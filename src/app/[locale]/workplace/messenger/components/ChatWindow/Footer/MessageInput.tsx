@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -12,6 +13,7 @@ export default function MessageInput() {
   const [openEmojis, setOpenEmojis] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -19,14 +21,26 @@ export default function MessageInput() {
         placeholder: "Send a message…",
       }),
     ],
-    content: "<p>Hello World! 🌎️</p>",
+    // content: "<p>Hello World! 🌎️</p>",
     editorProps: {
       attributes: {
         class: "outline-none focus:ring-0",
         style: "word-break: break-word; overflow-wrap: break-word;",
       },
+      handleKeyPress(_view, event) {
+        if (event.key === "Enter") {
+          handleGetContent();
+        }
+      },
     },
   });
+
+  const handleGetContent = () => {
+    // if (editor) {
+    //   const htmlContent = editor.getHTML();
+    //   console.log(htmlContent);
+    // }
+  };
 
   const isOneLine = ref.current?.offsetHeight;
 
@@ -39,7 +53,7 @@ export default function MessageInput() {
   return (
     <div
       className={cn(
-        "flex w-full flex-wrap items-center rounded-md bg-gray-100 p-3 hover:bg-gray-200 gap-3 relative",
+        "flex w-full flex-wrap items-center rounded-md bg-gray-100 px-3 py-1 hover:bg-gray-200 gap-3 relative",
       )}
       style={{
         alignItems: isOneLine ? "center" : "flex-start",
@@ -61,7 +75,13 @@ export default function MessageInput() {
         onBlur={handleBlurEmojisPicker}
         className="absolute bottom-[115%] right-0 z-10"
       >
-        <EmojiPicker searchDisabled open={openEmojis} />
+        <EmojiPicker
+          onEmojiClick={(icon) => {
+            editor!.commands.insertContent(icon.emoji);
+          }}
+          searchDisabled
+          open={openEmojis}
+        />
       </div>
     </div>
   );

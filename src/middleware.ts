@@ -17,7 +17,7 @@ const { auth } = NextAuth(authConfig);
 const authHandler = auth((req) => {
   const publicPathnameRegex = RegExp(
     `^(/(${AppConfig.locales.join("|")}))?(${PUBLIC_PAGES.flatMap((p) =>
-      p === "/" ? ["", "/"] : p,
+      p === "/" ? ["", "/"] : `${p}(/.*)?`,
     ).join("|")})/?$`,
     "i",
   );
