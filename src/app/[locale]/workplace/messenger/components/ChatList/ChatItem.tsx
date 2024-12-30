@@ -38,10 +38,12 @@ export default function ChatItem({ item }: Props) {
       </div>
       <div className="w-full space-y-1 text-xs">
         <div className="flex justify-between">
-          <p className="text-[15px] font-medium">{item.name}</p>
+          <p className="text-[14px] font-medium">{item.name}</p>
           <p className="text-zinc-500">{item.time}</p>
         </div>
-        <p className="line-clamp-1 text-start text-zinc-500">{item.message}</p>
+        <p className="line-clamp-1 text-start text-[11px] text-zinc-500">
+          {item.message}
+        </p>
       </div>
     </button>
   );

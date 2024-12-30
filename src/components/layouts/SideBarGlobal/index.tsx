@@ -6,7 +6,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import QuickCreate from "@/components/business/QuickCreate";
-import QuickSearch from "@/components/business/QuickSearch";
 import UserSetting from "@/components/business/UserSetting";
 import { cn } from "@/libs/utils";
 import { selectIsCollapsed } from "@/stores/setting/selectors";
@@ -45,15 +44,16 @@ export default function SideBarGlobal() {
         })}
       >
         <div className={cn("w-full space-y-6", isBetweenStyle)}>
-          <div className="flex justify-between">
+          <div className="mt-3 flex justify-between">
             <UserSetting />
             {!isCollapsedSideBar && <QuickCreate />}
           </div>
           <ListItemSideBar />
         </div>
-        <div className={cn("space-y-2 w-full", isBetweenStyle)}>
+        <div className={cn("space-y-2 w-full mb-3", isBetweenStyle)}>
           {isCollapsedSideBar && <QuickCreate />}
-          <QuickSearch isExpanded={!isCollapsedSideBar} />
+          {/* <QuickSearch isExpanded={!isCollapsedSideBar} /> */}
+          <UserSetting />
         </div>
       </div>
       <div

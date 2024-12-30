@@ -1,5 +1,7 @@
 import React from "react";
 
+import Card from "@/components/common/Card";
+
 import ChatList from "./components/ChatList";
 
 type Props = {
@@ -8,11 +10,13 @@ type Props = {
 
 export default function layoutMessenger({ children }: Props) {
   return (
-    <div className="flex h-full flex-1 gap-1 overflow-hidden">
-      <div className="h-full w-[22%]">
-        <ChatList />
+    <Card classNames={{ body: "h-full flex-1, p-0" }}>
+      <div className="flex h-full overflow-hidden">
+        <div className="h-full w-[18%] border-r">
+          <ChatList />
+        </div>
+        <div className="h-full flex-1">{children}</div>
       </div>
-      <div className="h-full flex-1">{children}</div>
-    </div>
+    </Card>
   );
 }

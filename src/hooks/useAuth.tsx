@@ -20,7 +20,11 @@ export default function useAuth() {
       code: body.code,
     });
 
-    if (res?.error) return toast.error(res.error);
+    if (res?.error) {
+      setIsLoading(false);
+      toast.error(res.error);
+      return;
+    }
 
     toast.success("Verify OTP successfully !");
 
@@ -28,8 +32,6 @@ export default function useAuth() {
       setIsLoading(false);
       router.push("/");
     }, 2000);
-
-    return true;
   };
 
   const handleResendOtp = (userId: number) => {

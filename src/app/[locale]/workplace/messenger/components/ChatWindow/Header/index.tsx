@@ -12,7 +12,7 @@ export default function Header() {
       <div className="flex w-full justify-between gap-2 px-3 py-2">
         <div className="flex gap-3">
           <Avatar
-            size="lg"
+            size="md"
             src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
           />
           <div>

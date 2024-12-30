@@ -8,7 +8,11 @@ import SearchChat from "./SearchChat";
 
 export default function ChatList() {
   return (
-    <Card classNames={{ body: "pt-0" }} header={<SearchChat />}>
+    <Card
+      isDecorative={false}
+      classNames={{ body: "pt-0 bg-transparent" }}
+      header={<SearchChat />}
+    >
       {listChatMock.map((item) => (
         <ChatItem item={item} key={item.id} />
       ))}

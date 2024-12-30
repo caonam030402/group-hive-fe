@@ -17,12 +17,22 @@ interface IProps {
     body?: string;
     footer?: string;
   };
+  isDecorative?: boolean;
 }
-export default function Card({ children, header, classNames, footer }: IProps) {
+export default function Card({
+  children,
+  header,
+  classNames,
+  footer,
+  isDecorative = true,
+}: IProps) {
   return (
     <CardUI
       classNames={{
-        base: "h-full shadow-none border border-default-100 group",
+        base: cn(
+          "h-full shadow-none group",
+          isDecorative && "border border-default-100",
+        ),
         body: "w-full",
       }}
     >

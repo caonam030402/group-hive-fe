@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@nextui-org/button";
+import { InputOtp } from "@nextui-org/input-otp";
 import { IoChevronBackOutline } from "@react-icons/all-files/io5/IoChevronBackOutline";
-import React, { useEffect, useMemo, useState } from "react";
-import toast from "react-hot-toast";
+import React, { useEffect, useMemo } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 import type { IRequestConfirmOtp } from "@/api/auth/type";
 import { STEP_FORM_AUTH } from "@/app/[locale]/(auth)/register/constant";
-import InputOTP from "@/components/business/InputOtp";
 import { cn } from "@/libs/utils";
 import { formatEmailHide } from "@/utils/helpers";
 
@@ -29,34 +29,33 @@ export default function VerifyCodeMail({
   isLoadingOtp,
 }: IProps) {
   const maxLength = 6;
-  const [OTP, setOTP] = useState("");
   const secondsRemaining = 60;
   const [timeRemaining, setTimeRemaining] = React.useState(secondsRemaining);
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      otp: "",
+    },
+  });
 
   const isDisabledResend = useMemo(() => {
     return timeRemaining !== 0;
   }, [timeRemaining]);
 
-  const isQualifiedOtp = useMemo(() => {
-    return OTP.length === maxLength;
-  }, [OTP.length]);
-
-  const handleSubmit = (pin: string) => {
-    if (pin.length !== maxLength) {
-      toast.error("Invalid OTP");
-      return;
-    }
-
+  const onSubmit = (data: { otp: string }) => {
     handleConfirmOtp(
       {
         user: {
           id: userId || 0,
         },
-        code: Number(pin),
+        code: Number(data.otp),
       },
       userId || 0,
     );
-    setOTP(pin);
   };
 
   useEffect(() => {
@@ -64,6 +63,7 @@ export default function VerifyCodeMail({
       setTimeRemaining((prevTime) => {
         if (prevTime === 0) {
           clearInterval(timerInterval);
+
           return 0;
         }
         return prevTime - 1;
@@ -74,7 +74,10 @@ export default function VerifyCodeMail({
   }, [timeRemaining]);
 
   return (
-    <div className="flex w-full flex-1 flex-col items-center justify-center">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex w-full flex-1 flex-col items-center justify-center"
+    >
       <div className="w-full max-w-[600px]">
         <Button
           className="mb-3 min-w-0 gap-1 px-1 py-0 text-sm"
@@ -84,12 +87,37 @@ export default function VerifyCodeMail({
         >
           <IoChevronBackOutline /> Back
         </Button>
-        <h1 className="text-2xl font-bold">Enter verification code</h1>
-        <div className="mt-2">
+        <h1 className="text-2xl font-bold ">Enter verification code</h1>
+        <div className="my-2">
           A 6-digit code was sent to {formatEmailHide(email)}. Enter it within
           10 minutes.
         </div>
-        <InputOTP length={maxLength} onComplete={handleSubmit} />
+
+        <Controller
+          control={control}
+          name="otp"
+          render={({ field }) => (
+            <InputOtp
+              {...field}
+              errorMessage={errors.otp && errors.otp.message}
+              isInvalid={!!errors.otp}
+              classNames={{ segmentWrapper: "gap-x-6", segment: "w-14 h-14" }}
+              variant="faded"
+              fullWidth
+              size="lg"
+              name="otp"
+              length={maxLength}
+            />
+          )}
+          rules={{
+            required: "OTP is required",
+            minLength: {
+              value: 6,
+              message: "Please enter a valid OTP",
+            },
+          }}
+        />
+
         <button
           type="button"
           onClick={() => {
@@ -98,7 +126,7 @@ export default function VerifyCodeMail({
             setTimeRemaining(secondsRemaining);
           }}
           className={cn(
-            "mt-5 flex cursor-pointer items-center gap-1 text-primary",
+            "mt-2 flex cursor-pointer items-center gap-1 text-primary",
             isDisabledResend && "cursor-not-allowed opacity-50",
           )}
         >
@@ -109,15 +137,14 @@ export default function VerifyCodeMail({
           )}
         </button>
         <Button
+          type="submit"
           isLoading={isLoadingOtp}
-          disabled={!isQualifiedOtp}
-          color={isQualifiedOtp ? "primary" : "default"}
+          color="primary"
           className="mt-5 w-full"
-          onClick={() => handleSubmit(OTP)}
         >
           Next
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

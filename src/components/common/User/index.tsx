@@ -1,6 +1,8 @@
 import { Avatar } from "@nextui-org/avatar";
 import React from "react";
 
+import { cn } from "@/libs/utils";
+
 interface Props {
   info: {
     name?: string;
@@ -8,13 +10,16 @@ interface Props {
     avatar: string;
   };
   onlyAvatar?: boolean;
+  shape?: "circle" | "square";
 }
 
-export default function User({ info, onlyAvatar }: Props) {
+export default function User({ info, onlyAvatar, shape = "circle" }: Props) {
+  const isCircle = shape === "circle" ? "rounded-full" : "rounded-md";
+
   return (
     <div className="flex cursor-pointer items-center gap-2" aria-hidden="true">
       <Avatar
-        className="size-12 shrink-0"
+        className={cn("size-12 shrink-0", isCircle)}
         src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
         size="md"
       />

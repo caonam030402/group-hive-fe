@@ -23,6 +23,7 @@ export default function UserSetting() {
       <DropdownTrigger>
         <div>
           <User
+            shape="circle"
             onlyAvatar={isCollapsedSideBar}
             info={{
               name: "John Doe",
@@ -38,7 +39,7 @@ export default function UserSetting() {
         aria-label="Dropdown menu with "
       >
         <DropdownSection aria-label="Profile & Actions">
-          <DropdownItem isReadOnly>
+          <DropdownItem key="profile" isReadOnly>
             <AccountHeader />
           </DropdownItem>
         </DropdownSection>

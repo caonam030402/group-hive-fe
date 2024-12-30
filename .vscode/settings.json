@@ -31,5 +31,6 @@
   "i18n-ally.keystyle": "nested",
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
-  }
+  },
+  "testing.automaticallyOpenTestResults": "neverOpen"
 }
