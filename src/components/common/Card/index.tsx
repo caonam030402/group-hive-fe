@@ -16,6 +16,7 @@ interface IProps {
     header?: string;
     body?: string;
     footer?: string;
+    base?: string;
   };
   isDecorative?: boolean;
 }
@@ -32,6 +33,7 @@ export default function Card({
         base: cn(
           "h-full shadow-none group",
           isDecorative && "border border-default-100",
+          classNames?.base,
         ),
         body: "w-full",
       }}

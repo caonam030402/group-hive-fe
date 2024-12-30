@@ -4,6 +4,7 @@ export const PATH = {
   REGISTER: "/register",
   WORKPLACE: "/workplace",
   MESSENGER: "/workplace/messenger",
+  GET_STARTED: "/get-started",
 };
 
 export const PUBLIC_PAGES = [
@@ -12,6 +13,8 @@ export const PUBLIC_PAGES = [
   PATH.HOME,
   PATH.WORKPLACE,
   PATH.MESSENGER,
+  PATH.MESSENGER,
+  PATH.GET_STARTED,
 ];
 
 export enum ENameCookie {
