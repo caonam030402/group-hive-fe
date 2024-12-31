@@ -11,6 +11,8 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 
+import RowSteps from "@/components/common/RowSteps";
+
 const animals = [
   { key: "cat", label: "Cat" },
   { key: "dog", label: "Dog" },
@@ -33,29 +35,38 @@ interface IProps {
 }
 export default function AddWorkSpace({ isOpen, onOpenChange }: IProps) {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
+    <Modal size="4xl" isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
               Add a new workspace
             </ModalHeader>
-            <ModalBody>
+            <ModalBody className="flex flex-col items-center text-center">
               <p className="text-sm text-gray-500">
                 Fill in your organization details and kickstart efficient
                 collaboration on Lark.
               </p>
+              <RowSteps
+                defaultStep={2}
+                steps={[
+                  {
+                    title: "Create",
+                  },
+                  {
+                    title: "Review",
+                  },
+                  {
+                    title: "Publish",
+                  },
+                ]}
+              />
               <Input
                 labelPlacement="outside"
                 label="Name"
                 placeholder="Organization name"
               />
-              <Select
-                classNames={{ base: "w-full" }}
-                labelPlacement="outside"
-                className="max-w-xs"
-                label="Select an animal"
-              >
+              <Select labelPlacement="outside" label="Select an animal">
                 {animals.map((animal) => (
                   <SelectItem key={animal.key}>{animal.label}</SelectItem>
                 ))}
