@@ -10,6 +10,8 @@ import React from "react";
 export type RowStepProps = {
   title?: React.ReactNode;
   className?: string;
+  content?: React.ReactNode;
+  disableControl?: boolean;
 };
 
 export interface RowStepsProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -191,7 +193,7 @@ const RowSteps = React.forwardRef<HTMLButtonElement, RowStepsProps>(
                     "group flex w-full cursor-pointer flex-row items-center justify-center gap-x-3 rounded-large py-2.5",
                     stepClassName,
                   )}
-                  onClick={() => setCurrentStep(stepIdx)}
+                  onClick={() => step.disableControl && setCurrentStep(stepIdx)}
                   {...props}
                 >
                   <div className="relative flex h-full items-center">
