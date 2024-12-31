@@ -57,7 +57,7 @@ export default function AddWorkSpace({ isOpen, onOpenChange }: IProps) {
   };
 
   return (
-    <Modal size="4xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal size="2xl" isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose) => (
           <>

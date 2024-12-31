@@ -9,7 +9,7 @@ import Card from "@/components/common/Card";
 
 export default function ListWorkSpace() {
   return (
-    <Card classNames={{ base: "h-auto mt-4" }}>
+    <Card classNames={{ base: "h-auto mt-4 w-[80%] mx-auto" }}>
       {Array.from({ length: 5 }).map((_, index) => (
         <div key={index}>
           <div className="flex cursor-pointer items-center justify-between rounded-md border-gray-200 px-2 py-3 hover:bg-gray-100">

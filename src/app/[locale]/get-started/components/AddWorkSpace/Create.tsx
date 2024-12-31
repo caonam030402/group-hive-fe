@@ -1,5 +1,6 @@
+import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Input } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
+import { Checkbox, Form } from "@nextui-org/react";
 import React from "react";
 
 const animals = [
@@ -20,17 +21,49 @@ const animals = [
 
 export default function Create() {
   return (
-    <>
+    <Form className="flex flex-col gap-5">
       <Input
         labelPlacement="outside"
         label="Name"
         placeholder="Organization name"
       />
-      <Select labelPlacement="outside" label="Select an animal">
+      <Autocomplete
+        labelPlacement="outside"
+        placeholder="Select your industry"
+        label="Industry"
+      >
         {animals.map((animal) => (
-          <SelectItem key={animal.key}>{animal.label}</SelectItem>
+          <AutocompleteItem value="" key={animal.key}>
+            {animal.label}
+          </AutocompleteItem>
         ))}
-      </Select>
-    </>
+      </Autocomplete>
+      <Autocomplete
+        labelPlacement="outside"
+        placeholder="Select your size"
+        label="Size"
+      >
+        {animals.map((animal) => (
+          <AutocompleteItem value="" key={animal.key}>
+            {animal.label}
+          </AutocompleteItem>
+        ))}
+      </Autocomplete>
+      <Autocomplete
+        labelPlacement="outside"
+        placeholder="Select your region"
+        label="Region"
+      >
+        {animals.map((animal) => (
+          <AutocompleteItem value="" key={animal.key}>
+            {animal.label}
+          </AutocompleteItem>
+        ))}
+      </Autocomplete>
+      <Checkbox size="sm" classNames={{ label: "text-sm" }} defaultSelected>
+        {" "}
+        I have read and accept the Terms of Service and Privacy Policy.
+      </Checkbox>
+    </Form>
   );
 }
