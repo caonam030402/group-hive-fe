@@ -3,25 +3,15 @@ import { Input } from "@nextui-org/input";
 import { Checkbox, Form } from "@nextui-org/react";
 import React from "react";
 
-const animals = [
-  { key: "cat", label: "Cat" },
-  { key: "dog", label: "Dog" },
-  { key: "elephant", label: "Elephant" },
-  { key: "lion", label: "Lion" },
-  { key: "tiger", label: "Tiger" },
-  { key: "giraffe", label: "Giraffe" },
-  { key: "dolphin", label: "Dolphin" },
-  { key: "penguin", label: "Penguin" },
-  { key: "zebra", label: "Zebra" },
-  { key: "shark", label: "Shark" },
-  { key: "whale", label: "Whale" },
-  { key: "otter", label: "Otter" },
-  { key: "crocodile", label: "Crocodile" },
-];
+import {
+  countriesList,
+  industriesList,
+  sizeWorkplaceList,
+} from "@/constants/common";
 
 export default function Create() {
   return (
-    <Form className="flex flex-col gap-5">
+    <Form className="my-3 flex w-full flex-col gap-5">
       <Input
         labelPlacement="outside"
         label="Name"
@@ -32,9 +22,9 @@ export default function Create() {
         placeholder="Select your industry"
         label="Industry"
       >
-        {animals.map((animal) => (
-          <AutocompleteItem value="" key={animal.key}>
-            {animal.label}
+        {industriesList.map((industry) => (
+          <AutocompleteItem value="" key={industry.category}>
+            {industry.category}
           </AutocompleteItem>
         ))}
       </Autocomplete>
@@ -43,9 +33,9 @@ export default function Create() {
         placeholder="Select your size"
         label="Size"
       >
-        {animals.map((animal) => (
-          <AutocompleteItem value="" key={animal.key}>
-            {animal.label}
+        {sizeWorkplaceList.map((size) => (
+          <AutocompleteItem value={size.value} key={size.value}>
+            {size.name}
           </AutocompleteItem>
         ))}
       </Autocomplete>
@@ -54,14 +44,13 @@ export default function Create() {
         placeholder="Select your region"
         label="Region"
       >
-        {animals.map((animal) => (
-          <AutocompleteItem value="" key={animal.key}>
-            {animal.label}
+        {countriesList.map((country) => (
+          <AutocompleteItem value={country.value} key={country.value}>
+            {country.name}
           </AutocompleteItem>
         ))}
       </Autocomplete>
-      <Checkbox size="sm" classNames={{ label: "text-sm" }} defaultSelected>
-        {" "}
+      <Checkbox size="sm" classNames={{ label: "text-xs" }} defaultSelected>
         I have read and accept the Terms of Service and Privacy Policy.
       </Checkbox>
     </Form>
