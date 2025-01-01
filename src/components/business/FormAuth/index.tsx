@@ -48,7 +48,6 @@ export default function FormSignUp({
           <h1 className="text-2xl font-bold">{title}</h1>
           <Input
             size="md"
-            errorMessage={errors.email?.message}
             placeholder="name@work.com"
             isInvalid={!!errors.email?.message}
             type="email"
