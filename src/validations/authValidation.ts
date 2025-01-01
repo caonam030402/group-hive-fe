@@ -9,15 +9,14 @@ const passwordValidation = new RegExp(
 
 const authValidation = z.object({
   email: z
-    .string({ message: messageValidation.emailIsRequired })
-    .min(6, { message: messageValidation.sixCharacters })
-    .email({ message: messageValidation.emailIsInvalid }),
+    .string({ message: messageValidation({ field: "email" }).isRequired })
+    .min(6, { message: messageValidation({ min: 6 }).minCharacters })
+    .email({ message: messageValidation({ field: "email" }).isValid }),
   password: z
-    .string({ message: messageValidation.passwordIsRequired })
+    .string({ message: messageValidation({ field: "password" }).isRequired })
     .max(20)
     .regex(passwordValidation, {
-      message:
-        "Minimum 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character",
+      message: messageValidation({ field: "password" }).passwordRule,
     }),
 });
 
