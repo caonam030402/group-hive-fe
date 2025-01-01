@@ -2,7 +2,6 @@ import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { cn } from "@nextui-org/theme";
-import { IoIosArrowForward } from "@react-icons/all-files/io/IoIosArrowForward";
 import React from "react";
 
 import Card from "@/components/common/Card";
@@ -23,9 +22,7 @@ export default function ListWorkSpace() {
                 <div className="text-xs text-gray-500">44 members</div>
               </div>
             </div>
-            <Button isIconOnly size="sm">
-              <IoIosArrowForward />
-            </Button>
+            <Button size="sm">Launch</Button>
           </div>
           <Divider className={cn("my-0", index === 4 && "hidden")} />
         </div>

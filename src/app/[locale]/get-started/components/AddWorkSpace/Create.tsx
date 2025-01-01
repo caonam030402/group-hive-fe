@@ -11,7 +11,7 @@ import {
 
 export default function Create() {
   return (
-    <Form className="my-3 flex w-full flex-col gap-5">
+    <Form className="my-1 flex w-full flex-col gap-5">
       <Input
         labelPlacement="outside"
         label="Name"
