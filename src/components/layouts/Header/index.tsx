@@ -8,6 +8,7 @@ import {
 } from "@nextui-org/react";
 
 import Logo from "@/components/common/Logo";
+import { PATH } from "@/constants/common";
 
 const listNav = [
   {
@@ -34,30 +35,32 @@ const listNav = [
 
 export default function Header() {
   return (
-    <Navbar maxWidth="2xl" className="container">
-      <NavbarBrand>
-        <Logo />
-      </NavbarBrand>
-      <NavbarContent className="hidden gap-9 sm:flex" justify="start">
-        {listNav.map((nav) => {
-          return (
-            <Link
-              className="text-[15px] font-medium text-gray-800"
-              href={nav.link}
-              key={nav.title}
-            >
-              {nav.title}
-            </Link>
-          );
-        })}
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+    <div className="bg-white">
+      <Navbar maxWidth="2xl" className="container">
+        <NavbarBrand>
+          <Logo />
+        </NavbarBrand>
+        <NavbarContent className="hidden gap-9 sm:flex" justify="start">
+          {listNav.map((nav) => {
+            return (
+              <Link
+                className="text-[15px] font-medium text-gray-800"
+                href={nav.link}
+                key={nav.title}
+              >
+                {nav.title}
+              </Link>
+            );
+          })}
+        </NavbarContent>
+        <NavbarContent justify="end">
+          <NavbarItem>
+            <Button as={Link} color="primary" href={PATH.REGISTER}>
+              Sign Up
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+      </Navbar>
+    </div>
   );
 }

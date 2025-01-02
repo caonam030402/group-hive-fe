@@ -25,6 +25,9 @@ export default withSentryConfig(
       },
       poweredByHeader: false,
       reactStrictMode: true,
+      images: {
+        domains: ['framerusercontent.com'],
+      },
     }),
   ),
   {
