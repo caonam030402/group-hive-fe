@@ -4,6 +4,7 @@ import React from "react";
 
 import Header from "@/components/layouts/Header";
 
+import CommunicationTool from "./components/CommunicationTool";
 import Introduce from "./components/Introduce";
 import OpsEx from "./components/OpsEx";
 
@@ -13,9 +14,9 @@ export default function HomePage() {
       <Header />
       {/* BODY */}
       <Introduce />
-
+      <OpsEx />
       <div className="container mx-auto">
-        <OpsEx />
+        <CommunicationTool />
       </div>
       {/* <Button
         onClick={() => {

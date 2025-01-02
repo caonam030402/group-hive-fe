@@ -121,7 +121,7 @@ export const listTab = [
 
 export default function OpsEx() {
   return (
-    <div className="mx-auto my-16 w-full text-center">
+    <div className="container mx-auto my-16 w-full text-center">
       <div className="text-3xl font-semibold">
         Plan, collaborate, execute and measure
       </div>
