@@ -14,6 +14,7 @@ export const PUBLIC_PAGES = [
   PATH.WORKPLACE,
   PATH.MESSENGER,
   PATH.GET_STARTED,
+  PATH.HOME,
 ];
 
 export enum ENameCookie {
