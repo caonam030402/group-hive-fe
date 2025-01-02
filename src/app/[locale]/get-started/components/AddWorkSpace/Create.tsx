@@ -19,7 +19,6 @@ interface IProps {
 }
 
 export default function Create({ form }: IProps) {
-  console.log(form.formState.errors);
   const errorFields = form.formState.errors;
   return (
     <div className="my-1 flex w-full flex-col gap-5">
