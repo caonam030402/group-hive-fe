@@ -3,16 +3,27 @@ import { IoCloudDownloadOutline } from "@react-icons/all-files/io5/IoCloudDownlo
 import Image from "next/image";
 import React from "react";
 
+const listLogoCompany = [
+  "https://framerusercontent.com/images/PPfehcyhCEreeqFeefrJsrMGQuI.png?scale-down-to=512",
+  "https://framerusercontent.com/images/jzriHkTmxukLUMFozWuKPWIODNE.png?scale-down-to=512",
+  "https://framerusercontent.com/images/eXnXhWuUyzZR8vgTMMR8mHO4Mw.png?scale-down-to=512",
+  "https://framerusercontent.com/images/E7ZPZFHqhI1DAyDq3Olx13iOqFw.png?scale-down-to=512",
+  "https://framerusercontent.com/images/7KT6pfYhbHMu69NtVo684Pv0dTY.png?scale-down-to=512",
+  "https://framerusercontent.com/images/Yj8HKZJO1ZbKKEvN89cv8AiC19I.png?scale-down-to=512",
+  "https://framerusercontent.com/images/hoIFPPBhMs6vJd54kVL36yoXc.png?scale-down-to=512",
+  "https://framerusercontent.com/images/kKSIMXAgtOTILcsphmfpSOgdKSA.webp?scale-down-to=512",
+];
+
 export default function Introduce() {
   return (
     <div
-      className="relative flex h-screen w-full flex-col items-center "
+      className="relative flex h-auto w-full flex-col items-center "
       style={{
         background:
           "linear-gradient(120deg, rgb(255, 255, 255) 0%, rgb(249, 249, 251) 100%)",
       }}
     >
-      <div className="absolute  z-10 h-[1100px] w-full flex-none object-cover">
+      <div className="absolute z-10 h-[1100px] w-full flex-none object-cover">
         <Image
           width={1820}
           height={1100}
@@ -30,6 +41,27 @@ export default function Introduce() {
           loop
         />
       </div>
+      <div className="absolute bottom-[5%] z-10 text-center uppercase">
+        Trusted by fast-growing companies from
+        <span className="font-bold"> 125+</span> countries
+        <div className="mt-2 flex flex-wrap gap-3">
+          {listLogoCompany.map((logo) => (
+            <div
+              key={logo}
+              className="flex h-[50px] w-[120px] items-center justify-center rounded-md bg-white/70 object-cover px-3"
+            >
+              <Image
+                key={logo}
+                width={2000}
+                height={2000}
+                className="rounded-md object-cover"
+                src={logo}
+                alt=""
+              />
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="absolute z-10 mt-10 flex flex-col items-center gap-5">
         <div className="text-center text-5xl font-bold">
@@ -44,10 +76,6 @@ export default function Introduce() {
         <Button className="mt-5" size="lg" color="primary">
           Download Now <IoCloudDownloadOutline />
         </Button>
-      </div>
-      <div className="absolute bottom-0 z-10 uppercase">
-        Trusted by fast-growing companies from
-        <span className="font-bold"> 125+</span> countries
       </div>
     </div>
   );
