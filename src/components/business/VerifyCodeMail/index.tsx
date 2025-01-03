@@ -6,9 +6,9 @@ import { IoChevronBackOutline } from "@react-icons/all-files/io5/IoChevronBackOu
 import React, { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import type { IRequestConfirmOtp } from "@/api/auth/type";
 import { STEP_FORM_AUTH } from "@/app/[locale]/(auth)/register/constant";
 import { cn } from "@/libs/utils";
+import type { IRequestConfirmOtp } from "@/types/auth";
 import { formatEmailHide } from "@/utils/helpers";
 
 interface IProps {

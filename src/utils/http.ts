@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 
 import { ENameCookie } from "@/constants/common";
 import { Env } from "@/libs/env";
+import type { IRequestInit } from "@/types";
 
 // class HttpError extends Error {
 //   status: number;
@@ -18,7 +19,7 @@ import { Env } from "@/libs/env";
 const request = async <Response>(
   method: "GET" | "POST" | "PUT" | "DELETE",
   url: string,
-  options: RequestInit,
+  options: IRequestInit,
 ) => {
   const baseUrl = Env.API_URL;
   const body = options?.body ? JSON.stringify(options.body) : undefined;
@@ -61,14 +62,14 @@ const request = async <Response>(
 };
 
 const http = {
-  get: <Response>(url: string, options?: RequestInit) =>
-    request<Response>("GET", url, options || {}),
-  post: <Response>(url: string, options?: RequestInit) =>
-    request<Response>("POST", url, options || {}),
-  put: <Response>(url: string, options?: RequestInit) =>
-    request<Response>("PUT", url, options || {}),
-  delete: <Response>(url: string, options?: RequestInit) =>
-    request<Response>("DELETE", url, options || {}),
+  get: <Response>(url: string, options: IRequestInit) =>
+    request<Response>("GET", url, options),
+  post: <Response>(url: string, options: IRequestInit) =>
+    request<Response>("POST", url, options),
+  put: <Response>(url: string, options: IRequestInit) =>
+    request<Response>("PUT", url, options),
+  delete: <Response>(url: string, options: IRequestInit) =>
+    request<Response>("DELETE", url, options),
 };
 
 export default http;

@@ -14,3 +14,6 @@ export interface IHttpResponse<Data> {
   status: number;
   payload: Data;
 }
+interface IRequestInit extends RequestInit {
+  body: unknown;
+}

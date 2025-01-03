@@ -2,10 +2,10 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 import { authGenerateOtp } from "@/api/auth";
-import type { IRequestConfirmOtp } from "@/api/auth/type";
 import { authCredential } from "@/configs/auth/action";
 import { ETriggerCredentials } from "@/constants/auth";
 import type { IErrorResponse } from "@/types";
+import type { IRequestConfirmOtp } from "@/types/auth";
 
 import useApi from "./useApi";
 

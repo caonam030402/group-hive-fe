@@ -38,3 +38,24 @@ declare module "next-auth" {
     };
   }
 }
+
+interface IRequestGenerateOtp {
+  user: {
+    id: number;
+  };
+  expiresTime: number;
+}
+
+interface IRequestConfirmOtp {
+  user: {
+    id: number;
+  };
+  code: number;
+}
+
+interface IResponseGenerateOtp {
+  user: {
+    id: number;
+  };
+  expiresTime: number;
+}
