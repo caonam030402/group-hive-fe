@@ -23,9 +23,15 @@ export interface IAuthCredentials {
   userId?: number;
 }
 
+interface IUserSession extends IUser {
+  token?: string;
+  refreshToken?: string;
+  tokenExpires?: number;
+}
+
 declare module "next-auth" {
   interface Session extends IAuthResponse {}
-  interface User extends IAuthResponse {
+  interface User extends IUserSession {
     error?: string;
   }
 

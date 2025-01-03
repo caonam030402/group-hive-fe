@@ -12,6 +12,7 @@ export default function GetStarted() {
   const {
     isOpen: isOpenAdd,
     onOpen: onOpenAdd,
+    onClose: onCloseAdd,
     onOpenChange: onOpenChangeAdd,
   } = useDisclosure();
   const {
@@ -42,7 +43,11 @@ export default function GetStarted() {
             </div>
             {/* <p className="mt-4 text-sm text-gray-500">Or open a workspace</p>
             <ListWorkSpace /> */}
-            <AddWorkSpace isOpen={isOpenAdd} onOpenChange={onOpenChangeAdd} />
+            <AddWorkSpace
+              onCloseAdd={onCloseAdd}
+              isOpen={isOpenAdd}
+              onOpenChange={onOpenChangeAdd}
+            />
             <JoinWorkSpace
               isOpen={isOpenJoin}
               onOpenChange={onOpenChangeJoin}

@@ -9,8 +9,10 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 import { workspaceCreate } from "@/api";
 import useApi from "@/hooks/useApi";
@@ -22,6 +24,7 @@ import Create from "./Create";
 interface IProps {
   isOpen: boolean;
   onOpenChange: () => void;
+  onCloseAdd: () => void;
 }
 
 export type FormType = Pick<
@@ -36,11 +39,16 @@ const rules = workSpaceValidation.pick({
   terms: true,
 });
 
-export default function AddWorkSpace({ isOpen, onOpenChange }: IProps) {
+export default function AddWorkSpace({
+  isOpen,
+  onOpenChange,
+  onCloseAdd,
+}: IProps) {
   const form = useForm<FormType>({
     resolver: zodResolver(rules),
   });
 
+  const { data: session } = useSession();
   const { fetch } = useApi();
 
   const handleAddWorkSpace = (data: FormType) => {
@@ -48,12 +56,15 @@ export default function AddWorkSpace({ isOpen, onOpenChange }: IProps) {
       ...data,
       terms: undefined,
       owner: {
-        id: "1",
+        id: session?.user?.id ?? "",
       },
     };
     fetch({
       fn: workspaceCreate(body),
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success("Workspace created successfully");
+        onCloseAdd();
+      },
     });
   };
 

@@ -24,17 +24,17 @@ interface IStatus {
 }
 
 interface IUser {
-  id: number;
-  email: string;
-  provider: string;
-  socialId: string;
-  firstName: string;
-  lastName: string;
-  photo: Photo;
-  role: Role;
-  status: Status;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
-  isVerified: boolean;
+  id?: number;
+  email?: string;
+  provider?: string;
+  socialId?: string;
+  firstName?: string;
+  lastName?: string;
+  photo?: Photo;
+  role?: Role;
+  status?: Status;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
+  isVerified?: boolean;
 }
