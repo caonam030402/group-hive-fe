@@ -1,34 +1,22 @@
-import { cookies } from "next/headers";
+import Cookies from "js-cookie";
 
 import { ENameCookie } from "@/constants/common";
 import { Env } from "@/libs/env";
 import type { IRequestInit } from "@/types";
-
-// class HttpError extends Error {
-//   status: number;
-
-//   payload: any;
-
-//   constructor({ status, payload }: { status: number; payload: any }) {
-//     super("Http Error");
-//     this.status = status;
-//     this.payload = payload;
-//   }
-// }
 
 const request = async <Response>(
   method: "GET" | "POST" | "PUT" | "DELETE",
   url: string,
   options: IRequestInit,
 ) => {
-  const baseUrl = Env.API_URL;
+  const baseUrl = Env.NEXT_PUBLIC_API_URL;
   const body = options?.body ? JSON.stringify(options.body) : undefined;
-  const cookieStore = cookies();
 
-  const clientToken = cookieStore.get(ENameCookie.ACCESS_TOKEN)?.value;
+  const clientToken = Cookies.get(ENameCookie.ACCESS_TOKEN);
+
   const baseHeader = {
     "Content-Type": "application/json",
-    Authorization: clientToken !== "" ? `Bearer ${clientToken}}` : "",
+    Authorization: clientToken !== "" ? `Bearer ${clientToken}` : "",
   };
 
   const response = await fetch(baseUrl + url, {

@@ -12,6 +12,8 @@ import {
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { workspaceCreate } from "@/api";
+import useApi from "@/hooks/useApi";
 import type { WorkSpaceValidation } from "@/validations/workSpaceValidation";
 import workSpaceValidation from "@/validations/workSpaceValidation";
 
@@ -39,8 +41,20 @@ export default function AddWorkSpace({ isOpen, onOpenChange }: IProps) {
     resolver: zodResolver(rules),
   });
 
+  const { fetch } = useApi();
+
   const handleAddWorkSpace = (data: FormType) => {
-    console.log(data);
+    const body = {
+      ...data,
+      terms: undefined,
+      owner: {
+        id: "1",
+      },
+    };
+    fetch({
+      fn: workspaceCreate(body),
+      onSuccess: () => {},
+    });
   };
 
   return (

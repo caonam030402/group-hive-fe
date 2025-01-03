@@ -3,8 +3,8 @@ interface IWorkspaceCreateBody {
   industry: String;
   size: String;
   region: String;
-  description: String;
-  avatar: String;
+  description?: String;
+  avatar?: String;
   owner: {
     id: String;
   };

@@ -12,12 +12,16 @@ export const setCookies = ({
   return cookies().set({
     name,
     value,
-    httpOnly: true,
+    httpOnly: false,
     path: "/",
     sameSite: "strict",
     expires: expires || new Date(),
     secure: true,
   });
+};
+
+export const getCookies = ({ key }: { key: string }) => {
+  return cookies().get(key)?.value;
 };
 
 export const clearCookies = ({ key }: { key: string }) => {
