@@ -7,13 +7,12 @@ interface IUseFetch<T> {
 }
 
 export default function useApi() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function fetch<T>({ fn, onError, onSuccess }: IUseFetch<T>) {
     setIsLoading(true);
     const response: any = await fn;
     // const statusCode = response.status;
-
     if (!response.ok) {
       // statusCode !== HttpStatusCode.UnprocessableEntity &&
       //   toast.error(response.payload.message);
@@ -23,7 +22,6 @@ export default function useApi() {
       setIsLoading(false);
       onSuccess?.(response as T);
     }
-
     setIsLoading(false);
 
     return response;

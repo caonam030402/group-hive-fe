@@ -15,5 +15,15 @@ export interface IHttpResponse<Data> {
   payload: Data;
 }
 interface IRequestInit extends RequestInit {
-  body: unknown;
+  body?: unknown;
+}
+
+interface IPagination {
+  page: number;
+  limit: number;
+}
+
+interface IPaginationResponse<T> {
+  data: T[];
+  pagination: IPagination;
 }
