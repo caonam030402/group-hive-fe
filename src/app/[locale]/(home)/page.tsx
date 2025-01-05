@@ -12,20 +12,11 @@ export default function HomePage() {
   return (
     <div className="">
       <Header />
-      {/* BODY */}
       <Introduce />
       <OpsEx />
       <div className="container mx-auto">
         <CommunicationTool />
       </div>
-      {/* <Button
-        onClick={() => {
-          signOut();
-        }}
-        color="primary"
-      >
-        Button
-      </Button> */}
     </div>
   );
 }

@@ -1,7 +1,11 @@
 import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
 import { IoCloudDownloadOutline } from "@react-icons/all-files/io5/IoCloudDownloadOutline";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import React from "react";
+
+import { PATH } from "@/constants";
 
 const listLogoCompany = [
   "https://framerusercontent.com/images/PPfehcyhCEreeqFeefrJsrMGQuI.png?scale-down-to=512",
@@ -15,6 +19,8 @@ const listLogoCompany = [
 ];
 
 export default function Introduce() {
+  const { status } = useSession();
+  const isAuthenticated = status === "authenticated";
   return (
     <div
       className="relative flex h-auto w-full flex-col items-center "
@@ -73,9 +79,23 @@ export default function Introduce() {
           centralized communication, project management, digital workflows,
           analytics and more.
         </div>
-        <Button className="mt-5" size="lg" color="primary">
-          Download Now <IoCloudDownloadOutline />
-        </Button>
+        <div className="flex gap-4">
+          <Button className="mt-5" size="lg" color="primary">
+            Download Now <IoCloudDownloadOutline />
+          </Button>
+          {isAuthenticated && (
+            <Button
+              variant="bordered"
+              className="mt-5"
+              size="lg"
+              as={Link}
+              href={PATH.GET_STARTED}
+              color="primary"
+            >
+              Launch Lark
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

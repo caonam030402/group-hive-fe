@@ -4,7 +4,9 @@ import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/react";
 import React from "react";
 
-import IntroSection from "../(auth)/register/components/IntroSection";
+import Header from "@/components/layouts/Header";
+import { bgBluePink } from "@/constants/bgImage";
+
 import AddWorkSpace from "./components/AddWorkSpace";
 import JoinWorkSpace from "./components/JoinWorkSpace";
 
@@ -22,10 +24,17 @@ export default function GetStarted() {
   } = useDisclosure();
 
   return (
-    <section className="flex h-screen text-sm">
-      <IntroSection />
+    <>
+      <div className="bg-white">
+        <Header />
+      </div>
 
-      <div className="h-screen flex-1">
+      <div
+        style={{
+          backgroundImage: `url(${bgBluePink})`,
+        }}
+        className="flex h-[calc(100vh-70px)] items-center justify-center"
+      >
         <div className="flex h-full flex-col items-center justify-center">
           <div className="w-[30vw] text-center">
             <div className="text-3xl font-bold">Create a new workspace</div>
@@ -54,7 +63,13 @@ export default function GetStarted() {
             />
           </div>
         </div>
+        {/* <Image
+          src="https://framerusercontent.com/images/eGUZCxDhYATHFYfOSrqsMTURw.jpg?scale-down-to=1024"
+          alt="hero"
+          width={2000}
+          className="size-full h-auto w-[500px]"
+        /> */}
       </div>
-    </section>
+    </>
   );
 }

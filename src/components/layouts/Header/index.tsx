@@ -43,7 +43,9 @@ export default function Header() {
   return (
     <Navbar maxWidth="xl">
       <NavbarBrand>
-        <Logo />
+        <Link href={PATH.HOME}>
+          <Logo />
+        </Link>
       </NavbarBrand>
       <NavbarContent className="hidden gap-9 sm:flex" justify="start">
         {listNav.map((nav) => {
