@@ -6,7 +6,7 @@ import { cn } from "@/libs/utils";
 interface Props {
   info: {
     name?: string;
-    email?: string;
+    email?: string | null | undefined;
     avatar: string;
   };
   onlyAvatar?: boolean;

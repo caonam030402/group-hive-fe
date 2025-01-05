@@ -1,6 +1,6 @@
-import { authLogout } from "@/api/auth";
+import { signOut } from "@/configs/auth";
 
-export const userMenuOptions = [
+export const userMenuOptions: IMenuUserOption[] = [
   {
     id: "0",
     title: "Account Management",
@@ -40,7 +40,41 @@ export const userMenuOptions = [
         title: "Log Out",
         href: "",
         action: () => {
-          authLogout();
+          signOut();
+        },
+        icon: "",
+      },
+    ],
+  },
+];
+
+export const userMenuOptionsHome: IMenuUserOption[] = [
+  {
+    id: "0",
+    children: [
+      {
+        id: "1",
+        title: "Get Started",
+        href: "workplace/profile",
+        icon: "",
+      },
+      {
+        id: "2",
+        title: "Workplace",
+        href: "workplace/qr-code",
+        icon: "",
+      },
+    ],
+  },
+  {
+    id: "3",
+    children: [
+      {
+        id: "6",
+        title: "Log Out",
+        href: "",
+        action: () => {
+          signOut();
         },
         icon: "",
       },

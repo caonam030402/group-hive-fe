@@ -38,3 +38,15 @@ interface IUser {
   deletedAt?: string;
   isVerified?: boolean;
 }
+
+interface IMenuUser {
+  id: string;
+  title?: string;
+  href?: string;
+  icon?: string;
+  action?: () => void;
+}
+
+interface IMenuUserOption extends IMenuUser {
+  children?: IMenuUser[];
+}

@@ -2,7 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@nextui-org/link";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next-nprogress-bar";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -26,8 +27,9 @@ const rules = authValidation.pick({ email: true, password: true });
 export default function Login() {
   const emailRef = useRef<string | null>(null);
   const userId = useRef<number | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const session = useSession();
+  const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEP_FORM_AUTH.FORM_AUTH);
   const { handleConfirmOtp, handleResendOtp, isLoadingAuth } = useAuth();
 
@@ -64,11 +66,9 @@ export default function Login() {
       setIsLoading(false);
     } else {
       toast.success("Login successfully !");
-
-      setTimeout(() => {
-        setIsLoading(false);
-        router.push("/");
-      }, 1000);
+      setIsLoading(false);
+      router.push("/");
+      session.update();
     }
   };
 
