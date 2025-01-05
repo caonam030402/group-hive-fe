@@ -23,7 +23,7 @@ const request = async <Response>(
     method,
     headers: {
       ...baseHeader,
-      ...options.headers,
+      ...options?.headers,
     },
     body,
   });
@@ -50,8 +50,8 @@ const request = async <Response>(
 };
 
 const http = {
-  get: <Response>(url: string, options: IRequestInit) =>
-    request<Response>("GET", url, options),
+  get: <Response>(url: string, options?: IRequestInit) =>
+    request<Response>("GET", url, options || {}),
   post: <Response>(url: string, options: IRequestInit) =>
     request<Response>("POST", url, options),
   put: <Response>(url: string, options: IRequestInit) =>
