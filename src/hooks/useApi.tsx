@@ -9,6 +9,10 @@ interface IUseFetch<T> {
 export default function useApi() {
   const [isLoading, setIsLoading] = useState(true);
 
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 1000);
+
   async function fetch<T>({ fn, onError, onSuccess }: IUseFetch<T>) {
     setIsLoading(true);
     const response: any = await fn;

@@ -25,6 +25,7 @@ interface IProps {
   isOpen: boolean;
   onOpenChange: () => void;
   onCloseAdd: () => void;
+  setIsRefresh?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type FormType = Pick<
@@ -43,13 +44,14 @@ export default function AddWorkSpace({
   isOpen,
   onOpenChange,
   onCloseAdd,
+  setIsRefresh,
 }: IProps) {
   const form = useForm<FormType>({
     resolver: zodResolver(rules),
   });
 
   const { data: session } = useSession();
-  const { fetch } = useApi();
+  const { fetch, isLoading } = useApi();
 
   const handleAddWorkSpace = (data: FormType) => {
     const body = {
@@ -64,6 +66,7 @@ export default function AddWorkSpace({
       onSuccess: () => {
         toast.success("Workspace created successfully");
         onCloseAdd();
+        setIsRefresh && setIsRefresh(true);
       },
     });
   };
@@ -93,7 +96,7 @@ export default function AddWorkSpace({
               >
                 Close
               </Button>
-              <Button type="submit" color="primary">
+              <Button isLoading={isLoading} type="submit" color="primary">
                 Create
               </Button>
             </ModalFooter>

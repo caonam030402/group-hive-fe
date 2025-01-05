@@ -2,7 +2,7 @@
 
 import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/react";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { workspaceGet } from "@/api";
 import RenderCondition from "@/components/common/RenderCondition";
@@ -28,7 +28,8 @@ export default function GetStarted() {
   } = useDisclosure();
 
   const { fetch, isLoading } = useApi();
-  const [listWorkSpace, setListWorkSpace] = React.useState<IWorkspace[]>([]);
+  const [isRefresh, setIsRefresh] = useState(false);
+  const [listWorkSpace, setListWorkSpace] = useState<IWorkspace[]>([]);
   const handleFetchListWorkSpace = useCallback(() => {
     fetch({
       fn: workspaceGet(),
@@ -41,7 +42,7 @@ export default function GetStarted() {
 
   useEffect(() => {
     handleFetchListWorkSpace();
-  }, [handleFetchListWorkSpace]);
+  }, [handleFetchListWorkSpace, isRefresh]);
 
   const isHaveWorkspace = listWorkSpace.length > 0;
   const title = isHaveWorkspace ? "Welcome back" : "Create Workspace";
@@ -94,6 +95,7 @@ export default function GetStarted() {
                 }
               />
               <AddWorkSpace
+                setIsRefresh={setIsRefresh}
                 onCloseAdd={onCloseAdd}
                 isOpen={isOpenAdd}
                 onOpenChange={onOpenChangeAdd}
