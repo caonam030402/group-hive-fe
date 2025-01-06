@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
 import { authGenerateOtp } from "@/api/auth";
@@ -12,6 +13,7 @@ import useApi from "./useApi";
 export default function useAuth() {
   const router = useRouter();
   const { fetch, isLoading: isLoadingAuth, setIsLoading } = useApi();
+  const { update } = useSession();
   const handleConfirmOtp = async (body: IRequestConfirmOtp, userId: number) => {
     setIsLoading(true);
     const res = await authCredential({
@@ -28,10 +30,9 @@ export default function useAuth() {
 
     toast.success("Verify OTP successfully !");
 
-    setTimeout(() => {
-      setIsLoading(false);
-      router.push("/");
-    }, 2000);
+    setIsLoading(false);
+    router.push("/");
+    update();
   };
 
   const handleResendOtp = (userId: number) => {

@@ -26,6 +26,7 @@ interface IProps {
   onOpenChange: () => void;
   onCloseAdd: () => void;
   setIsRefresh?: React.Dispatch<React.SetStateAction<boolean>>;
+  isRefresh: boolean;
 }
 
 export type FormType = Pick<
@@ -44,6 +45,7 @@ export default function AddWorkSpace({
   isOpen,
   onOpenChange,
   onCloseAdd,
+  isRefresh,
   setIsRefresh,
 }: IProps) {
   const form = useForm<FormType>({
@@ -66,7 +68,7 @@ export default function AddWorkSpace({
       onSuccess: () => {
         toast.success("Workspace created successfully");
         onCloseAdd();
-        setIsRefresh && setIsRefresh(true);
+        setIsRefresh && setIsRefresh(!isRefresh);
       },
     });
   };

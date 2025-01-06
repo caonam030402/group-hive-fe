@@ -31,6 +31,7 @@ interface IUser {
   firstName?: string;
   lastName?: string;
   photo?: Photo;
+  avatar?: string;
   role?: Role;
   status?: Status;
   createdAt?: string;

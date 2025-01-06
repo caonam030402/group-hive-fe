@@ -20,7 +20,7 @@ export default function User({ info, onlyAvatar, shape = "circle" }: Props) {
     <div className="flex cursor-pointer items-center gap-2" aria-hidden="true">
       <Avatar
         className={cn("size-12 shrink-0", isCircle)}
-        src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
+        src={info.avatar || "https://i.pravatar.cc/150?u=a04258a2462d826712d"}
         size="md"
       />
       {!onlyAvatar && (

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface IUseFetch<T> {
   fn: Promise<T>;
@@ -19,7 +20,7 @@ export default function useApi() {
     // const statusCode = response.status;
     if (!response.ok) {
       // statusCode !== HttpStatusCode.UnprocessableEntity &&
-      //   toast.error(response.payload.message);
+      toast.error(response.payload.errors);
       setIsLoading(false);
       onError?.(response);
     } else {

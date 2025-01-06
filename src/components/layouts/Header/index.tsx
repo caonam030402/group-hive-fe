@@ -68,7 +68,10 @@ export default function Header() {
               ifContent={
                 <UserSetting
                   placement="bottom"
-                  info={{ email: session?.user?.email }}
+                  info={{
+                    email: session?.user?.email,
+                    avatar: session?.user?.avatar,
+                  }}
                   menuOptions={userMenuOptionsHome}
                 />
               }

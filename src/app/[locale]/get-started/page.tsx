@@ -97,6 +97,7 @@ export default function GetStarted() {
               <AddWorkSpace
                 setIsRefresh={setIsRefresh}
                 onCloseAdd={onCloseAdd}
+                isRefresh={isRefresh}
                 isOpen={isOpenAdd}
                 onOpenChange={onOpenChangeAdd}
               />
