@@ -54,7 +54,7 @@ export default function RootLayout(props: {
           locale={props.params.locale}
           messages={messages}
         >
-          <SessionProvider>
+          <SessionProvider refetchOnWindowFocus={false}>
             <Providers>{props.children}</Providers>
           </SessionProvider>
         </NextIntlClientProvider>

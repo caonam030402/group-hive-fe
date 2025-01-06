@@ -20,7 +20,7 @@ export default function useApi() {
     // const statusCode = response.status;
     if (!response.ok) {
       // statusCode !== HttpStatusCode.UnprocessableEntity &&
-      toast.error(response.payload.errors);
+      toast.error(response.payload.errors || response.payload.message);
       setIsLoading(false);
       onError?.(response);
     } else {

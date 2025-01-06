@@ -17,6 +17,7 @@ interface IWorkspace {
   region: String;
   description: String;
   avatar: string;
+  members: unknown[];
   owner: {
     id: String;
   };
