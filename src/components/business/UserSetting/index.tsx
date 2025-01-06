@@ -19,7 +19,7 @@ import AccountHeader from "./AccountHeader";
 
 export interface IProps {
   info?: {
-    name?: string;
+    name?: string | null | undefined;
     email?: string | null | undefined;
     avatar?: string;
   };

@@ -4,9 +4,11 @@ import toast from "react-hot-toast";
 
 import { authGenerateOtp } from "@/api/auth";
 import { authCredential } from "@/configs/auth/action";
+import { ENameLocalS, PATH } from "@/constants";
 import { ETriggerCredentials } from "@/constants/auth";
 import type { IErrorResponse } from "@/types";
 import type { IRequestConfirmOtp } from "@/types/auth";
+import { getLocalStorage } from "@/utils/clientStorage";
 
 import useApi from "./useApi";
 
@@ -29,6 +31,9 @@ export default function useAuth() {
     }
 
     toast.success("Verify OTP successfully !");
+
+    const isHasIdWS = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
+    router.push(isHasIdWS ? PATH.WORKPLACE : PATH.HOME);
 
     setIsLoading(false);
     router.push("/");

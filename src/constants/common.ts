@@ -21,6 +21,10 @@ export enum ENameCookie {
   ACCESS_TOKEN = "_next-auth.htshs",
 }
 
+export enum ENameLocalS {
+  WORKSPACE_ID = "_next-wp.htshs",
+}
+
 export const countriesList = [
   { name: "Afghanistan", value: "AF" },
   { name: "Åland Islands", value: "AX" },

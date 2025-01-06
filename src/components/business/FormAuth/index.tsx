@@ -49,6 +49,7 @@ export default function FormSignUp({
           <Input
             size="md"
             placeholder="name@work.com"
+            errorMessage={errors.email?.message}
             isInvalid={!!errors.email?.message}
             type="email"
             startContent={

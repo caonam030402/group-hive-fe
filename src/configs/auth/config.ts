@@ -7,7 +7,7 @@ import { listCredential } from "@/constants/auth";
 import { ENameCookie } from "@/constants/common";
 import type { IErrorResponse, IHttpResponse } from "@/types";
 import type { IAuthResponse } from "@/types/auth";
-import { setCookies } from "@/utils/clientStorage";
+import { setCookies } from "@/utils";
 
 export default {
   // trustHost: process.env.NODE_ENV === "development",

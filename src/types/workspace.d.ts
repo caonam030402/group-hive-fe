@@ -11,6 +11,7 @@ interface IWorkspaceCreateBody {
 }
 
 interface IWorkspace {
+  id: number;
   name: String;
   industry: String;
   size: String;

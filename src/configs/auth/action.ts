@@ -3,7 +3,7 @@
 import { authLogout } from "@/api/auth";
 import { ENameCookie, PATH } from "@/constants/common";
 import type { IAuthCredentials } from "@/types/auth";
-import { clearCookies } from "@/utils/clientStorage";
+import { clearCookies } from "@/utils/serverStorage";
 
 import { signIn, signOut as _signOut } from "./auth";
 

@@ -1,29 +1,13 @@
-import { cookies } from "next/headers";
-
-export const setCookies = ({
-  name,
+export const setLocalStorage = ({
+  key,
   value,
-  expires,
 }: {
-  name: string;
-  value: string;
-  expires: number;
+  key: string;
+  value: unknown;
 }) => {
-  return cookies().set({
-    name,
-    value,
-    httpOnly: false,
-    path: "/",
-    sameSite: "strict",
-    expires: expires || new Date(),
-    secure: true,
-  });
+  return value && localStorage.setItem(key, JSON.stringify(value));
 };
-
-export const getCookies = ({ key }: { key: string }) => {
-  return cookies().get(key)?.value;
-};
-
-export const clearCookies = ({ key }: { key: string }) => {
-  return cookies().delete(key);
+export const getLocalStorage = ({ key }: { key: string }) => {
+  const value = localStorage.getItem(key);
+  return value && JSON.parse(value);
 };

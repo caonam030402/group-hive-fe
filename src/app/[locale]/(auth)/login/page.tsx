@@ -12,8 +12,9 @@ import FormAuth from "@/components/business/FormAuth";
 import VerifyCodeMail from "@/components/business/VerifyCodeMail";
 import { authCredential } from "@/configs/auth/action";
 import { ETriggerCredentials } from "@/constants/auth";
-import { PATH } from "@/constants/common";
+import { ENameLocalS, PATH } from "@/constants/common";
 import useAuth from "@/hooks/useAuth";
+import { getLocalStorage } from "@/utils/clientStorage";
 import authValidation, {
   type AuthValidation,
 } from "@/validations/authValidation";
@@ -58,6 +59,7 @@ export default function Login() {
       }
 
       Object.keys(error || {}).forEach((key) => {
+        toast.error(error?.[key]);
         form.setError(key as keyof FormType, {
           message: error?.[key],
         });
@@ -65,9 +67,10 @@ export default function Login() {
 
       setIsLoading(false);
     } else {
+      const isHasIdWS = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
       toast.success("Login successfully !");
       setIsLoading(false);
-      router.push("/");
+      router.push(isHasIdWS ? PATH.WORKPLACE : PATH.HOME);
       session.update();
     }
   };

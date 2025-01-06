@@ -5,7 +5,7 @@ import { cn } from "@/libs/utils";
 
 interface Props {
   info: {
-    name?: string;
+    name?: string | null | undefined;
     email?: string | null | undefined;
     avatar: string;
   };
