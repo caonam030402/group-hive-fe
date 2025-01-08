@@ -50,3 +50,11 @@ export const authRefreshToken = (refreshToken: string) => {
 export const authLogout = () => {
   return http.post<IAuthResponse>("auth/logout", { body: {} });
 };
+
+export const authLoginGoogle = (idToken?: string) => {
+  return http.post<IAuthResponse>("auth/google/login", {
+    body: {
+      idToken,
+    },
+  });
+};

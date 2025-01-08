@@ -2,12 +2,22 @@ import type { JWT, NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
-import { authRefreshToken } from "@/api/auth";
+import { authLoginGoogle } from "@/api/auth";
 import { listCredential } from "@/constants/auth";
 import { ENameCookie } from "@/constants/common";
 import type { IErrorResponse, IHttpResponse } from "@/types";
 import type { IAuthResponse } from "@/types/auth";
 import { setCookies } from "@/utils";
+
+const mapUserToToken = ({ data, token }: { data: User; token: JWT }) => ({
+  ...token,
+  user: {
+    ...data,
+    token: data.token,
+    refreshToken: data.refreshToken,
+    tokenExpires: data.tokenExpires,
+  },
+});
 
 export default {
   // trustHost: process.env.NODE_ENV === "development",
@@ -53,7 +63,6 @@ export default {
     },
     session: async ({ token, session }) => {
       const tokenCustom = token as unknown as JWT;
-
       return {
         ...session,
         user: tokenCustom.user,
@@ -66,45 +75,22 @@ export default {
       return true;
     },
 
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, account }) => {
+      const providerType = account?.provider;
+
       const tokenCustom = token as unknown as JWT;
+
+      if (providerType === "google") {
+        const res = await authLoginGoogle(account?.id_token);
+        const userRes = res.payload?.user as User;
+        return mapUserToToken({ data: userRes, token: tokenCustom });
+      }
+
       if (user) {
-        return {
-          ...token,
-          exp: user.tokenExpires,
-          user: {
-            ...user,
-            token: user.token,
-            refreshToken: user.refreshToken,
-            tokenExpires: user.tokenExpires,
-          },
-        };
+        return mapUserToToken({ data: user, token: tokenCustom });
       }
 
-      if (token.exp !== undefined && token.exp > Date.now() / 1000) {
-        return token;
-      }
-
-      const { payload } = await authRefreshToken(tokenCustom.user.refreshToken);
-
-      setCookies({
-        value: payload!.token || "",
-        name: ENameCookie.ACCESS_TOKEN,
-        expires: 30 * 24 * 60 * 60,
-      });
-
-      const newToken = {
-        ...token,
-        exp: payload!.tokenExpires || 0,
-        user: {
-          ...tokenCustom.user.user,
-          token: payload!.token,
-          refreshToken: payload!.refreshToken,
-          tokenExpires: payload!.tokenExpires,
-        },
-      };
-
-      return newToken;
+      return token;
     },
   },
 } satisfies NextAuthConfig;
