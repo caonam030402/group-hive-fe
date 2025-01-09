@@ -48,7 +48,6 @@ export default function Login() {
     });
 
     const error = JSON.parse(res?.error || "{}");
-
     if (res?.error) {
       if (error.isVerified) {
         setIsLoading(false);
@@ -70,8 +69,8 @@ export default function Login() {
       const isHasIdWS = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
       toast.success("Login successfully !");
       setIsLoading(false);
-      router.push(isHasIdWS ? PATH.WORKPLACE : PATH.HOME);
       session.update();
+      router.push(isHasIdWS ? PATH.WORKPLACE : PATH.HOME);
     }
   };
 

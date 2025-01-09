@@ -1,7 +1,4 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
-
-import { HttpStatusCode } from "@/constants";
 
 interface IUseFetch<T> {
   fn: Promise<T>;
@@ -19,14 +16,8 @@ export default function useApi() {
   async function fetch<T>({ fn, onError, onSuccess }: IUseFetch<T>) {
     setIsLoading(true);
     const response: any = await fn;
-    const statusCode = response.status;
-
-    if (statusCode === HttpStatusCode.Unauthorized) {
-      toast.error(response.payload.errors || response.payload.message);
-    }
 
     if (!response.ok) {
-      // statusCode !== HttpStatusCode.UnprocessableEntity &&
       setIsLoading(false);
       onError?.(response);
     } else {
