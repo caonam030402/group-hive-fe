@@ -1,8 +1,9 @@
-import Cookies from "js-cookie";
+import { getSession } from "next-auth/react";
 
-import { ENameCookie } from "@/constants/common";
 import { Env } from "@/libs/env";
 import type { IRequestInit } from "@/types";
+
+const isClient = typeof window !== "undefined";
 
 const request = async <Response>(
   method: "GET" | "POST" | "PUT" | "DELETE",
@@ -10,13 +11,12 @@ const request = async <Response>(
   options: IRequestInit,
 ) => {
   const baseUrl = Env.NEXT_PUBLIC_API_URL;
+  const session = isClient ? await getSession() : null;
   const body = options?.body ? JSON.stringify(options.body) : undefined;
-
-  const clientToken = Cookies.get(ENameCookie.ACCESS_TOKEN);
 
   const baseHeader = {
     "Content-Type": "application/json",
-    Authorization: clientToken !== "" ? `Bearer ${clientToken}` : "",
+    Authorization: `Bearer ${session?.user?.token}`,
   };
 
   const response = await fetch(baseUrl + url, {

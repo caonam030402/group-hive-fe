@@ -2,7 +2,7 @@ import type { JWT, NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
-import { authLoginGoogle } from "@/api/auth";
+import { authLoginGoogle, authRefreshToken } from "@/api/auth";
 import { listCredential } from "@/constants/auth";
 import { ENameCookie } from "@/constants/common";
 import type { IErrorResponse, IHttpResponse } from "@/types";
@@ -18,6 +18,22 @@ const mapUserToToken = ({ data, token }: { data: User; token: JWT }) => ({
     tokenExpires: data.tokenExpires,
   },
 });
+
+const refetchToken = async (token: JWT) => {
+  const { payload, ok } = await authRefreshToken(token.user.refreshToken);
+  if (ok) {
+    return mapUserToToken({
+      data: {
+        ...token.user,
+        token: payload?.token,
+        refreshToken: payload?.refreshToken,
+        tokenExpires: payload?.tokenExpires,
+      },
+      token,
+    });
+  }
+  return null;
+};
 
 export default {
   // trustHost: process.env.NODE_ENV === "development",
@@ -90,7 +106,12 @@ export default {
         return mapUserToToken({ data: user, token: tokenCustom });
       }
 
-      return token;
+      if (Date.now() < tokenCustom.user.tokenExpires) {
+        return token;
+      }
+
+      const refreshedToken = await refetchToken(tokenCustom);
+      return refreshedToken ?? null;
     },
   },
 } satisfies NextAuthConfig;
