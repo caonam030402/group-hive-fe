@@ -36,7 +36,7 @@ export default function ListWorkSpace({ listWorkSpace, onAddOpen }: IProps) {
               <div>
                 <div>{item.name}</div>
                 <div className="text-xs text-gray-500">
-                  {item.members.length + 1} members
+                  {item.members.length} members
                 </div>
               </div>
             </div>

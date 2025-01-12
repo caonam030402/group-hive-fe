@@ -42,9 +42,11 @@ const request = async <Response>(
         payload = null;
       }
     }
-    const statusError = ![HttpStatusCode.Ok, HttpStatusCode.NoContent].includes(
-      response.status,
-    );
+    const statusError = ![
+      HttpStatusCode.Ok,
+      HttpStatusCode.NoContent,
+      HttpStatusCode.Created,
+    ].includes(response.status);
     if (isClient && statusError) {
       const payloadErr = payload as IErrorResponse;
       toast.error(payloadErr.errors || payloadErr.message);
