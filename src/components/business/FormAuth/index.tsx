@@ -8,16 +8,16 @@ import React, { useState } from "react";
 import { type UseFormReturn } from "react-hook-form";
 
 import AuthWithProvider from "@/components/business/AuthWithProvider";
-
-import type { FormType } from "../../../app/[locale]/(auth)/register/page";
+import type { IFormTypeAuth } from "@/types/form";
 
 interface IProps {
   handleSubmitMail: (data: any) => void;
   isLoading: boolean;
-  form: UseFormReturn<FormType, any, undefined>;
+  form: UseFormReturn<IFormTypeAuth, any, undefined>;
   title?: string;
   labelAction?: string;
   description?: React.ReactNode;
+  isLogin?: boolean;
 }
 
 export default function FormSignUp({
@@ -27,15 +27,22 @@ export default function FormSignUp({
   title = "Create account",
   labelAction = "Sign in",
   description,
+  isLogin,
 }: IProps) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisiblePassWord, setIsVisiblePassWord] = useState(false);
+  const [isVisibleConfirmPassWord, setIsVisibleConfirmPassWord] =
+    useState(false);
   const {
     formState: { errors },
     register,
     handleSubmit,
   } = form;
 
-  const toggleVisibility = () => setIsVisible(!isVisible);
+  const toggleVisibilityPassword = () =>
+    setIsVisiblePassWord(!isVisiblePassWord);
+
+  const toggleVisibilityConfirmPassword = () =>
+    setIsVisibleConfirmPassWord(!isVisibleConfirmPassWord);
 
   const onSubmit = handleSubmit((data) => {
     handleSubmitMail(data);
@@ -57,10 +64,31 @@ export default function FormSignUp({
             }
             {...form.register("email")}
           />
+          {!isLogin && (
+            <div className="flex gap-3">
+              <Input
+                size="md"
+                placeholder="first name"
+                errorMessage={errors.firstName?.message}
+                isInvalid={!!errors.firstName?.message}
+                startContent={
+                  <IoMailOutline className="pointer-events-none shrink-0 text-xl text-default-400" />
+                }
+                {...form.register("firstName")}
+              />
+              <Input
+                size="md"
+                placeholder="last name"
+                errorMessage={errors.lastName?.message}
+                isInvalid={!!errors.lastName?.message}
+                {...form.register("lastName")}
+              />
+            </div>
+          )}
           <Input
             size="md"
             errorMessage={errors.password?.message}
-            placeholder="******************"
+            placeholder="password"
             isInvalid={!!errors.password?.message}
             startContent={
               <FiLock className="pointer-events-none shrink-0 text-xl text-default-400" />
@@ -69,19 +97,46 @@ export default function FormSignUp({
               <button
                 className="focus:outline-none"
                 type="button"
-                onClick={toggleVisibility}
+                onClick={toggleVisibilityPassword}
                 aria-label="toggle password visibility"
               >
-                {isVisible ? (
+                {isVisiblePassWord ? (
                   <FiEyeOff className="pointer-events-none text-xl text-default-400" />
                 ) : (
                   <FiEye className="pointer-events-none text-xl text-default-400" />
                 )}
               </button>
             }
-            type={isVisible ? "text" : "password"}
+            type={isVisiblePassWord ? "text" : "password"}
             {...register("password")}
           />
+          {!isLogin && (
+            <Input
+              size="md"
+              errorMessage={errors.confirmPassword?.message}
+              placeholder="confirm password"
+              isInvalid={!!errors.confirmPassword?.message}
+              startContent={
+                <FiLock className="pointer-events-none shrink-0 text-xl text-default-400" />
+              }
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibilityConfirmPassword}
+                  aria-label="toggle password visibility"
+                >
+                  {isVisibleConfirmPassWord ? (
+                    <FiEyeOff className="pointer-events-none text-xl text-default-400" />
+                  ) : (
+                    <FiEye className="pointer-events-none text-xl text-default-400" />
+                  )}
+                </button>
+              }
+              type={isVisibleConfirmPassWord ? "text" : "password"}
+              {...register("confirmPassword")}
+            />
+          )}
           <Button
             isLoading={isLoading}
             type="submit"

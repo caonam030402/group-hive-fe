@@ -14,15 +14,13 @@ import { authCredential } from "@/configs/auth/action";
 import { ETriggerCredentials } from "@/constants/auth";
 import { ENameLocalS, PATH } from "@/constants/common";
 import useAuth from "@/hooks/useAuth";
+import type { IFormTypeAuth, IFormTypeLogin } from "@/types/form";
 import { getLocalStorage } from "@/utils/clientStorage";
-import authValidation, {
-  type AuthValidation,
-} from "@/validations/authValidation";
+import authValidation from "@/validations/authValidation";
 
 import { STEP_FORM_AUTH } from "../register/constant";
 import IntroSection from "./components/IntroSection";
 
-export type FormType = Pick<AuthValidation, "email" | "password">;
 const rules = authValidation.pick({ email: true, password: true });
 
 export default function Login() {
@@ -34,14 +32,14 @@ export default function Login() {
   const [step, setStep] = useState(STEP_FORM_AUTH.FORM_AUTH);
   const { handleConfirmOtp, handleResendOtp, isLoadingAuth } = useAuth();
 
-  const form = useForm<FormType>({
+  const form = useForm<IFormTypeAuth>({
     resolver: zodResolver(rules),
   });
 
-  const handleLogin = async (body: FormType) => {
+  const handleLogin = async (body: IFormTypeLogin) => {
     setIsLoading(true);
 
-    const res = await authCredential<FormType>({
+    const res = await authCredential<IFormTypeLogin>({
       trigger: ETriggerCredentials.LOGIN,
       email: body.email,
       password: body.password,
@@ -59,7 +57,7 @@ export default function Login() {
 
       Object.keys(error || {}).forEach((key) => {
         toast.error(error?.[key]);
-        form.setError(key as keyof FormType, {
+        form.setError(key as keyof IFormTypeLogin, {
           message: error?.[key],
         });
       });
@@ -80,6 +78,7 @@ export default function Login() {
         return (
           <FormAuth
             form={form}
+            isLogin
             isLoading={isLoading}
             handleSubmitMail={handleLogin}
             title="Login to your account"

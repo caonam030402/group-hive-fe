@@ -12,16 +12,25 @@ import { PATH } from "@/constants/common";
 import useApi from "@/hooks/useApi";
 import useAuth from "@/hooks/useAuth";
 import type { IAuthErrorResponse } from "@/types/auth";
-import authValidation, {
-  type AuthValidation,
-} from "@/validations/authValidation";
+import type { IFormTypeAuth, IFormTypeRegister } from "@/types/form";
+import authValidation from "@/validations/authValidation";
 
 import FormAuth from "../../../../components/business/FormAuth";
 import IntroSection from "./components/IntroSection";
 import { STEP_FORM_AUTH } from "./constant";
 
-export type FormType = Pick<AuthValidation, "email" | "password">;
-const rules = authValidation.pick({ email: true, password: true });
+const rules = authValidation
+  .pick({
+    email: true,
+    password: true,
+    firstName: true,
+    lastName: true,
+    confirmPassword: true,
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords does not match",
+  });
 
 export default function SignIn() {
   const [step, setStep] = useState(STEP_FORM_AUTH.FORM_AUTH);
@@ -30,11 +39,11 @@ export default function SignIn() {
   const { fetch, isLoading } = useApi();
   const { handleConfirmOtp, handleResendOtp, isLoadingAuth } = useAuth();
 
-  const form = useForm<FormType>({
+  const form = useForm<IFormTypeAuth>({
     resolver: zodResolver(rules),
   });
 
-  const handleSubmitMail = (body: FormType) => {
+  const handleSubmitMail = (body: IFormTypeRegister) => {
     fetch({
       fn: authRegisterWithEmail(body),
       onError: (error) => {
@@ -45,7 +54,7 @@ export default function SignIn() {
         // Set message error from server
         if (errors) {
           Object.keys(errors || {}).forEach((key) => {
-            form.setError(key as keyof FormType, {
+            form.setError(key as keyof IFormTypeRegister, {
               message: errors?.[key],
             });
           });

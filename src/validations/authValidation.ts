@@ -18,6 +18,21 @@ const authValidation = z.object({
     .regex(passwordValidation, {
       message: messageValidation({ field: "password" }).passwordRule,
     }),
+  firstName: z
+    .string({ message: messageValidation({ field: "firstName" }).isRequired })
+    .min(1, { message: messageValidation({ min: 3 }).minCharacters })
+    .max(10, {
+      message: messageValidation({ max: 10 }).maxCharacters,
+    }),
+  lastName: z
+    .string({ message: messageValidation({ field: "lastName" }).isRequired })
+    .min(1, { message: messageValidation({ min: 3 }).minCharacters })
+    .max(10, {
+      message: messageValidation({ max: 10 }).maxCharacters,
+    }),
+  confirmPassword: z.string({
+    message: messageValidation({ field: "confirmPassword" }).isRequired,
+  }),
 });
 
 export default authValidation;
