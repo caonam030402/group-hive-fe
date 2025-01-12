@@ -27,3 +27,23 @@ interface IPaginationResponse<T> {
   data: T[];
   pagination: IPagination;
 }
+
+interface IQueryGetApi {
+  pagination?: IPagination;
+  filterRelational?: {
+    field: string;
+    value: string;
+  };
+  filterBy?: {
+    field: string;
+    value: string;
+  };
+  order?: {
+    field: string;
+    value: string;
+  };
+  search?: {
+    field: string;
+    value: string;
+  };
+}
