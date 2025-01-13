@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import {
   Controller,
   type FieldValues,
+  type RegisterOptions,
   type UseFormReturn,
 } from "react-hook-form";
 
@@ -18,6 +19,10 @@ interface IProps {
   isScrollList?: boolean;
   maxHeight?: number;
   form: UseFormReturn<FieldValues, any, undefined>;
+  rules?: Omit<
+    RegisterOptions<FieldValues>,
+    "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"
+  >;
 }
 
 export default function InputAddMore({
@@ -27,6 +32,12 @@ export default function InputAddMore({
   isScrollList = false,
   maxHeight = 300,
   form,
+  rules = {
+    required: {
+      value: true,
+      message: `${name} is required`,
+    },
+  },
 }: IProps) {
   const [list, setList] = useState<{ id: number; name: string }[]>(() => {
     return Array.from({ length: initLength }, (_, index) => ({
@@ -37,7 +48,8 @@ export default function InputAddMore({
 
   const [deletedItems, setDeletedItems] = useState<Set<number>>(new Set());
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: number, nameDelete?: string) => {
+    form.unregister(nameDelete);
     setDeletedItems((prevDeleted) => {
       const newDeleted = new Set(prevDeleted);
       newDeleted.add(id);
@@ -68,12 +80,7 @@ export default function InputAddMore({
           <Controller
             control={form.control}
             key={item.id}
-            rules={{
-              required: {
-                value: true,
-                message: `${name} is required`,
-              },
-            }}
+            rules={rules}
             render={({ field: { onChange } }) => (
               <Input
                 key={item.id}
@@ -87,7 +94,7 @@ export default function InputAddMore({
                 endContent={
                   visibleList.length > 1 && (
                     <Button
-                      onPress={() => handleDelete(item.id)}
+                      onPress={() => handleDelete(item.id, item.name)}
                       variant="light"
                       isIconOnly
                       size="sm"

@@ -2,6 +2,7 @@ import React from "react";
 import type { FieldValues, UseFormReturn } from "react-hook-form";
 
 import InputAddMore from "@/components/common/InputAddMore";
+import { emailRules } from "@/validations";
 
 export interface IProps {
   form: UseFormReturn<FieldValues, any, undefined>;
@@ -17,6 +18,7 @@ export default function ViaEmail({ form }: IProps) {
       <InputAddMore
         isScrollList
         form={form}
+        rules={emailRules}
         name="email"
         max={20}
         initLength={2}
