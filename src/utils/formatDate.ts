@@ -11,9 +11,7 @@ dayjs.extend(timezone);
 
 export const formatDateText = (date: string | dayjs.Dayjs) => {
   const timezoneStr = dayjs.tz.guess();
-  console.log(timezoneStr);
   const now = dayjs().tz(timezoneStr);
-  console.log(now.format("MM/DD/YYYY HH:mm:ss"));
   const inputDate = dayjs(date).utc().tz(timezoneStr);
 
   if (

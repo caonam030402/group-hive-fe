@@ -1,3 +1,5 @@
+import type { IUserChat } from "@/types/chat";
+
 import { AppConfig } from "../configs/main/appConfig";
 
 export const formatEmailHide = (email: string) => {
@@ -26,4 +28,14 @@ export const getI18nPath = (url: string, locale: string) => {
   }
 
   return `/${locale}${url}`;
+};
+
+export const getUserFriend = ({
+  userChats,
+  currentUser,
+}: {
+  userChats: IUserChat[];
+  currentUser?: number;
+}) => {
+  return userChats.filter((chat) => chat.user.id !== currentUser)[0];
 };

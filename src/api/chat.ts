@@ -9,3 +9,9 @@ export const chatGet = (query: IQueryGetApi) => {
 
   return http.get<IPaginationResponse<IChat>>(url);
 };
+
+export const chatGetDetail = (id: IChat["id"]) => {
+  const url = `chat/${id}`;
+
+  return http.get<IChat>(url);
+};

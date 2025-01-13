@@ -8,6 +8,10 @@ interface IMessage {
   sentAt: string;
 }
 
+interface IUserChat {
+  user: IUser;
+}
+
 interface IChat {
   id: string;
   name: string;
@@ -16,7 +20,5 @@ interface IChat {
   lastMessage: IMessage;
   createdAt: string;
   updatedAt: string;
-  userChats: {
-    user: IUser;
-  }[];
+  userChats: IUserChat[];
 }

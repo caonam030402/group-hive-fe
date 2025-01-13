@@ -5,9 +5,11 @@ import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import React from "react";
 
+import { PATH } from "@/constants";
 import { cn } from "@/libs/utils";
 import type { IChat } from "@/types/chat";
 import { formatDateText } from "@/utils/formatDate";
+import { getUserFriend } from "@/utils/helpers";
 
 interface Props {
   item: IChat;
@@ -21,7 +23,7 @@ export default function ChatItem({ item }: Props) {
   const { data } = useSession();
 
   const handleClick = () => {
-    router.push(`/workplace/messenger/${id}`);
+    router.push(`${PATH.MESSENGER}/${id}`);
   };
 
   const userMessage = lastMessage.user;
@@ -29,11 +31,9 @@ export default function ChatItem({ item }: Props) {
   const authorSend =
     (userMessage.firstName ?? "") + (userMessage.lastName ?? "");
 
-  const currentUser = data?.user?.id;
+  const currentUser = Number(data?.user?.id);
 
-  const userFriend = userChats.filter((chat) => {
-    return chat.user.id !== currentUser;
-  })[0];
+  const userFriend = getUserFriend({ currentUser, userChats });
 
   const avatarRender = userFriend?.user.avatar || avatar;
   const nameRender =

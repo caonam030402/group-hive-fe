@@ -46,7 +46,6 @@ export default function RootLayout(props: {
 
   // Using internationalization in Client Components
   const messages = useMessages();
-
   return (
     <html className={inter.className} lang={props.params.locale}>
       <body>
