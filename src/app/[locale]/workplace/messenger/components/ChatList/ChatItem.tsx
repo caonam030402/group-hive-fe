@@ -2,6 +2,7 @@
 
 import { Avatar } from "@nextui-org/avatar";
 import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 import { cn } from "@/libs/utils";
@@ -16,10 +17,27 @@ export default function ChatItem({ item }: Props) {
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const isActive = item.id.toString() === params.id?.[0];
+  const { lastMessage, id, name, avatar, userChats } = item;
+  const { data } = useSession();
 
   const handleClick = () => {
-    router.push(`/workplace/messenger/${item.id}`);
+    router.push(`/workplace/messenger/${id}`);
   };
+
+  const userMessage = lastMessage.user;
+
+  const authorSend =
+    (userMessage.firstName ?? "") + (userMessage.lastName ?? "");
+
+  const currentUser = data?.user?.id;
+
+  const userFriend = userChats.filter((chat) => {
+    return chat.user.id !== currentUser;
+  })[0];
+
+  const avatarRender = userFriend?.user.avatar || avatar;
+  const nameRender =
+    `${userFriend?.user.firstName}${userFriend?.user.lastName}` || name;
   return (
     <button
       type="button"
@@ -29,16 +47,16 @@ export default function ChatItem({ item }: Props) {
       })}
     >
       <div className="relative ">
-        <Avatar className="shrink-0" src={item?.avatar} />
+        <Avatar className="shrink-0" src={avatarRender} />
         <div className="absolute bottom-[6%] right-0 size-[9px] rounded-full border border-white bg-green-500" />
       </div>
       <div className="w-full space-y-1 text-xs">
         <div className="flex justify-between">
-          <p className="text-[14px] font-medium">{item.name}</p>
-          <p className="text-zinc-500"> {formatDateText(item.updatedAt)}</p>
+          <p className="text-[14px] font-medium">{nameRender}</p>
+          <p className="text-zinc-500">{formatDateText(lastMessage.sentAt)}</p>
         </div>
         <p className="line-clamp-1 text-start text-[11px] text-zinc-500">
-          {item.lastMessage?.content}
+          {authorSend}: {lastMessage?.content}
         </p>
       </div>
     </button>

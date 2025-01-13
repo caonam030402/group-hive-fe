@@ -5,6 +5,7 @@ interface IMessage {
   type: EMessageType;
   content: string;
   user: IUser;
+  sentAt: string;
 }
 
 interface IChat {
@@ -15,5 +16,7 @@ interface IChat {
   lastMessage: IMessage;
   createdAt: string;
   updatedAt: string;
-  userChats: IUser[];
+  userChats: {
+    user: IUser;
+  }[];
 }
