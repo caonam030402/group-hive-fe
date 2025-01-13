@@ -17,6 +17,8 @@ import React from "react";
 
 import { cn } from "@/libs/utils";
 
+import ModalAddOrganizationMember from "../AddMemberModal";
+
 const listQuickCreate = [
   {
     id: "1",
@@ -57,6 +59,7 @@ interface Props {
 export default function QuickCreate({ className }: Props) {
   return (
     <Dropdown placement="left-start">
+      <ModalAddOrganizationMember />
       <DropdownTrigger>
         <Button
           size="sm"

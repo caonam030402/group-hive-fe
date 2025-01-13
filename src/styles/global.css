@@ -94,6 +94,34 @@
   overflow-y: auto;
 }
 
+.scroll {
+  overflow: auto;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-color: #d1d5db; 
+}
+
+.scroll.dark::-webkit-scrollbar-thumb {
+  background-color: #6b7280;
+}
+
+.scroll::-webkit-scrollbar-track {
+  border-radius: 9999px;
+  background-color: #f3f4f6;
+}
+
+.scroll.dark::-webkit-scrollbar-track {
+  background-color: #374151; 
+}
+
+
+
 .scroll:active::-webkit-scrollbar-thumb,
 .scroll:focus::-webkit-scrollbar-thumb,
 .scroll:hover::-webkit-scrollbar-thumb {
@@ -106,6 +134,10 @@
 
 .scroll::-webkit-scrollbar-thumb  {
   visibility: hidden;
+}
+
+.scroll-visible::-webkit-scrollbar-thumb  {
+  visibility: visible;
 }
 
 .tiptap p.is-editor-empty:first-child::before {
