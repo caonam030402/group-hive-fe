@@ -9,7 +9,7 @@ import { PATH } from "@/constants";
 import { cn } from "@/libs/utils";
 import type { IChat } from "@/types/chat";
 import { formatDateText } from "@/utils/formatDate";
-import { getUserFriend } from "@/utils/helpers";
+import { getUserFriend, renderFullName } from "@/utils/helpers";
 
 interface Props {
   item: IChat;
@@ -28,8 +28,10 @@ export default function ChatItem({ item }: Props) {
 
   const userMessage = lastMessage.user;
 
-  const authorSend =
-    (userMessage.firstName ?? "") + (userMessage.lastName ?? "");
+  const authorSend = renderFullName(
+    userMessage.firstName,
+    userMessage.lastName,
+  );
 
   const currentUser = Number(data?.user?.id);
 
@@ -37,7 +39,8 @@ export default function ChatItem({ item }: Props) {
 
   const avatarRender = userFriend?.user.avatar || avatar;
   const nameRender =
-    `${userFriend?.user.firstName}${userFriend?.user.lastName}` || name;
+    renderFullName(userFriend?.user.firstName, userFriend?.user.lastName) ||
+    name;
   return (
     <button
       type="button"

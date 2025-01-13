@@ -1,5 +1,5 @@
 import type { IPaginationResponse, IQueryGetApi } from "@/types";
-import type { IChat } from "@/types/chat";
+import type { IChat, IMessage } from "@/types/chat";
 import { buildQueryParamsGet } from "@/utils/buildQueryParams";
 import http from "@/utils/http";
 
@@ -14,4 +14,10 @@ export const chatGetDetail = (id: IChat["id"]) => {
   const url = `chat/${id}`;
 
   return http.get<IChat>(url);
+};
+
+export const messageGet = (query: IQueryGetApi) => {
+  const queryString = buildQueryParamsGet(query);
+  const url = `message?${queryString}`;
+  return http.get<IPaginationResponse<IMessage>>(url);
 };

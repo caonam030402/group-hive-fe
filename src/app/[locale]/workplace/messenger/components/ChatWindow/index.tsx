@@ -1,29 +1,37 @@
 import React, { useEffect } from "react";
 
-import { chatGetDetail } from "@/api";
+import { chatGetDetail, messageGet } from "@/api";
 import Card from "@/components/common/Card";
 import useApi from "@/hooks/useApi";
-import type { IChat } from "@/types/chat";
+import type { IChat, IMessage } from "@/types/chat";
 
+import Body from "./Body";
 import Footer from "./Footer";
 import Header from "./Header";
 
 export default function ChatWindow({ params }: { params: { id: string } }) {
   const [chatDetail, setChatDetail] = React.useState<IChat | null>();
+  const [listMessage, setListMessage] = React.useState<IMessage[] | null>();
   const { fetch } = useApi();
-  console.log(params);
-  console.log(chatDetail);
-  const handleFetch = React.useCallback(() => {
+
+  useEffect(() => {
     fetch({
       fn: chatGetDetail(params.id),
       onSuccess: (data) => {
         setChatDetail(data.payload);
       },
     });
-  }, [params.id]);
-
-  useEffect(() => {
-    handleFetch();
+    fetch({
+      fn: messageGet({
+        filterRelational: {
+          field: "chat",
+          value: params.id,
+        },
+      }),
+      onSuccess: (data) => {
+        setListMessage(data.payload?.data);
+      },
+    });
   }, [params.id]);
   return (
     <Card
@@ -33,9 +41,9 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
         header: "p-0",
         footer: "overflow-visible",
       }}
-      header={<Header />}
+      header={<Header chatDetail={chatDetail} />}
     >
-      {params.id}
+      <Body listMessage={listMessage} />
     </Card>
   );
 }

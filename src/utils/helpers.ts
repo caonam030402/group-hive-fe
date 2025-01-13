@@ -34,8 +34,12 @@ export const getUserFriend = ({
   userChats,
   currentUser,
 }: {
-  userChats: IUserChat[];
+  userChats?: IUserChat[];
   currentUser?: number;
 }) => {
-  return userChats.filter((chat) => chat.user.id !== currentUser)[0];
+  return userChats?.filter((chat) => chat.user.id !== currentUser)[0];
+};
+
+export const renderFullName = (firstName?: string, lastName?: string) => {
+  return `${firstName ?? ""} ${lastName ?? ""}`;
 };
