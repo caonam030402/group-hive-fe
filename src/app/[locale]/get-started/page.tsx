@@ -7,11 +7,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import { workspaceGet } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
 import Header from "@/components/layouts/Header";
+import ModalAddWorkSpace from "@/components/modals/ModalAddWorkSpace";
+import ModalJoinWorkSpace from "@/components/modals/ModalJoinWorkSpace";
 import { bgBluePink } from "@/constants/bgImage";
 import useApi from "@/hooks/useApi";
 
-import AddWorkSpace from "./AddWorkSpace";
-import JoinWorkSpace from "./JoinWorkSpace";
 import ListWorkSpace from "./ListWorkSpace";
 
 export default function GetStarted() {
@@ -94,14 +94,14 @@ export default function GetStarted() {
                   </div>
                 }
               />
-              <AddWorkSpace
+              <ModalAddWorkSpace
                 setIsRefresh={setIsRefresh}
                 onCloseAdd={onCloseAdd}
                 isRefresh={isRefresh}
                 isOpen={isOpenAdd}
                 onOpenChange={onOpenChangeAdd}
               />
-              <JoinWorkSpace
+              <ModalJoinWorkSpace
                 isOpen={isOpenJoin}
                 onOpenChange={onOpenChangeJoin}
               />

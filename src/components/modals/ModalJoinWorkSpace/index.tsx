@@ -15,7 +15,7 @@ interface IProps {
   onOpenChange: () => void;
 }
 
-export default function JoinWorkSpace({ isOpen, onOpenChange }: IProps) {
+export default function ModalJoinWorkSpace({ isOpen, onOpenChange }: IProps) {
   return (
     <Modal size="xl" isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>

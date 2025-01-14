@@ -17,7 +17,7 @@ import React from "react";
 
 import { cn } from "@/libs/utils";
 
-import ModalAddOrganizationMember from "../AddMemberModal";
+import ModalAddOrganizationMember from "../../modals/ModalAddOrganizationMember";
 
 const listQuickCreate = [
   {

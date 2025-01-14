@@ -41,7 +41,7 @@ const rules = workSpaceValidation.pick({
   terms: true,
 });
 
-export default function AddWorkSpace({
+export default function ModalAddWorkSpace({
   isOpen,
   onOpenChange,
   onCloseAdd,

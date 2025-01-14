@@ -40,7 +40,7 @@ export default function ModalAddOrganizationMember() {
   };
 
   return (
-    <Modal isOpen>
+    <Modal isOpen size="xl">
       <ModalContent>
         {(onClose) => (
           <>
@@ -67,15 +67,19 @@ export default function ModalAddOrganizationMember() {
               />
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
-                Cancel
-              </Button>
-              <Button
-                color="primary"
-                onClick={formEmail.handleSubmit(onSubmit)}
-              >
-                Send
-              </Button>
+              {+activeKey === EKeyTab.EMAIL && (
+                <>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Cancel
+                  </Button>
+                  <Button
+                    color="primary"
+                    onClick={formEmail.handleSubmit(onSubmit)}
+                  >
+                    Send
+                  </Button>
+                </>
+              )}
             </ModalFooter>
           </>
         )}
