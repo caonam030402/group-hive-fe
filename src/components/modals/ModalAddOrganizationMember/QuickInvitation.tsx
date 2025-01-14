@@ -1,10 +1,14 @@
 import { Button } from "@nextui-org/button";
+import { useDisclosure } from "@nextui-org/modal";
 import React from "react";
 import toast from "react-hot-toast";
 
 import Divider from "@/components/common/Divider";
 
+import ModalQrCode from "../ModalInviteQrCode";
+
 export default function QuickInvitation() {
+  const { isOpen, onOpenChange, onOpen } = useDisclosure();
   const textInviteLink =
     "You've been invited to join 213213. You can join the organization via the 8-digit Invite Code WRKVPRPZ. How to use Invite Code? https://www.larksuite.com/hc/articles/360040931394 You can also join the organization via this link https://zsgakdoj63d3.sg.larksuite.com/invite/465BIcaaK8lg1?join=1&team_name=213213";
   const listOptionInvite = [
@@ -52,7 +56,7 @@ export default function QuickInvitation() {
       description:
         "hare the Invite QR Code with members. They can scan the QR code to join the organization.",
       action: (
-        <Button color="primary" size="sm">
+        <Button onPress={onOpen} color="primary" size="sm">
           View
         </Button>
       ),
@@ -85,6 +89,7 @@ export default function QuickInvitation() {
           </div>
         ))}
       </div>
+      <ModalQrCode isOpen={isOpen} onOpenChange={onOpenChange} />
     </div>
   );
 }
