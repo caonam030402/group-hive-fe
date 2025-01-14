@@ -10,3 +10,11 @@ export const workspaceCreate = (body: IWorkspaceCreateBody) => {
 export const workspaceGet = () => {
   return http.get<IPaginationResponse<IWorkspace>>("workspaces");
 };
+
+export const workspaceSendMailInvite = (listEmail: IUser["email"][]) => {
+  return http.post<null>("workspaces/invite-send-mail", {
+    body: {
+      emails: listEmail,
+    },
+  });
+};

@@ -23,6 +23,7 @@ interface IProps {
     RegisterOptions<FieldValues>,
     "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"
   >;
+  isCheckDuplicate?: boolean;
 }
 
 export default function InputAddMore({
@@ -32,6 +33,7 @@ export default function InputAddMore({
   isScrollList = false,
   maxHeight = 300,
   form,
+  isCheckDuplicate = false,
   rules = {
     required: {
       value: true,
@@ -68,6 +70,25 @@ export default function InputAddMore({
 
   const conditionLimit = visibleList.length >= max;
 
+  const handleCheckDuplicateName = (
+    valueEvent: string,
+    item: {
+      name: string;
+    },
+  ) => {
+    const formValues = Object.values(form.getValues());
+
+    const occurrences = formValues.filter((val) => val === valueEvent).length;
+
+    if (occurrences > 1 && valueEvent !== "") {
+      form.setError(item.name, {
+        message: `${valueEvent} is duplicate`,
+      });
+    } else {
+      form.clearErrors(item.name);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-3">
       <div
@@ -80,10 +101,17 @@ export default function InputAddMore({
           <Controller
             control={form.control}
             key={item.id}
-            rules={rules}
-            render={({ field: { onChange } }) => (
+            rules={{
+              ...rules,
+              onChange: (event) => {
+                isCheckDuplicate &&
+                  handleCheckDuplicateName(event.target.value, item);
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
               <Input
                 key={item.id}
+                value={value || ""}
                 errorMessage={form.formState.errors[
                   item.name
                 ]?.message?.toString()}

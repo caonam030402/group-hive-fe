@@ -9,8 +9,11 @@ import {
 import { Tab, Tabs } from "@nextui-org/react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
+import { workspaceSendMailInvite } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
+import useApi from "@/hooks/useApi";
 
 import QuickInvitation from "./QuickInvitation";
 import ViaEmail from "./ViaEmail";
@@ -34,9 +37,19 @@ const listTab = [
 export default function ModalAddOrganizationMember() {
   const [activeKey, setActiveKey] = React.useState<EKeyTab>(EKeyTab.EMAIL);
   const formEmail = useForm();
+  const { fetch, isLoading } = useApi();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const handleSendMailInvite = async (data: { [key: string]: string }) => {
+    const listEmail: string[] = [];
+    Object.entries(data).map(([_key, value]) => listEmail.push(value));
+
+    fetch({
+      fn: workspaceSendMailInvite(listEmail),
+      onSuccess: () => {
+        formEmail.reset();
+        toast.success("Send mail invite successfully");
+      },
+    });
   };
 
   return (
@@ -73,8 +86,9 @@ export default function ModalAddOrganizationMember() {
                     Cancel
                   </Button>
                   <Button
+                    isLoading={isLoading}
                     color="primary"
-                    onClick={formEmail.handleSubmit(onSubmit)}
+                    onClick={formEmail.handleSubmit(handleSendMailInvite)}
                   >
                     Send
                   </Button>

@@ -7,11 +7,11 @@ interface IUseFetch<T> {
 }
 
 export default function useApi() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1000);
+  // setTimeout(() => {
+  //   setIsLoading(false);
+  // }, 1000);
 
   async function fetch<T>({ fn, onError, onSuccess }: IUseFetch<T>) {
     setIsLoading(true);
@@ -24,6 +24,7 @@ export default function useApi() {
       setIsLoading(false);
       onSuccess?.(response as T);
     }
+
     setIsLoading(false);
 
     return response;

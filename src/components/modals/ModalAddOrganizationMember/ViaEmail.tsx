@@ -16,6 +16,7 @@ export default function ViaEmail({ form }: IProps) {
         will receive an email notification
       </p>
       <InputAddMore
+        isCheckDuplicate
         isScrollList
         form={form}
         rules={emailRules}
