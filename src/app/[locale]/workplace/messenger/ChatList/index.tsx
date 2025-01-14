@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 
-import { chatGet } from "@/api";
+import { chatGet } from "@/apis";
 import Card from "@/components/common/Card";
 import { ENameLocalS } from "@/constants";
 import useApi from "@/hooks/useApi";

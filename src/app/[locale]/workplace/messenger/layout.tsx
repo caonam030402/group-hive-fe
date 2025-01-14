@@ -2,7 +2,7 @@ import React from "react";
 
 import Card from "@/components/common/Card";
 
-import ChatList from "./components/ChatList";
+import ChatList from "./ChatList";
 
 type Props = {
   children: React.ReactNode;

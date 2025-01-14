@@ -2,7 +2,7 @@ import type { JWT, NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
-import { authLoginGoogle, authRefreshToken } from "@/api/auth";
+import { authLoginGoogle, authRefreshToken } from "@/apis/auth";
 import { listCredential } from "@/constants/auth";
 import { ENameCookie } from "@/constants/common";
 import type { IErrorResponse, IHttpResponse } from "@/types";

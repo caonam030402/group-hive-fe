@@ -19,7 +19,7 @@ import { getLocalStorage } from "@/utils/clientStorage";
 import authValidation from "@/validations/authValidation";
 
 import { STEP_FORM_AUTH } from "../register/constant";
-import IntroSection from "./components/IntroSection";
+import IntroSection from "./IntroSection";
 
 const rules = authValidation.pick({ email: true, password: true });
 

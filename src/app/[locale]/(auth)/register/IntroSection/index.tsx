@@ -5,7 +5,7 @@ import React from "react";
 import Divider from "@/components/common/Divider";
 import Logo from "@/components/common/Logo";
 
-import { listContent, listIcons } from "../../constant";
+import { listContent, listIcons } from "../constant";
 
 export default function IntroSection() {
   return (

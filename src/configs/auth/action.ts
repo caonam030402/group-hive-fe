@@ -1,6 +1,6 @@
 "use server";
 
-import { authLogout } from "@/api/auth";
+import { authLogout } from "@/apis/auth";
 import { ENameCookie, PATH } from "@/constants/common";
 import type { IAuthCredentials } from "@/types/auth";
 import { clearCookies } from "@/utils/serverStorage";

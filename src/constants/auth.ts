@@ -1,4 +1,4 @@
-import { authConfirmOtp, authLoginWithEmail } from "@/api/auth";
+import { authConfirmOtp, authLoginWithEmail } from "@/apis/auth";
 
 export enum ETriggerCredentials {
   LOGIN = "login",

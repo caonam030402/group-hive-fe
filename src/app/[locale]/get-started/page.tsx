@@ -4,15 +4,15 @@ import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/react";
 import React, { useCallback, useEffect, useState } from "react";
 
-import { workspaceGet } from "@/api";
+import { workspaceGet } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
 import Header from "@/components/layouts/Header";
 import { bgBluePink } from "@/constants/bgImage";
 import useApi from "@/hooks/useApi";
 
-import AddWorkSpace from "./components/AddWorkSpace";
-import JoinWorkSpace from "./components/JoinWorkSpace";
-import ListWorkSpace from "./components/ListWorkSpace";
+import AddWorkSpace from "./AddWorkSpace";
+import JoinWorkSpace from "./JoinWorkSpace";
+import ListWorkSpace from "./ListWorkSpace";
 
 export default function GetStarted() {
   const {

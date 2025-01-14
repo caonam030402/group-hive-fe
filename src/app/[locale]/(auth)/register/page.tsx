@@ -6,7 +6,7 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { authRegisterWithEmail } from "@/api/auth";
+import { authRegisterWithEmail } from "@/apis/auth";
 import VerifyCodeMail from "@/components/business/VerifyCodeMail";
 import { PATH } from "@/constants/common";
 import useApi from "@/hooks/useApi";
@@ -16,8 +16,8 @@ import type { IFormTypeAuth, IFormTypeRegister } from "@/types/form";
 import authValidation from "@/validations/authValidation";
 
 import FormAuth from "../../../../components/business/FormAuth";
-import IntroSection from "./components/IntroSection";
 import { STEP_FORM_AUTH } from "./constant";
+import IntroSection from "./IntroSection";
 
 const rules = authValidation
   .pick({

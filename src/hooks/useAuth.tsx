@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
-import { authGenerateOtp } from "@/api/auth";
+import { authGenerateOtp } from "@/apis/auth";
 import { authCredential } from "@/configs/auth/action";
 import { ENameLocalS, PATH } from "@/constants";
 import { ETriggerCredentials } from "@/constants/auth";
