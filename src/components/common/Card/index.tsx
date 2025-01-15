@@ -3,12 +3,13 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  type CardProps,
 } from "@nextui-org/card";
 import React from "react";
 
 import { cn } from "@/libs/utils";
 
-interface IProps {
+interface IProps extends CardProps {
   children: React.ReactNode;
   header?: React.ReactNode;
   footer?: React.ReactNode;
@@ -26,6 +27,7 @@ export default function Card({
   classNames,
   footer,
   isDecorative = true,
+  ...props
 }: IProps) {
   return (
     <CardUI
@@ -37,6 +39,7 @@ export default function Card({
         ),
         body: "w-full",
       }}
+      {...props}
     >
       {header && (
         <CardHeader
