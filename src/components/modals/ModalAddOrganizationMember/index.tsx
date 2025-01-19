@@ -38,7 +38,6 @@ export default function ModalAddOrganizationMember() {
   const [activeKey, setActiveKey] = React.useState<EKeyTab>(EKeyTab.EMAIL);
   const formEmail = useForm();
   const { fetch, isLoading } = useApi();
-
   const handleSendMailInvite = async (data: { [key: string]: string }) => {
     const listEmail: string[] = [];
     Object.entries(data).map(([_key, value]) => listEmail.push(value));

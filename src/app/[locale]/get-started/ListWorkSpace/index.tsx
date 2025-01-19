@@ -9,7 +9,7 @@ import { ENameLocalS, PATH } from "@/constants";
 import { setLocalStorage } from "@/utils/clientStorage";
 
 interface IProps {
-  listWorkSpace: IWorkspace[];
+  listWorkSpace: IWorkspace[] | undefined;
   onAddOpen?: () => void;
 }
 

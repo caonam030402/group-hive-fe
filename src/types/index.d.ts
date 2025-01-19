@@ -1,3 +1,5 @@
+import type { MutationOptions } from "@tanstack/react-query";
+
 export interface IErrorResponse {
   statusCode: number;
   message: string;
@@ -27,6 +29,13 @@ interface IPaginationResponse<T> {
   data: T[];
   pagination: IPagination;
 }
+
+type IOptionRQ = Omit<
+  UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+  "queryKey" | "queryFn" | "initialData"
+> & { initialData?: () => undefined };
+
+type IOptionRQMutation = MutationOptions;
 
 interface IQueryGetApi {
   pagination?: IPagination;

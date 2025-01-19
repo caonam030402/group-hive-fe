@@ -2,15 +2,14 @@
 
 import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/react";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { workspaceGet } from "@/apis";
+import { workspaceService } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
 import Header from "@/components/layouts/Header";
 import ModalAddWorkSpace from "@/components/modals/ModalAddWorkSpace";
 import ModalJoinWorkSpace from "@/components/modals/ModalJoinWorkSpace";
 import { bgBluePink } from "@/constants/bgImage";
-import useApi from "@/hooks/useApi";
 
 import ListWorkSpace from "./ListWorkSpace";
 
@@ -27,24 +26,9 @@ export default function GetStarted() {
     onOpenChange: onOpenChangeJoin,
   } = useDisclosure();
 
-  const { fetch, isLoading } = useApi();
   const [isRefresh, setIsRefresh] = useState(false);
-  const [listWorkSpace, setListWorkSpace] = useState<IWorkspace[]>([]);
-  const handleFetchListWorkSpace = useCallback(() => {
-    fetch({
-      fn: workspaceGet(),
-      onSuccess: (data) => {
-        const res = data.payload?.data;
-        res && setListWorkSpace(res);
-      },
-    });
-  }, []);
-
-  useEffect(() => {
-    handleFetchListWorkSpace();
-  }, [handleFetchListWorkSpace, isRefresh]);
-
-  const isHaveWorkspace = listWorkSpace.length > 0;
+  const { data: listWorkSpace, isLoading } = workspaceService.useGet();
+  const isHaveWorkspace = listWorkSpace && listWorkSpace?.length > 0;
   const title = isHaveWorkspace ? "Welcome back" : "Create Workspace";
   const description = isHaveWorkspace
     ? "Lark gives your team a home — a place where they can talk and work together. To create a new workspace, click the button below"

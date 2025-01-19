@@ -1,31 +1,21 @@
 import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/modal";
-import React, { useEffect } from "react";
+import React from "react";
 import toast from "react-hot-toast";
 
-import { inviteWorkspaceGetOne } from "@/apis";
+import { workspaceService } from "@/apis";
 import Divider from "@/components/common/Divider";
 import { ENameLocalS, PATH } from "@/constants";
-import useApi from "@/hooks/useApi";
 import { usePathname } from "@/libs/i18nNavigation";
 import { getLocalStorage } from "@/utils/clientStorage";
 
 import ModalQrCode from "../ModalInviteQrCode";
 
 export default function QuickInvitation() {
-  const [inviteInfo, setInviteInfo] = React.useState<IInviteWorkspace | null>();
-  const { fetch } = useApi();
   const idWorkSpace = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
   const pathName = usePathname();
 
-  useEffect(() => {
-    fetch({
-      fn: inviteWorkspaceGetOne(idWorkSpace),
-      onSuccess: (data) => {
-        setInviteInfo(data.payload);
-      },
-    });
-  }, [idWorkSpace, fetch]);
+  const { data: inviteInfo } = workspaceService.useGetInviteById(idWorkSpace);
 
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
   const link = `${pathName}${PATH.INVITE_WORKSPACE}${inviteInfo?.link}`;
