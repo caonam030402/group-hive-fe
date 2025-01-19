@@ -18,3 +18,15 @@ export const workspaceSendMailInvite = (listEmail: IUser["email"][]) => {
     },
   });
 };
+
+export const inviteWorkspaceCreate = (listEmail: IUser["email"][]) => {
+  return http.post<null>("workspaces/create-invite", {
+    body: {
+      emails: listEmail,
+    },
+  });
+};
+
+export const inviteWorkspaceGetOne = (id: IWorkspace["id"]) => {
+  return http.get<IInviteWorkspace>(`workspaces/get-invite/${id}`);
+};

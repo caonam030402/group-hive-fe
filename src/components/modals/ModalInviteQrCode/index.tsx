@@ -19,9 +19,9 @@ interface IProps {
   isOpen: boolean;
   onOpenChange: () => void;
   info?: {
-    inviteCode: string;
-    valueQrCode: string;
-    nameSpace: string;
+    inviteCode?: String;
+    valueQrCode?: string;
+    nameSpace?: String;
   };
 }
 
@@ -48,7 +48,7 @@ export default function ModalInviteQrCode({
       link.click();
       toast.success("Download successfully");
     });
-  }, [ref]);
+  }, [info.nameSpace]);
 
   const fullName =
     data?.user && renderFullName(data?.user.firstName, data?.user.lastName);
@@ -77,7 +77,7 @@ export default function ModalInviteQrCode({
                   <div className="my-10 text-xl font-bold">
                     {info.nameSpace}
                   </div>
-                  <QrCode />
+                  <QrCode value={info?.valueQrCode} />
                   <div className="mt-8 text-center">
                     <div className="text-xs">Invite Code</div>
                     <div className="text-xl font-bold">{info.inviteCode}</div>

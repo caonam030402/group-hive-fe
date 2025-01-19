@@ -23,3 +23,13 @@ interface IWorkspace {
     id: String;
   };
 }
+
+interface IInviteWorkspace {
+  id: string;
+  inviteCode: string;
+  link: string;
+  workspace: IWorkspace;
+  expiredAt: string;
+  createdAt: string;
+  updatedAt: string;
+}

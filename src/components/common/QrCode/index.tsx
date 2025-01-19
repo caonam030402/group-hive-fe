@@ -13,6 +13,7 @@ export default function QrCode({
   imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Lark_Suite_logo_2022.png/480px-Lark_Suite_logo_2022.png",
   size = 256,
   value = "https://reactjs.org/",
+  ...rest
 }: IProps) {
   return (
     <QRCodeSVG
@@ -27,6 +28,7 @@ export default function QrCode({
         opacity: 1,
         excavate: true,
       }}
+      {...rest}
     />
   );
 }

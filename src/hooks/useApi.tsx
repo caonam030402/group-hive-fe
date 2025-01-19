@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 interface IUseFetch<T> {
   fn: Promise<T>;
@@ -13,7 +13,7 @@ export default function useApi() {
   //   setIsLoading(false);
   // }, 1000);
 
-  async function fetch<T>({ fn, onError, onSuccess }: IUseFetch<T>) {
+  async function fetchFn<T>({ fn, onError, onSuccess }: IUseFetch<T>) {
     setIsLoading(true);
     const response: any = await fn;
 
@@ -29,6 +29,8 @@ export default function useApi() {
 
     return response;
   }
+
+  const fetch = useCallback(fetchFn, []);
 
   return { fetch, isLoading, setIsLoading };
 }

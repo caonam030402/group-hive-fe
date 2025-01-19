@@ -1,16 +1,35 @@
 import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/modal";
-import React from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 
+import { inviteWorkspaceGetOne } from "@/apis";
 import Divider from "@/components/common/Divider";
+import { ENameLocalS, PATH } from "@/constants";
+import useApi from "@/hooks/useApi";
+import { usePathname } from "@/libs/i18nNavigation";
+import { getLocalStorage } from "@/utils/clientStorage";
 
 import ModalQrCode from "../ModalInviteQrCode";
 
 export default function QuickInvitation() {
+  const [inviteInfo, setInviteInfo] = React.useState<IInviteWorkspace | null>();
+  const { fetch } = useApi();
+  const idWorkSpace = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
+  const pathName = usePathname();
+
+  useEffect(() => {
+    fetch({
+      fn: inviteWorkspaceGetOne(idWorkSpace),
+      onSuccess: (data) => {
+        setInviteInfo(data.payload);
+      },
+    });
+  }, [idWorkSpace, fetch]);
+
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
-  const textInviteLink =
-    "You've been invited to join 213213. You can join the organization via the 8-digit Invite Code WRKVPRPZ. How to use Invite Code? https://www.larksuite.com/hc/articles/360040931394 You can also join the organization via this link https://zsgakdoj63d3.sg.larksuite.com/invite/465BIcaaK8lg1?join=1&team_name=213213";
+  const link = `${pathName}${PATH.INVITE_WORKSPACE}${inviteInfo?.link}`;
+  const textInviteLink = `You've been invited to join ${inviteInfo?.workspace.name}. You can join the organization via the 8-digit Invite Code {${inviteInfo?.inviteCode}. How to use Invite Code? You can also join the organization via this link ${link}`;
   const listOptionInvite = [
     {
       id: 1,
@@ -89,7 +108,15 @@ export default function QuickInvitation() {
           </div>
         ))}
       </div>
-      <ModalQrCode isOpen={isOpen} onOpenChange={onOpenChange} />
+      <ModalQrCode
+        info={{
+          inviteCode: inviteInfo?.inviteCode,
+          nameSpace: inviteInfo?.workspace.name,
+          valueQrCode: inviteInfo?.link,
+        }}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
     </div>
   );
 }
