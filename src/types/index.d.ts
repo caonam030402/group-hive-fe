@@ -56,3 +56,9 @@ interface IQueryGetApi {
     value: string;
   };
 }
+
+interface IPropModal {
+  isOpen: boolean;
+  onOpenChange: () => void;
+  onClose: () => void;
+}

@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 
 import { workspaceService } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
+import type { IPropModal } from "@/types";
 
 import QuickInvitation from "./QuickInvitation";
 import ViaEmail from "./ViaEmail";
@@ -33,7 +34,10 @@ const listTab = [
   },
 ];
 
-export default function ModalAddOrganizationMember() {
+export default function ModalAddOrganizationMember({
+  isOpen,
+  onOpenChange,
+}: IPropModal) {
   const [activeKey, setActiveKey] = React.useState<EKeyTab>(EKeyTab.EMAIL);
   const { mutate, isPending } = workspaceService.useSendMailsInvite();
   const formEmail = useForm();
@@ -49,7 +53,7 @@ export default function ModalAddOrganizationMember() {
   };
 
   return (
-    <Modal isOpen size="xl">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
       <ModalContent>
         {(onClose) => (
           <>
