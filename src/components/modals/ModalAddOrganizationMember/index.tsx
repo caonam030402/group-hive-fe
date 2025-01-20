@@ -11,9 +11,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { workspaceSendMailInvite } from "@/apis";
+import { workspaceService } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
-import useApi from "@/hooks/useApi";
 
 import QuickInvitation from "./QuickInvitation";
 import ViaEmail from "./ViaEmail";
@@ -36,14 +35,12 @@ const listTab = [
 
 export default function ModalAddOrganizationMember() {
   const [activeKey, setActiveKey] = React.useState<EKeyTab>(EKeyTab.EMAIL);
+  const { mutate, isPending } = workspaceService.useSendMailsInvite();
   const formEmail = useForm();
-  const { fetch, isLoading } = useApi();
   const handleSendMailInvite = async (data: { [key: string]: string }) => {
     const listEmail: string[] = [];
     Object.entries(data).map(([_key, value]) => listEmail.push(value));
-
-    fetch({
-      fn: workspaceSendMailInvite(listEmail),
+    mutate(listEmail, {
       onSuccess: () => {
         formEmail.reset();
         toast.success("Send mail invite successfully");
@@ -85,7 +82,7 @@ export default function ModalAddOrganizationMember() {
                     Cancel
                   </Button>
                   <Button
-                    isLoading={isLoading}
+                    isLoading={isPending}
                     color="primary"
                     onClick={formEmail.handleSubmit(handleSendMailInvite)}
                   >
