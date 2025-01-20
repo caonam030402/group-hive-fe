@@ -9,13 +9,14 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { workspaceCreate } from "@/apis";
-import useApi from "@/hooks/useApi";
+import { workspaceService } from "@/apis";
+import { workSpaceKeyRQ } from "@/constants/keyRQ";
 import type { WorkSpaceValidation } from "@/validations/workSpaceValidation";
 import workSpaceValidation from "@/validations/workSpaceValidation";
 
@@ -25,8 +26,6 @@ interface IProps {
   isOpen: boolean;
   onOpenChange: () => void;
   onCloseAdd: () => void;
-  setIsRefresh?: React.Dispatch<React.SetStateAction<boolean>>;
-  isRefresh: boolean;
 }
 
 export type FormType = Pick<
@@ -45,15 +44,14 @@ export default function ModalAddWorkSpace({
   isOpen,
   onOpenChange,
   onCloseAdd,
-  isRefresh,
-  setIsRefresh,
 }: IProps) {
   const form = useForm<FormType>({
     resolver: zodResolver(rules),
   });
+  const queryClient = useQueryClient();
 
   const { data: session } = useSession();
-  const { fetch, isLoading } = useApi();
+  const { mutate, isPending } = workspaceService.useCreate();
 
   const handleAddWorkSpace = (data: FormType) => {
     const body = {
@@ -63,12 +61,11 @@ export default function ModalAddWorkSpace({
         id: session?.user?.id ?? "",
       },
     };
-    fetch({
-      fn: workspaceCreate(body),
+    mutate(body, {
       onSuccess: () => {
         toast.success("Workspace created successfully");
         onCloseAdd();
-        setIsRefresh && setIsRefresh(!isRefresh);
+        queryClient.invalidateQueries({ queryKey: [workSpaceKeyRQ.workspace] });
       },
     });
   };
@@ -98,7 +95,7 @@ export default function ModalAddWorkSpace({
               >
                 Close
               </Button>
-              <Button isLoading={isLoading} type="submit" color="primary">
+              <Button isLoading={isPending} type="submit" color="primary">
                 Create
               </Button>
             </ModalFooter>

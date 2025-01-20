@@ -1,12 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { workSpaceKeyRQ } from "@/constants/keyRQ";
-import type {
-  IOptionRQ,
-  IOptionRQMutation,
-  IPaginationResponse,
-  ISuccessResponse,
-} from "@/types";
+import type { IOptionRQ, IPaginationResponse, ISuccessResponse } from "@/types";
 import http from "@/utils/http";
 
 export const workspaceCreate = (body: IWorkspaceCreateBody) => {
@@ -33,28 +28,25 @@ export const inviteWorkspaceCreate = (listEmail: IUser["email"][]) => {
 
 export const workspaceService = {
   useGetInviteById: (id: IWorkspace["id"], option?: IOptionRQ) => {
-    const query = useQuery(
-      [workSpaceKeyRQ.invite],
-      () => http.get<IInviteWorkspace>(`workspaces/get-invite/${id}`),
-      {
-        staleTime: 1000 * 60 * 60 * 24,
-        ...option,
-      },
-    );
+    const query = useQuery({
+      queryKey: [workSpaceKeyRQ.invite],
+      queryFn: () => http.get<IInviteWorkspace>(`workspaces/get-invite/${id}`),
+      staleTime: 1000 * 60 * 60 * 24,
+      ...option,
+    });
     return {
       ...query,
       data: query.data?.payload,
     };
   },
   useGet: (option?: IOptionRQ) => {
-    const query = useQuery(
-      [workSpaceKeyRQ.workspace],
-      () => http.get<IPaginationResponse<IWorkspace>>("workspaces"),
-      {
-        staleTime: 1000 * 60 * 60 * 24,
-        ...option,
-      },
-    );
+    const query = useQuery({
+      queryKey: [workSpaceKeyRQ.workspace],
+      queryFn: () => http.get<IPaginationResponse<IWorkspace>>("workspaces"),
+      staleTime: 1000 * 60 * 60 * 24,
+      ...option,
+    });
+
     return {
       ...query,
       data: query.data?.payload?.data,
@@ -71,13 +63,12 @@ export const workspaceService = {
       ...option,
     });
   },
-  useCreate: (body?: IWorkspaceCreateBody, option?: IOptionRQMutation) => {
-    const api = http.post<ISuccessResponse<null>>("workspaces", {
-      body,
-    });
+  useCreate: () => {
     return useMutation({
-      mutationFn: () => api,
-      ...option,
+      mutationFn: async (body: IWorkspaceCreateBody) => {
+        const response = await http.post<null>("workspaces", { body });
+        return response.payload;
+      },
     });
   },
 };

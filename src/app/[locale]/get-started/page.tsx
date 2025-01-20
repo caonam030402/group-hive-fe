@@ -2,7 +2,7 @@
 
 import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/react";
-import React, { useState } from "react";
+import React from "react";
 
 import { workspaceService } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
@@ -26,7 +26,6 @@ export default function GetStarted() {
     onOpenChange: onOpenChangeJoin,
   } = useDisclosure();
 
-  const [isRefresh, setIsRefresh] = useState(false);
   const { data: listWorkSpace, isLoading } = workspaceService.useGet();
   const isHaveWorkspace = listWorkSpace && listWorkSpace?.length > 0;
   const title = isHaveWorkspace ? "Welcome back" : "Create Workspace";
@@ -79,9 +78,7 @@ export default function GetStarted() {
                 }
               />
               <ModalAddWorkSpace
-                setIsRefresh={setIsRefresh}
                 onCloseAdd={onCloseAdd}
-                isRefresh={isRefresh}
                 isOpen={isOpenAdd}
                 onOpenChange={onOpenChangeAdd}
               />
