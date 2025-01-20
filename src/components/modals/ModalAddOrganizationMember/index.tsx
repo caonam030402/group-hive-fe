@@ -11,8 +11,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { workspaceService } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
+import { workspaceService } from "@/services";
 import type { IPropModal } from "@/types";
 
 import QuickInvitation from "./QuickInvitation";

@@ -15,8 +15,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { workspaceService } from "@/apis";
 import { workSpaceKeyRQ } from "@/constants/keyRQ";
+import { workspaceService } from "@/services";
 import type { WorkSpaceValidation } from "@/validations/workSpaceValidation";
 import workSpaceValidation from "@/validations/workSpaceValidation";
 

@@ -2,10 +2,10 @@
 
 import React, { useEffect } from "react";
 
-import { chatGet } from "@/apis";
 import Card from "@/components/common/Card";
 import { ENameLocalS } from "@/constants";
 import useApi from "@/hooks/useApi";
+import { chatGet } from "@/services";
 import type { IChat } from "@/types/chat";
 import { getLocalStorage } from "@/utils/clientStorage";
 

@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 import React from "react";
 import toast from "react-hot-toast";
 
-import { workspaceService } from "@/apis";
 import Divider from "@/components/common/Divider";
 import { ENameLocalS, PATH } from "@/constants";
 import { workSpaceKeyRQ } from "@/constants/keyRQ";
 import { usePathname } from "@/libs/i18nNavigation";
+import { workspaceService } from "@/services";
 import { getLocalStorage } from "@/utils/clientStorage";
 
 import ModalQrCode from "../ModalInviteQrCode";

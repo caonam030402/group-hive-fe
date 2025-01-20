@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
-import { chatGetDetail, messageGet } from "@/apis";
 import Card from "@/components/common/Card";
 import useApi from "@/hooks/useApi";
+import { chatGetDetail, messageGet } from "@/services";
 import type { IChat, IMessage } from "@/types/chat";
 
 import Body from "./Body";

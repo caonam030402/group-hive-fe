@@ -4,12 +4,12 @@ import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/react";
 import React from "react";
 
-import { workspaceService } from "@/apis";
 import RenderCondition from "@/components/common/RenderCondition";
 import Header from "@/components/layouts/Header";
 import ModalAddWorkSpace from "@/components/modals/ModalAddWorkSpace";
 import ModalJoinWorkSpace from "@/components/modals/ModalJoinWorkSpace";
 import { bgBluePink } from "@/constants/bgImage";
+import { workspaceService } from "@/services";
 
 import ListWorkSpace from "./ListWorkSpace";
 

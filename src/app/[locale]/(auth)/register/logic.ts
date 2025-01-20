@@ -3,8 +3,8 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { authService } from "@/apis";
 import useAuth from "@/hooks/useAuth";
+import { authService } from "@/services";
 import type { IAuthErrorResponse } from "@/types/auth";
 import type { IFormTypeAuth, IFormTypeRegister } from "@/types/form";
 import authValidation from "@/validations/authValidation";

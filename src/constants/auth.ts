@@ -1,4 +1,4 @@
-import { authService } from "@/apis/auth";
+import { authService } from "@/services/auth";
 
 export enum ETriggerCredentials {
   LOGIN = "login",

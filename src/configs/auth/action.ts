@@ -1,7 +1,7 @@
 "use server";
 
-import { authService } from "@/apis/auth";
 import { ENameCookie, PATH } from "@/constants/common";
+import { authService } from "@/services/auth";
 import type { IAuthCredentials } from "@/types/auth";
 import { clearCookies } from "@/utils/serverStorage";
 
