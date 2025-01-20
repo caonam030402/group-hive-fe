@@ -1,4 +1,4 @@
-import { authConfirmOtp, authLoginWithEmail } from "@/apis/auth";
+import { authService } from "@/apis/auth";
 
 export enum ETriggerCredentials {
   LOGIN = "login",
@@ -9,13 +9,13 @@ export const listCredential = (
   credentials: Partial<Record<string, unknown>>,
 ) => {
   const list = {
-    [ETriggerCredentials.OTP]: authConfirmOtp({
+    [ETriggerCredentials.OTP]: authService.confirmOtp({
       user: {
         id: Number(credentials.userId),
       },
       code: Number(credentials.code),
     }),
-    [ETriggerCredentials.LOGIN]: authLoginWithEmail({
+    [ETriggerCredentials.LOGIN]: authService.loginWithEmail({
       email: credentials.email as string,
       password: credentials.password as string,
     }),

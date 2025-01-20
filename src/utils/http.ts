@@ -7,6 +7,19 @@ import type { IErrorResponse, IRequestInit } from "@/types";
 
 const isClient = typeof window !== "undefined";
 
+export class HttpError extends Error {
+  data: IErrorResponse;
+
+  constructor(message: string, data: IErrorResponse) {
+    super(message);
+    this.name = "HttpError";
+    this.data = data;
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, HttpError);
+    }
+  }
+}
+
 const request = async <Response>(
   method: "GET" | "POST" | "PUT" | "DELETE",
   url: string,
@@ -49,7 +62,7 @@ const request = async <Response>(
     ].includes(response.status);
     if (isClient && statusError) {
       const payloadErr = payload as IErrorResponse;
-      toast.error(payloadErr.errors || payloadErr.message);
+      throw payloadErr;
     }
 
     const data = {
@@ -60,12 +73,12 @@ const request = async <Response>(
 
     return data;
   } catch (e) {
-    isClient && toast.error("Something went wrong");
-    return {
-      ok: false,
-      status: 500,
-      payload: null,
-    };
+    const payloadErr = e as IErrorResponse;
+    if (isClient) {
+      payloadErr.message && toast.error(payloadErr.message);
+    }
+    const err = new HttpError("Error", payloadErr);
+    throw (err.data = payloadErr);
   }
 };
 

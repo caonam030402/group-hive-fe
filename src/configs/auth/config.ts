@@ -2,7 +2,7 @@ import type { JWT, NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
-import { authLoginGoogle, authRefreshToken } from "@/apis/auth";
+import { authService } from "@/apis/auth";
 import { listCredential } from "@/constants/auth";
 import { ENameCookie } from "@/constants/common";
 import type { IErrorResponse, IHttpResponse } from "@/types";
@@ -20,7 +20,9 @@ const mapUserToToken = ({ data, token }: { data: User; token: JWT }) => ({
 });
 
 const refetchToken = async (token: JWT) => {
-  const { payload, ok } = await authRefreshToken(token.user.refreshToken);
+  const { payload, ok } = await authService.refreshToken(
+    token.user.refreshToken,
+  );
   if (ok) {
     return mapUserToToken({
       data: {
@@ -97,7 +99,7 @@ export default {
       const tokenCustom = token as unknown as JWT;
 
       if (providerType === "google") {
-        const res = await authLoginGoogle(account?.id_token);
+        const res = await authService.loginGoogle(account?.id_token);
         const userRes = res.payload?.user as User;
         return mapUserToToken({ data: userRes, token: tokenCustom });
       }

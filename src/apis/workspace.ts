@@ -51,15 +51,11 @@ export const workspaceService = {
   useSendMailsInvite: () => {
     return useMutation({
       mutationFn: async (listEmail: IUser["email"][]) => {
-        const response = await http.post<null>("workspaces/invite-send-mail", {
+        return http.post<null>("workspaces/invite-send-mail", {
           body: {
             emails: listEmail,
           },
         });
-        if (!response.ok) {
-          throw new Error("Internal Server Error");
-        }
-        return response;
       },
     });
   },

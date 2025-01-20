@@ -1,6 +1,6 @@
 "use server";
 
-import { authLogout } from "@/apis/auth";
+import { authService } from "@/apis/auth";
 import { ENameCookie, PATH } from "@/constants/common";
 import type { IAuthCredentials } from "@/types/auth";
 import { clearCookies } from "@/utils/serverStorage";
@@ -27,6 +27,6 @@ export async function authCredential<T>(body: IAuthCredentials & T) {
 
 export async function signOut() {
   clearCookies({ key: ENameCookie.ACCESS_TOKEN });
-  await authLogout();
+  await authService.logout();
   await _signOut({ redirectTo: PATH.LOGIN });
 }

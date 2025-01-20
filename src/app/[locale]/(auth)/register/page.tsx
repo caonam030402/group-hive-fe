@@ -6,10 +6,9 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { authRegisterWithEmail } from "@/apis/auth";
+import { authService } from "@/apis/auth";
 import VerifyCodeMail from "@/components/business/VerifyCodeMail";
 import { PATH } from "@/constants/common";
-import useApi from "@/hooks/useApi";
 import useAuth from "@/hooks/useAuth";
 import type { IAuthErrorResponse } from "@/types/auth";
 import type { IFormTypeAuth, IFormTypeRegister } from "@/types/form";
@@ -36,18 +35,19 @@ export default function SignIn() {
   const [step, setStep] = useState(STEP_FORM_AUTH.FORM_AUTH);
   const emailRef = useRef<string | null>(null);
   const userId = useRef<number | null>(null);
-  const { fetch, isLoading } = useApi();
+  // const { fetch, isLoading } = useApi();
   const { handleConfirmOtp, handleResendOtp, isLoadingAuth } = useAuth();
+  const { isPending, mutate } = authService.useRegisterWithEmail();
 
   const form = useForm<IFormTypeAuth>({
     resolver: zodResolver(rules),
   });
 
   const handleSubmitMail = (body: IFormTypeRegister) => {
-    fetch({
-      fn: authRegisterWithEmail(body),
+    mutate(body, {
       onError: (error) => {
-        const errorResponse = error.payload as IAuthErrorResponse | null;
+        console.log(error);
+        const errorResponse = error as IAuthErrorResponse;
         const errors = errorResponse?.errors;
         setStep(STEP_FORM_AUTH.FORM_AUTH);
 
@@ -57,10 +57,10 @@ export default function SignIn() {
             form.setError(key as keyof IFormTypeRegister, {
               message: errors?.[key],
             });
+            toast.error(errors[key] as string);
           });
         }
       },
-
       onSuccess: (response) => {
         userId.current = Number(response.payload?.userId);
         toast.success("Success register please verify your email!");
@@ -78,7 +78,7 @@ export default function SignIn() {
             labelAction="Sign Up for Free"
             title="Create account"
             form={form}
-            isLoading={isLoading}
+            isLoading={isPending}
             handleSubmitMail={handleSubmitMail}
             description={
               <div className="text-sm text-default-500">

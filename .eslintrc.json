@@ -67,7 +67,7 @@
         "unused-imports/no-unused-imports": "error",
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-unused-expressions": "off",
-        " ": "off",
+        "@typescript-eslint/no-throw-literal": "off",
         "react/no-array-index-key": "off",
         "unused-imports/no-unused-vars": [
           "error",

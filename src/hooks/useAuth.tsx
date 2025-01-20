@@ -1,20 +1,19 @@
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
-import { authGenerateOtp } from "@/apis/auth";
+import { authService } from "@/apis/auth";
 import { authCredential } from "@/configs/auth/action";
 import { ENameLocalS, PATH } from "@/constants";
 import { ETriggerCredentials } from "@/constants/auth";
-import type { IErrorResponse } from "@/types";
 import type { IRequestConfirmOtp } from "@/types/auth";
 import { getLocalStorage } from "@/utils/clientStorage";
 
-import useApi from "./useApi";
-
 export default function useAuth() {
   const router = useRouter();
-  const { fetch, isLoading: isLoadingAuth, setIsLoading } = useApi();
+  const [isLoading, setIsLoading] = useState(false);
+  const { mutate, isPending } = authService.useGenerateOtp();
   const { update } = useSession();
   const handleConfirmOtp = async (body: IRequestConfirmOtp, userId: number) => {
     setIsLoading(true);
@@ -41,26 +40,22 @@ export default function useAuth() {
   };
 
   const handleResendOtp = (userId: number) => {
-    fetch({
-      fn: authGenerateOtp({
+    mutate(
+      {
         user: { id: userId || 0 },
         expiresTime: 60,
-      }),
-
-      onError: (error) => {
-        const errorResponse = error.payload as IErrorResponse | null;
-        toast.error(errorResponse!.message);
       },
-
-      onSuccess: () => {
-        toast.success("Resend OTP successfully !");
+      {
+        onSuccess: () => {
+          toast.success("Resend OTP successfully");
+        },
       },
-    });
+    );
   };
 
   return {
     handleConfirmOtp,
     handleResendOtp,
-    isLoadingAuth,
+    isLoadingAuth: isLoading || isPending,
   };
 }
