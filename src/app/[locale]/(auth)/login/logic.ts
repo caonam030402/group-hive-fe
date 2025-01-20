@@ -9,7 +9,7 @@ import { authCredential } from "@/configs/auth";
 import { ENameLocalS, ETriggerCredentials, PATH } from "@/constants";
 import useAuth from "@/hooks/useAuth";
 import type { IFormTypeAuth, IFormTypeLogin } from "@/types/form";
-import { getLocalStorage } from "@/utils";
+import { getLocalStorage } from "@/utils/clientStorage";
 import authValidation from "@/validations/authValidation";
 
 import { STEP_FORM_AUTH } from "../register/constant";
