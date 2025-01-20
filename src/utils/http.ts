@@ -21,7 +21,7 @@ export class HttpError extends Error {
 }
 
 const request = async <Response>(
-  method: "GET" | "POST" | "PUT" | "DELETE",
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
   url: string,
   options: IRequestInit,
 ) => {
@@ -89,6 +89,8 @@ const http = {
     request<Response>("POST", url, options),
   put: <Response>(url: string, options: IRequestInit) =>
     request<Response>("PUT", url, options),
+  patch: <Response>(url: string, options: IRequestInit) =>
+    request<Response>("PATCH", url, options),
   delete: <Response>(url: string, options: IRequestInit) =>
     request<Response>("DELETE", url, options),
 };

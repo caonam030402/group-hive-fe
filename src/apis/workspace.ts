@@ -8,7 +8,7 @@ export const workspaceService = {
   useGetInviteById: (id: IWorkspace["id"], option?: IOptionRQ) => {
     const query = useQuery({
       queryKey: [workSpaceKeyRQ.invite],
-      queryFn: () => http.get<IInviteWorkspace>(`workspaces/get-invite/${id}`),
+      queryFn: () => http.get<IInviteWorkspace>(`workspaces/invite/${id}`),
       staleTime: 1000 * 60 * 60 * 24,
       ...option,
     });
@@ -30,15 +30,17 @@ export const workspaceService = {
       data: query.data?.payload?.data,
     };
   },
-  useCreateInvite: (listEmail: IUser["email"][], option?: IOptionRQ) => {
-    const api = http.post<null>("workspaces/create-invite", {
-      body: {
-        emails: listEmail,
-      },
-    });
+  useUpdateInvite: () => {
     return useMutation({
-      mutationFn: () => api,
-      ...option,
+      mutationFn: (id: IWorkspace["id"]) => {
+        return http.put<null>("workspaces/invite", {
+          body: {
+            workspace: {
+              id,
+            },
+          },
+        });
+      },
     });
   },
   useCreate: () => {

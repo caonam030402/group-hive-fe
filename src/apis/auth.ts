@@ -30,7 +30,6 @@ export const authService = {
       },
     });
   },
-
   // Server side
   loginWithEmail: (body: IAuth) => {
     return http.post<{

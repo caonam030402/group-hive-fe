@@ -1,11 +1,14 @@
 import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/modal";
+import { useQueryClient } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import React from "react";
 import toast from "react-hot-toast";
 
 import { workspaceService } from "@/apis";
 import Divider from "@/components/common/Divider";
 import { ENameLocalS, PATH } from "@/constants";
+import { workSpaceKeyRQ } from "@/constants/keyRQ";
 import { usePathname } from "@/libs/i18nNavigation";
 import { getLocalStorage } from "@/utils/clientStorage";
 
@@ -16,6 +19,8 @@ export default function QuickInvitation() {
   const pathName = usePathname();
 
   const { data: inviteInfo } = workspaceService.useGetInviteById(idWorkSpace);
+  const { mutate, isPending } = workspaceService.useUpdateInvite();
+  const queryClient = useQueryClient();
 
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
   const link = `${pathName}${PATH.INVITE_WORKSPACE}${inviteInfo?.link}`;
@@ -71,13 +76,23 @@ export default function QuickInvitation() {
       ),
     },
   ];
+  const handleResetInvite = () => {
+    mutate(idWorkSpace, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [workSpaceKeyRQ.invite] });
+      },
+    });
+  };
   return (
     <div>
       <div className="mb-5 flex items-center gap-2">
         <p className="text-[13px]">
-          Expiration time of the Invite Link or Code below: Feb 24, 2025
+          Expiration time of the Invite Link or Code below:{" "}
+          {dayjs(inviteInfo?.expiredAt).format("MMMM D, YYYY")}
         </p>
         <Button
+          isLoading={isPending}
+          onPress={() => handleResetInvite()}
           variant="light"
           className="h-6 min-w-0 px-2 text-[13px] text-primary"
         >
