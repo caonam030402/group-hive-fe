@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next-nprogress-bar";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,7 +19,6 @@ export default function useLogin() {
   const emailRef = useRef<string | null>(null);
   const userId = useRef<number | null>(null);
   const router = useRouter();
-  const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEP_FORM_AUTH.FORM_AUTH);
   const { handleConfirmOtp, handleResendOtp, isLoadingAuth } = useAuth();
@@ -60,7 +58,6 @@ export default function useLogin() {
       const isHasIdWS = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
       toast.success("Login successfully !");
       setIsLoading(false);
-      session.update();
       router.push(isHasIdWS ? PATH.WORKPLACE : PATH.HOME);
     }
   };

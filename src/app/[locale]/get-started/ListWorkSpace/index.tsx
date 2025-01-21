@@ -40,7 +40,7 @@ export default function ListWorkSpace({ listWorkSpace, onAddOpen }: IProps) {
                 </div>
               </div>
             </div>
-            <Button onPress={() => handleLaunch(item.id)} size="sm">
+            <Button onPress={() => handleLaunch(+item.id)} size="sm">
               Launch
             </Button>
           </div>

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import Divider from "@/components/common/Divider";
 import { ENameLocalS, PATH } from "@/constants";
 import { workSpaceKeyRQ } from "@/constants/keyRQ";
-import { usePathname } from "@/libs/i18nNavigation";
+import { hostUrl } from "@/libs/i18nNavigation";
 import { workspaceService } from "@/services";
 import { getLocalStorage } from "@/utils/clientStorage";
 
@@ -16,15 +16,14 @@ import ModalQrCode from "../ModalInviteQrCode";
 
 export default function QuickInvitation() {
   const idWorkSpace = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
-  const pathName = usePathname();
 
   const { data: inviteInfo } = workspaceService.useGetInviteById(idWorkSpace);
   const { mutate, isPending } = workspaceService.useUpdateInvite();
   const queryClient = useQueryClient();
 
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
-  const link = `${pathName}${PATH.INVITE_WORKSPACE}${inviteInfo?.link}`;
-  const textInviteLink = `You've been invited to join ${inviteInfo?.workspace.name}. You can join the organization via the 8-digit Invite Code {${inviteInfo?.inviteCode}. How to use Invite Code? You can also join the organization via this link ${link}`;
+  const link = `${hostUrl}${PATH.INVITE_WORKSPACE}${inviteInfo?.link}`;
+  const textInviteLink = `You've been invited to join ${inviteInfo?.workspace?.name}. You can join the organization via the 8-digit Invite Code {${inviteInfo?.inviteCode}. How to use Invite Code? You can also join the organization via this link ${link}`;
   const listOptionInvite = [
     {
       id: 1,

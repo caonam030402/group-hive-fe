@@ -7,12 +7,12 @@ import {
   ModalHeader,
 } from "@nextui-org/modal";
 import { toPng } from "html-to-image";
-import { useSession } from "next-auth/react";
 import React, { useCallback, useRef } from "react";
 import toast from "react-hot-toast";
 
 import QrCode from "@/components/common/QrCode";
 import User from "@/components/common/User";
+import { userService } from "@/services/user";
 import { renderFullName } from "@/utils/helpers";
 
 interface IProps {
@@ -35,7 +35,7 @@ export default function ModalInviteQrCode({
   },
 }: IProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { data } = useSession();
+  const { user } = userService.useProfile();
   const handleDownloadQrCode = useCallback(() => {
     if (ref.current === null) {
       return;
@@ -50,8 +50,7 @@ export default function ModalInviteQrCode({
     });
   }, [info.nameSpace]);
 
-  const fullName =
-    data?.user && renderFullName(data?.user.firstName, data?.user.lastName);
+  const fullName = user && renderFullName(user.firstName, user.lastName);
   return (
     <Modal size="md" isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
@@ -66,10 +65,7 @@ export default function ModalInviteQrCode({
                   ref={ref}
                   className="flex flex-col items-center justify-center rounded-md bg-white p-6"
                 >
-                  <User
-                    onlyAvatar
-                    info={{ avatar: data?.user?.avatar || "" }}
-                  />
+                  <User onlyAvatar info={{ avatar: user?.avatar || "" }} />
                   <div className="mt-2 text-sm">
                     <span className="mt-2 font-bold">{fullName}</span> has been
                     invited to join the workspace

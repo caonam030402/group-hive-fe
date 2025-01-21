@@ -1,5 +1,4 @@
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -14,7 +13,7 @@ export default function useAuth() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { mutate, isPending } = authService.useGenerateOtp();
-  const { update } = useSession();
+
   const handleConfirmOtp = async (body: IRequestConfirmOtp, userId: number) => {
     setIsLoading(true);
     const res = await authCredential({
@@ -36,7 +35,6 @@ export default function useAuth() {
 
     setIsLoading(false);
     router.push("/");
-    update();
   };
 
   const handleResendOtp = (userId: number) => {

@@ -6,3 +6,5 @@ export const { usePathname, useRouter } = createSharedPathnamesNavigation({
   locales: AppConfig.locales,
   localePrefix: AppConfig.localePrefix,
 });
+
+export const hostUrl = `${window.location.protocol}//${window.location.host}`;

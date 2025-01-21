@@ -25,6 +25,7 @@ export enum ENameCookie {
 
 export enum ENameLocalS {
   WORKSPACE_ID = "_next-wp.htshs",
+  PROFILE = "_next-wq.pf",
 }
 
 export const countriesList = [

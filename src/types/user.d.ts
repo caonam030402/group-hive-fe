@@ -27,6 +27,7 @@ interface IUser {
   id?: number;
   email?: string;
   provider?: string;
+  name?: string;
   socialId?: string;
   firstName?: string;
   lastName?: string;

@@ -3,7 +3,6 @@ import "@/styles/global.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
-import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 
 import { AppConfig } from "@/configs/main/appConfig";
@@ -53,9 +52,7 @@ export default function RootLayout(props: {
           locale={props.params.locale}
           messages={messages}
         >
-          <SessionProvider refetchOnWindowFocus={false}>
-            <Providers>{props.children}</Providers>
-          </SessionProvider>
+          <Providers>{props.children}</Providers>
         </NextIntlClientProvider>
       </body>
     </html>

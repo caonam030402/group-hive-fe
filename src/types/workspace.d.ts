@@ -6,12 +6,12 @@ interface IWorkspaceCreateBody {
   description?: String;
   avatar?: String;
   owner: {
-    id: String;
+    id: string | number;
   };
 }
 
 interface IWorkspace {
-  id: number;
+  id: number | string;
   name: String;
   industry: String;
   size: String;

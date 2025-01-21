@@ -5,7 +5,7 @@ import type { IOptionRQ, IPaginationResponse } from "@/types";
 import http from "@/utils/http";
 
 export const workspaceService = {
-  useGetInviteById: (id: IWorkspace["id"], option?: IOptionRQ) => {
+  useGetInviteById: (id: IWorkspace["id"] | null, option?: IOptionRQ) => {
     const query = useQuery({
       queryKey: [workSpaceKeyRQ.invite],
       queryFn: () => http.get<IInviteWorkspace>(`workspaces/invite/${id}`),

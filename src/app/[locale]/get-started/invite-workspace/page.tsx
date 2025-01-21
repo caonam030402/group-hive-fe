@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Image, Link } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 import Card from "@/components/common/Card";
@@ -9,10 +9,17 @@ import Header from "@/components/layouts/Header";
 import { PATH } from "@/constants";
 import { bgBluePink } from "@/constants/bgImage";
 import { cn } from "@/libs/utils";
+import { workspaceService } from "@/services";
+import { userService } from "@/services/user";
 
 export default function InviteWorkspace() {
-  const { data } = useSession();
-  const isAuth = !!data?.user;
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const { user } = userService.useProfile();
+  const isAuth = !!user;
+  const { data: inviteInfo } = workspaceService.useGetInviteById(id, {
+    enabled: !!id,
+  });
 
   return (
     <>
@@ -37,11 +44,13 @@ export default function InviteWorkspace() {
               classNames={{
                 wrapper: "absolute top-[-18%]",
               }}
-              src="https://cdn.dribbble.com/userupload/14785082/file/original-1e21952b088b78455115d8e87adf6cc3.png?resize=1024x768&vertical=center"
+              src={inviteInfo?.workspace.avatar}
               alt=""
             />
             <div className="mt-8 text-sm">Nam Cao has invited you to join</div>
-            <div className="mt-2 text-2xl font-bold">IT-tech</div>
+            <div className="mt-2 text-2xl font-bold">
+              {inviteInfo?.workspace.name}
+            </div>
             <Button
               color={isAuth ? "primary" : "default"}
               disabled={!isAuth}

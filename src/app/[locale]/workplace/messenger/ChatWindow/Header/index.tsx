@@ -1,8 +1,8 @@
 import { Avatar } from "@nextui-org/avatar";
-import { useSession } from "next-auth/react";
 import React from "react";
 
 import Divider from "@/components/common/Divider";
+import { userService } from "@/services/user";
 import type { IChat } from "@/types/chat";
 import { getUserFriend, renderFullName } from "@/utils/helpers";
 
@@ -14,10 +14,10 @@ interface IProps {
 }
 
 export default function Header({ chatDetail }: IProps) {
-  const { data } = useSession();
+  const { user: data } = userService.useProfile();
   const userFriend = getUserFriend({
     userChats: chatDetail?.userChats,
-    currentUser: Number(data?.user?.id),
+    currentUser: Number(data?.id),
   });
 
   const user = userFriend?.user;

@@ -1,6 +1,8 @@
+import Cookies from "js-cookie";
 import { getSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
+import { ENameCookie } from "@/constants/common";
 import { HttpStatusCode } from "@/constants/httpStatusCode";
 import { Env } from "@/libs/env";
 import type { IErrorResponse, IRequestInit } from "@/types";
@@ -27,12 +29,21 @@ const request = async <Response>(
 ) => {
   try {
     const baseUrl = Env.NEXT_PUBLIC_API_URL;
-    const session = isClient ? await getSession() : null;
+
+    let token;
+
+    if (isClient) {
+      token = Cookies.get(ENameCookie.ACCESS_TOKEN);
+    } else {
+      const session = isClient ? await getSession() : null;
+      token = session?.user?.token;
+    }
+
     const body = options?.body ? JSON.stringify(options.body) : undefined;
 
     const baseHeader = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${session?.user?.token}`,
+      Authorization: `Bearer ${token}`,
     };
 
     const response = await fetch(baseUrl + url, {

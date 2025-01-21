@@ -2,10 +2,10 @@ import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { IoCloudDownloadOutline } from "@react-icons/all-files/io5/IoCloudDownloadOutline";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import React from "react";
 
 import { PATH } from "@/constants";
+import { userService } from "@/services/user";
 
 const listLogoCompany = [
   "https://framerusercontent.com/images/PPfehcyhCEreeqFeefrJsrMGQuI.png?scale-down-to=512",
@@ -19,8 +19,8 @@ const listLogoCompany = [
 ];
 
 export default function Introduce() {
-  const { status } = useSession();
-  const isAuthenticated = status === "authenticated";
+  const { user } = userService.useProfile();
+  const isAuthenticated = !!user;
   return (
     <div
       className="relative flex h-auto w-full flex-col items-center "

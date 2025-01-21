@@ -2,13 +2,13 @@
 
 "use client";
 
-import { useSession } from "next-auth/react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import QuickCreate from "@/components/business/QuickCreate";
 import UserSetting from "@/components/business/UserSetting";
 import { cn } from "@/libs/utils";
+import { userService } from "@/services/user";
 import { selectIsCollapsed } from "@/stores/setting/selectors";
 import { setIsCollapsedSideBar } from "@/stores/setting/slice";
 
@@ -21,7 +21,7 @@ export default function SideBarGlobal() {
   const minWidthCollapse = 70;
   const isCollapsedSideBar = useSelector(selectIsCollapsed);
 
-  const { data } = useSession();
+  const { user } = userService.useProfile();
 
   const checkHandleCollapse = (sidebarWidth: number, setSidebarWidth: any) => {
     if (sidebarWidth < minWidth + 10) {
@@ -37,7 +37,7 @@ export default function SideBarGlobal() {
   });
 
   const isBetweenStyle = isCollapsedSideBar ? "flex flex-col items-center" : "";
-  const user = data?.user;
+
   return (
     <div className="flex h-screen">
       <div

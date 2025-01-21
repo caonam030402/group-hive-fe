@@ -6,13 +6,13 @@ import {
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
 
 import UserSetting from "@/components/business/UserSetting";
 import Logo from "@/components/common/Logo";
 import RenderCondition from "@/components/common/RenderCondition";
 import { userMenuOptionsHome } from "@/constants";
 import { PATH } from "@/constants/common";
+import { userService } from "@/services/user";
 
 const listNav = [
   {
@@ -38,8 +38,7 @@ const listNav = [
 ];
 
 export default function Header() {
-  const { data: session, status } = useSession();
-  const isLoading = status === "loading";
+  const { user, isLoading } = userService.useProfile();
   return (
     <Navbar maxWidth="xl">
       <NavbarBrand>
@@ -64,13 +63,13 @@ export default function Header() {
         <NavbarItem>
           {!isLoading && (
             <RenderCondition
-              condition={!!session}
+              condition={!!user}
               ifContent={
                 <UserSetting
                   placement="bottom"
                   info={{
-                    email: session?.user?.email,
-                    avatar: session?.user?.avatar,
+                    email: user?.email,
+                    avatar: user?.avatar,
                   }}
                   menuOptions={userMenuOptionsHome}
                 />

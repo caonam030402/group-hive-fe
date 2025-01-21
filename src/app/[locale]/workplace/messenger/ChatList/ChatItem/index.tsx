@@ -2,11 +2,11 @@
 
 import { Avatar } from "@nextui-org/avatar";
 import { useParams, useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import React from "react";
 
 import { PATH } from "@/constants";
 import { cn } from "@/libs/utils";
+import { userService } from "@/services/user";
 import type { IChat } from "@/types/chat";
 import { formatDateText } from "@/utils/formatDate";
 import { getUserFriend, renderFullName } from "@/utils/helpers";
@@ -20,7 +20,7 @@ export default function ChatItem({ item }: Props) {
   const router = useRouter();
   const isActive = item.id.toString() === params.id?.[0];
   const { lastMessage, id, name, avatar, userChats } = item;
-  const { data } = useSession();
+  const { user } = userService.useProfile();
 
   const handleClick = () => {
     router.push(`${PATH.MESSENGER}/${id}`);
@@ -33,7 +33,7 @@ export default function ChatItem({ item }: Props) {
     userMessage.lastName,
   );
 
-  const currentUser = Number(data?.user?.id);
+  const currentUser = Number(user?.id);
 
   const userFriend = getUserFriend({ currentUser, userChats });
 

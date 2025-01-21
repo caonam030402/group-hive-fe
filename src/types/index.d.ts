@@ -1,4 +1,4 @@
-import type { MutationOptions } from "@tanstack/react-query";
+import type { MutationOptions, UseQueryOptions } from "@tanstack/react-query";
 
 export interface IErrorResponse {
   statusCode: number;
@@ -30,10 +30,7 @@ interface IPaginationResponse<T> {
   pagination: IPagination;
 }
 
-type IOptionRQ = Omit<
-  UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-  "queryKey" | "queryFn" | "initialData"
-> & { initialData?: () => undefined };
+type IOptionRQ = Omit<UseQueryOptions<any>, "queryKey" | "queryFn">;
 
 type IOptionRQMutation = MutationOptions;
 

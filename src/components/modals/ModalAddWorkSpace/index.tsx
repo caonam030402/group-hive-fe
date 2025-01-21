@@ -10,13 +10,13 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { workSpaceKeyRQ } from "@/constants/keyRQ";
 import { workspaceService } from "@/services";
+import { userService } from "@/services/user";
 import type { WorkSpaceValidation } from "@/validations/workSpaceValidation";
 import workSpaceValidation from "@/validations/workSpaceValidation";
 
@@ -50,7 +50,7 @@ export default function ModalAddWorkSpace({
   });
   const queryClient = useQueryClient();
 
-  const { data: session } = useSession();
+  const { user } = userService.useProfile();
   const { mutate, isPending } = workspaceService.useCreate();
 
   const handleAddWorkSpace = (data: FormType) => {
@@ -58,7 +58,7 @@ export default function ModalAddWorkSpace({
       ...data,
       terms: undefined,
       owner: {
-        id: session?.user?.id ?? "",
+        id: user?.id ?? "",
       },
     };
     mutate(body, {
