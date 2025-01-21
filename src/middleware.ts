@@ -5,6 +5,7 @@ import createMiddleware from "next-intl/middleware";
 import authConfig from "./configs/auth/config";
 import { AppConfig } from "./configs/main/appConfig";
 import { PATH, PUBLIC_PAGES } from "./constants/common";
+import { EVerified } from "./enums/auth";
 
 const intlMiddleware = createMiddleware({
   locales: AppConfig.locales,
@@ -29,6 +30,8 @@ const authHandler = auth((req) => {
     (req.nextUrl.pathname === PATH.LOGIN ||
       req.nextUrl.pathname === PATH.REGISTER);
 
+  const isVerified = req.auth?.user?.isVerified === EVerified.VERIFIED;
+
   if (isProtected) {
     const newUrl = new URL(PATH.LOGIN, req.nextUrl.origin);
     return Response.redirect(newUrl);
@@ -36,6 +39,15 @@ const authHandler = auth((req) => {
 
   if (isRejected) {
     const newUrl = new URL(PATH.HOME, req.nextUrl.origin);
+    return Response.redirect(newUrl);
+  }
+
+  if (
+    !isVerified &&
+    req.nextUrl.pathname !== PATH.VERIFY &&
+    req.nextUrl.pathname !== PATH.LOGIN
+  ) {
+    const newUrl = new URL(PATH.VERIFY, req.nextUrl.origin);
     return Response.redirect(newUrl);
   }
 

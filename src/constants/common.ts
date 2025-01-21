@@ -6,6 +6,7 @@ export const PATH = {
   MESSENGER: "/workplace/messenger",
   GET_STARTED: "/get-started",
   INVITE_WORKSPACE: "/get-started/invite-workspace",
+  VERIFY: "/verify",
 };
 
 export const PUBLIC_PAGES = [

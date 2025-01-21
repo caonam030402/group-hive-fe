@@ -7,8 +7,11 @@ import React, { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { STEP_FORM_AUTH } from "@/app/[locale]/(auth)/register/constant";
+import { signOut } from "@/configs/auth";
+import { ENameLocalS } from "@/constants";
 import { cn } from "@/libs/utils";
 import type { IRequestConfirmOtp } from "@/types/auth";
+import { clearLocalStorage } from "@/utils/clientStorage";
 import { formatEmailHide } from "@/utils/helpers";
 
 interface IProps {
@@ -17,6 +20,7 @@ interface IProps {
   handleConfirmOtp: (body: IRequestConfirmOtp, userId: number) => void;
   isLoadingOtp: boolean;
   userId: number | undefined;
+  isLogout?: boolean;
   handleResendOtp: (userId: number) => void;
 }
 
@@ -25,6 +29,7 @@ export default function VerifyCodeMail({
   setStep,
   handleConfirmOtp,
   handleResendOtp,
+  isLogout = false,
   userId,
   isLoadingOtp,
 }: IProps) {
@@ -73,6 +78,11 @@ export default function VerifyCodeMail({
     return () => clearInterval(timerInterval);
   }, [timeRemaining]);
 
+  const handleLogout = () => {
+    signOut();
+    clearLocalStorage({ key: ENameLocalS.PROFILE });
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -83,9 +93,11 @@ export default function VerifyCodeMail({
           className="mb-3 min-w-0 gap-1 px-1 py-0 text-sm"
           size="sm"
           variant="light"
-          onClick={() => setStep?.(STEP_FORM_AUTH.FORM_AUTH)}
+          onPress={() =>
+            isLogout ? handleLogout() : setStep?.(STEP_FORM_AUTH.FORM_AUTH)
+          }
         >
-          <IoChevronBackOutline /> Back
+          <IoChevronBackOutline /> {isLogout ? "Logout" : "Back"}
         </Button>
         <h1 className="text-2xl font-bold ">Enter verification code</h1>
         <div className="my-2">

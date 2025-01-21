@@ -62,7 +62,7 @@ export default {
         });
 
         const user: User = {
-          ...payload.user,
+          isVerified: payload.user?.isVerified,
           id: payload.user?.id?.toString(),
           token: payload.token,
           refreshToken: payload.refreshToken,

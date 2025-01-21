@@ -16,7 +16,7 @@ export const userService = {
     setLocalStorage({ key: ENameLocalS.PROFILE, value: query.data?.payload });
     return {
       ...query,
-      user: userLs || query.data?.payload,
+      user: (userLs as IUser) || (query.data?.payload as IUser),
     };
   },
 };
