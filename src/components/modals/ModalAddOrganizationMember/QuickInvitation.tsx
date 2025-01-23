@@ -6,18 +6,20 @@ import React from "react";
 import toast from "react-hot-toast";
 
 import Divider from "@/components/common/Divider";
-import { ENameLocalS, PATH } from "@/constants";
+import { PATH } from "@/constants";
 import { workSpaceKeyRQ } from "@/constants/keyRQ";
+import useWorkspace from "@/hooks/useWorkspace";
 import { hostUrl } from "@/libs/i18nNavigation";
 import { workspaceService } from "@/services";
-import { getLocalStorage } from "@/utils/clientStorage";
 
 import ModalQrCode from "../ModalInviteQrCode";
 
 export default function QuickInvitation() {
-  const idWorkSpace = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
+  const { workspaceId } = useWorkspace();
 
-  const { data: inviteInfo } = workspaceService.useGetInviteById(idWorkSpace);
+  const { data: inviteInfo } = workspaceService.useGetInviteById(workspaceId, {
+    expendQueryKey: [workspaceId],
+  });
   const { mutate, isPending } = workspaceService.useUpdateInvite();
   const queryClient = useQueryClient();
 
@@ -76,7 +78,7 @@ export default function QuickInvitation() {
     },
   ];
   const handleResetInvite = () => {
-    mutate(idWorkSpace, {
+    mutate(workspaceId, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [workSpaceKeyRQ.invite] });
       },

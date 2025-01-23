@@ -30,7 +30,10 @@ interface IPaginationResponse<T> {
   pagination: IPagination;
 }
 
-type IOptionRQ = Omit<UseQueryOptions<any>, "queryKey" | "queryFn">;
+type IOptionRQ = { expendQueryKey?: string[] } & Omit<
+  UseQueryOptions<any>,
+  "queryKey" | "queryFn"
+>;
 
 type IOptionRQMutation = MutationOptions;
 

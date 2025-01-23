@@ -8,7 +8,7 @@ import http from "@/utils/http";
 export const workspaceService = {
   useGetInviteById: (id: IWorkspace["id"] | null, option?: IOptionRQ) => {
     const query = useQueryCommon({
-      queryKey: [workSpaceKeyRQ.invite],
+      queryKey: [workSpaceKeyRQ.invite, ...(option?.expendQueryKey ?? [])],
       queryFn: () => http.get<IInviteWorkspace>(`workspaces/invite/${id}`),
       ...option,
     });
@@ -56,6 +56,18 @@ export const workspaceService = {
           body: {
             emails: listEmail,
           },
+        });
+      },
+    });
+  },
+  useJoin: () => {
+    return useMutation({
+      mutationFn: async (body: {
+        workspaceId: IWorkspace["id"];
+        userId: IUser["id"];
+      }) => {
+        return http.post<null>("workspaces/join", {
+          body,
         });
       },
     });

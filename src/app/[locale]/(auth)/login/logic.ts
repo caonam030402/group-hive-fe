@@ -5,14 +5,15 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { authCredential } from "@/configs/auth";
-import { ENameLocalS, ETriggerCredentials, PATH } from "@/constants";
+import { ETriggerCredentials, PATH } from "@/constants";
+import useWorkspace from "@/hooks/useWorkspace";
 import type { IFormTypeAuth, IFormTypeLogin } from "@/types/form";
-import { getLocalStorage } from "@/utils/clientStorage";
 import authValidation from "@/validations/authValidation";
 
 const rules = authValidation.pick({ email: true, password: true });
 
 export default function useLogin() {
+  const { workspaceId } = useWorkspace();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +41,7 @@ export default function useLogin() {
 
       setIsLoading(false);
     } else {
-      const isHasIdWS = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
+      const isHasIdWS = !!workspaceId;
       toast.success("Login successfully !");
       setIsLoading(false);
       router.push(isHasIdWS ? PATH.WORKPLACE : PATH.HOME);

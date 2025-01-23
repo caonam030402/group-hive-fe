@@ -3,11 +3,13 @@
 import { Button, Image, Link } from "@nextui-org/react";
 import { useSearchParams } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 import Card from "@/components/common/Card";
 import Header from "@/components/layouts/Header";
 import { PATH } from "@/constants";
 import { bgBluePink } from "@/constants/bgImage";
+import useWorkspace from "@/hooks/useWorkspace";
 import { cn } from "@/libs/utils";
 import { workspaceService } from "@/services";
 import { userService } from "@/services/user";
@@ -20,6 +22,23 @@ export default function InviteWorkspace() {
   const { data: inviteInfo } = workspaceService.useGetInviteById(id, {
     enabled: !!id,
   });
+  const { handleSaveAndNavigateToWorkplace } = useWorkspace();
+
+  const { mutate } = workspaceService.useJoin();
+
+  const handleJoin = () => {
+    if (id) {
+      mutate(
+        { workspaceId: id, userId: user?.id },
+        {
+          onSuccess: () => {
+            toast.success("Join workspace successfully");
+            handleSaveAndNavigateToWorkplace(id);
+          },
+        },
+      );
+    }
+  };
 
   return (
     <>
@@ -57,6 +76,7 @@ export default function InviteWorkspace() {
               className={cn("mt-3 w-full", {
                 "cursor-not-allowed": !isAuth,
               })}
+              onPress={() => handleJoin()}
             >
               Join Now
             </Button>

@@ -1,12 +1,10 @@
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 import Card from "@/components/common/Card";
-import { ENameLocalS, PATH } from "@/constants";
-import { setLocalStorage } from "@/utils/clientStorage";
+import useWorkspace from "@/hooks/useWorkspace";
 
 interface IProps {
   listWorkSpace: IWorkspace[] | undefined;
@@ -14,11 +12,10 @@ interface IProps {
 }
 
 export default function ListWorkSpace({ listWorkSpace, onAddOpen }: IProps) {
-  const router = useRouter();
+  const { handleSaveAndNavigateToWorkplace } = useWorkspace();
   if (!listWorkSpace) return <div />;
   const handleLaunch = (id: string) => {
-    setLocalStorage({ key: ENameLocalS.WORKSPACE_ID, value: id });
-    router.push(PATH.WORKPLACE);
+    handleSaveAndNavigateToWorkplace(id);
   };
   return (
     <Card classNames={{ base: "h-auto mt-4 w-[80%] mx-auto" }}>
