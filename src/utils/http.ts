@@ -27,6 +27,8 @@ const request = async <Response>(
   url: string,
   options: IRequestInit,
 ) => {
+  const abortController = new AbortController();
+  const { signal } = abortController;
   try {
     const baseUrl = Env.NEXT_PUBLIC_API_URL;
 
@@ -53,6 +55,7 @@ const request = async <Response>(
         ...options?.headers,
       },
       body,
+      signal,
     });
 
     let payload: Response | null = null;

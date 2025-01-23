@@ -1,16 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-
 import { ENameLocalS } from "@/constants";
+import useQueryCommon from "@/hooks/useQuery";
 import { getLocalStorage, setLocalStorage } from "@/utils/clientStorage";
 import http from "@/utils/http";
 
 export const userService = {
   useProfile: () => {
     const userLs = getLocalStorage({ key: ENameLocalS.PROFILE });
-    const query = useQuery({
+    const query = useQueryCommon({
       queryFn: () => http.get<IUser>("auth/me"),
       queryKey: ["profile"],
-      staleTime: 1000 * 60 * 60 * 24,
       enabled: !userLs,
     });
     setLocalStorage({ key: ENameLocalS.PROFILE, value: query.data?.payload });

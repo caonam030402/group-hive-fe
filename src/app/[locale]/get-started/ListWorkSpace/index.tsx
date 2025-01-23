@@ -16,7 +16,7 @@ interface IProps {
 export default function ListWorkSpace({ listWorkSpace, onAddOpen }: IProps) {
   const router = useRouter();
   if (!listWorkSpace) return <div />;
-  const handleLaunch = (id: number) => {
+  const handleLaunch = (id: string) => {
     setLocalStorage({ key: ENameLocalS.WORKSPACE_ID, value: id });
     router.push(PATH.WORKPLACE);
   };
@@ -40,7 +40,7 @@ export default function ListWorkSpace({ listWorkSpace, onAddOpen }: IProps) {
                 </div>
               </div>
             </div>
-            <Button onPress={() => handleLaunch(+item.id)} size="sm">
+            <Button onPress={() => handleLaunch(item.id)} size="sm">
               Launch
             </Button>
           </div>

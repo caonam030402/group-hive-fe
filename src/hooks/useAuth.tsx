@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 
 import { authCredential } from "@/configs/auth/action";
@@ -14,42 +14,48 @@ export default function useAuth() {
   const [isLoading, setIsLoading] = useState(false);
   const { mutate, isPending } = authService.useGenerateOtp();
 
-  const handleConfirmOtp = async (body: IRequestConfirmOtp, userId: number) => {
-    setIsLoading(true);
-    const res = await authCredential({
-      trigger: ETriggerCredentials.OTP,
-      userId,
-      code: body.code,
-    });
+  const handleConfirmOtp = useCallback(
+    async (body: IRequestConfirmOtp, userId: number) => {
+      setIsLoading(true);
+      const res = await authCredential({
+        trigger: ETriggerCredentials.OTP,
+        userId,
+        code: body.code,
+      });
 
-    if (res?.error) {
+      if (res?.error) {
+        setIsLoading(false);
+        toast.error(res.error);
+        return;
+      }
+
+      toast.success("Verify OTP successfully !");
+
+      const isHasIdWS = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
+      router.push(isHasIdWS ? PATH.WORKPLACE : PATH.HOME);
+
       setIsLoading(false);
-      toast.error(res.error);
-      return;
-    }
+      router.push("/");
+    },
+    [router],
+  );
 
-    toast.success("Verify OTP successfully !");
-
-    const isHasIdWS = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
-    router.push(isHasIdWS ? PATH.WORKPLACE : PATH.HOME);
-
-    setIsLoading(false);
-    router.push("/");
-  };
-
-  const handleResendOtp = (userId: number) => {
-    mutate(
-      {
-        user: { id: userId || 0 },
-        expiresTime: 60,
-      },
-      {
-        onSuccess: () => {
-          toast.success("Resend OTP successfully");
+  const handleResendOtp = useCallback(
+    (userId: number) => {
+      mutate(
+        {
+          user: { id: userId || 0 },
+          expiresTime: 60,
         },
-      },
-    );
-  };
+        {
+          onSuccess: () => {
+            toast.success("Resend OTP successfully");
+          },
+        },
+      );
+    },
+    [mutate],
+  );
 
   return {
     handleConfirmOtp,

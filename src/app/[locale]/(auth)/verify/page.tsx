@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import VerifyCodeMail from "@/components/business/VerifyCodeMail";
 import useAuth from "@/hooks/useAuth";
@@ -11,6 +11,12 @@ import IntroSection from "../login/IntroSection";
 export default function Verify() {
   const { handleConfirmOtp, handleResendOtp, isLoadingAuth } = useAuth();
   const { user } = userService.useProfile();
+
+  useEffect(() => {
+    if (!user?.id) return;
+    handleResendOtp(user?.id || 0);
+  }, [handleResendOtp, user?.id]);
+
   return (
     <div>
       <section className="flex h-screen text-sm">
