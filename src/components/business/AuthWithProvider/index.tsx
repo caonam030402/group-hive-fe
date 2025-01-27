@@ -1,9 +1,7 @@
 "use client";
 
 import { Button } from "@nextui-org/button";
-import { FaApple } from "@react-icons/all-files/fa/FaApple";
-import { FaFacebookF } from "@react-icons/all-files/fa/FaFacebookF";
-import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
+import { FacebookLogo, GoogleLogo } from "@phosphor-icons/react";
 import React from "react";
 
 import Divider from "@/components/common/Divider";
@@ -13,17 +11,17 @@ const listItemProvider = [
   {
     name: "Google",
     provider: "google",
-    icon: <FcGoogle />,
+    icon: <GoogleLogo size={20} />,
   },
-  {
-    name: "Apple",
-    provider: "apple",
-    icon: <FaApple />,
-  },
+  // {
+  //   name: "Apple",
+  //   provider: "apple",
+  //   icon: <AppleLogo size={20} />,
+  // },
   {
     name: "Facebook",
     provider: "facebook",
-    icon: <FaFacebookF />,
+    icon: <FacebookLogo size={20} />,
   },
 ];
 

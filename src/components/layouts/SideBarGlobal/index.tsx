@@ -6,6 +6,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import QuickCreate from "@/components/business/QuickCreate";
+import QuickSearch from "@/components/business/QuickSearch";
 import UserSetting from "@/components/business/UserSetting";
 import { cn } from "@/libs/utils";
 import { userService } from "@/services/user";
@@ -60,9 +61,9 @@ export default function SideBarGlobal() {
           </div>
           <ListItemSideBar />
         </div>
-        <div className={cn("space-y-2 w-full mb-3", isBetweenStyle)}>
+        <div className={cn("space-y-4 w-full mb-3", isBetweenStyle)}>
           {isCollapsedSideBar && <QuickCreate />}
-          {/* <QuickSearch isExpanded={!isCollapsedSideBar} /> */}
+          <QuickSearch isExpanded={!isCollapsedSideBar} />
         </div>
       </div>
       <div

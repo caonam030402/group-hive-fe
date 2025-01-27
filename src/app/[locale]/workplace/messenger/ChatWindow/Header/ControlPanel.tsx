@@ -1,10 +1,7 @@
 "use client";
 
 import { Tab, Tabs } from "@nextui-org/react";
-import { GiPin } from "@react-icons/all-files/gi/GiPin";
-import { GoFileDirectory } from "@react-icons/all-files/go/GoFileDirectory";
-import { IoMdChatboxes } from "@react-icons/all-files/io/IoMdChatboxes";
-import { IoMdDocument } from "@react-icons/all-files/io/IoMdDocument";
+import { Chat, FileText, Folder, PushPin } from "@phosphor-icons/react";
 import React from "react";
 
 export default function ControlPanel() {
@@ -12,22 +9,22 @@ export default function ControlPanel() {
     {
       id: "1",
       name: "Chat",
-      icon: <IoMdChatboxes size={12} />,
+      icon: <Chat size={12} />,
     },
     {
       id: "2",
       name: "Pinned",
-      icon: <GiPin size={12} />,
+      icon: <PushPin size={12} />,
     },
     {
       id: "3",
       name: "Docs",
-      icon: <IoMdDocument size={12} />,
+      icon: <FileText size={12} />,
     },
     {
       id: "4",
       name: "Files",
-      icon: <GoFileDirectory size={12} />,
+      icon: <Folder size={12} />,
     },
   ];
   return (

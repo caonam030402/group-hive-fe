@@ -1,9 +1,12 @@
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { FiEye } from "@react-icons/all-files/fi/FiEye";
-import { FiEyeOff } from "@react-icons/all-files/fi/FiEyeOff";
-import { FiLock } from "@react-icons/all-files/fi/FiLock";
-import { IoMailOutline } from "@react-icons/all-files/io5/IoMailOutline";
+import {
+  EnvelopeSimple,
+  Eye,
+  EyeSlash,
+  Lock,
+  User,
+} from "@phosphor-icons/react";
 import React, { useState } from "react";
 import { type UseFormReturn } from "react-hook-form";
 
@@ -60,7 +63,7 @@ export default function FormSignUp({
             isInvalid={!!errors.email?.message}
             type="email"
             startContent={
-              <IoMailOutline className="pointer-events-none shrink-0 text-xl text-default-400" />
+              <EnvelopeSimple className="pointer-events-none shrink-0 text-xl text-default-400" />
             }
             {...form.register("email")}
           />
@@ -72,7 +75,7 @@ export default function FormSignUp({
                 errorMessage={errors.firstName?.message}
                 isInvalid={!!errors.firstName?.message}
                 startContent={
-                  <IoMailOutline className="pointer-events-none shrink-0 text-xl text-default-400" />
+                  <User className="pointer-events-none shrink-0 text-xl text-default-400" />
                 }
                 {...form.register("firstName")}
               />
@@ -91,7 +94,7 @@ export default function FormSignUp({
             placeholder="password"
             isInvalid={!!errors.password?.message}
             startContent={
-              <FiLock className="pointer-events-none shrink-0 text-xl text-default-400" />
+              <Lock className="pointer-events-none shrink-0 text-xl text-default-400" />
             }
             endContent={
               <button
@@ -101,9 +104,9 @@ export default function FormSignUp({
                 aria-label="toggle password visibility"
               >
                 {isVisiblePassWord ? (
-                  <FiEyeOff className="pointer-events-none text-xl text-default-400" />
+                  <EyeSlash className="pointer-events-none text-xl text-default-400" />
                 ) : (
-                  <FiEye className="pointer-events-none text-xl text-default-400" />
+                  <Eye className="pointer-events-none text-xl text-default-400" />
                 )}
               </button>
             }
@@ -117,7 +120,7 @@ export default function FormSignUp({
               placeholder="confirm password"
               isInvalid={!!errors.confirmPassword?.message}
               startContent={
-                <FiLock className="pointer-events-none shrink-0 text-xl text-default-400" />
+                <Lock className="pointer-events-none shrink-0 text-xl text-default-400" />
               }
               endContent={
                 <button
@@ -127,9 +130,9 @@ export default function FormSignUp({
                   aria-label="toggle password visibility"
                 >
                   {isVisibleConfirmPassWord ? (
-                    <FiEyeOff className="pointer-events-none text-xl text-default-400" />
+                    <EyeSlash className="pointer-events-none text-xl text-default-400" />
                   ) : (
-                    <FiEye className="pointer-events-none text-xl text-default-400" />
+                    <Eye className="pointer-events-none text-xl text-default-400" />
                   )}
                 </button>
               }

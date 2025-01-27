@@ -1,9 +1,11 @@
 import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/react";
-import { AiOutlineUserAdd } from "@react-icons/all-files/ai/AiOutlineUserAdd";
-import { BiVideo } from "@react-icons/all-files/bi/BiVideo";
-import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots";
-import { GoSearch } from "@react-icons/all-files/go/GoSearch";
+import {
+  DotsThreeOutline,
+  MagnifyingGlass,
+  UserPlus,
+  VideoCamera,
+} from "@phosphor-icons/react";
 import React from "react";
 
 export default function ListAction() {
@@ -11,22 +13,22 @@ export default function ListAction() {
     {
       id: "1",
       name: "Search in chat",
-      icon: <GoSearch size={18} />,
+      icon: <MagnifyingGlass size={20} />,
     },
     {
       id: "2",
       name: "Start a video call",
-      icon: <BiVideo size={20} />,
+      icon: <VideoCamera size={20} />,
     },
     {
       id: "3",
       name: "Add member",
-      icon: <AiOutlineUserAdd size={20} />,
+      icon: <UserPlus size={20} />,
     },
     {
       id: "4",
       name: "Settings",
-      icon: <BsThreeDots size={20} />,
+      icon: <DotsThreeOutline size={20} />,
     },
   ];
   return (

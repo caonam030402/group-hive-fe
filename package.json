@@ -47,6 +47,7 @@
     "@nextui-org/spacer": "^2.2.5",
     "@nextui-org/system": "^2.4.5",
     "@nextui-org/theme": "^2.4.4",
+    "@phosphor-icons/react": "^2.1.7",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^2.3.0",
     "@sentry/nextjs": "^7.116.0",

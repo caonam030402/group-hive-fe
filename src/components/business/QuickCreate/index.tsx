@@ -8,12 +8,14 @@ import {
   DropdownTrigger,
 } from "@nextui-org/dropdown";
 import { useDisclosure } from "@nextui-org/modal";
-import { BiGroup } from "@react-icons/all-files/bi/BiGroup";
-import { BiVideo } from "@react-icons/all-files/bi/BiVideo";
-import { BiVideoPlus } from "@react-icons/all-files/bi/BiVideoPlus";
-import { FiPlus } from "@react-icons/all-files/fi/FiPlus";
+import {
+  Plus,
+  Presentation,
+  User,
+  Users,
+  VideoConference,
+} from "@phosphor-icons/react";
 import { FiUser } from "@react-icons/all-files/fi/FiUser";
-import { HiOutlineDocumentAdd } from "@react-icons/all-files/hi/HiOutlineDocumentAdd";
 import React from "react";
 
 import ModalAddOrganizationMember from "@/components/modals/ModalAddOrganizationMember";
@@ -35,7 +37,7 @@ export default function QuickCreate({ className }: Props) {
     {
       id: "1",
       name: "New Group",
-      icon: <BiGroup />,
+      icon: <Users />,
       shortcut: "⌘C",
     },
     {
@@ -48,19 +50,19 @@ export default function QuickCreate({ className }: Props) {
     {
       id: "3",
       name: "New Docs",
-      icon: <HiOutlineDocumentAdd />,
+      icon: <User />,
       shortcut: "⌘E",
     },
     {
       id: "4",
       name: "New Video Meeting",
-      icon: <BiVideoPlus />,
+      icon: <Presentation />,
       shortcut: "⌘F",
     },
     {
       id: "5",
       name: "Join Video Meeting",
-      icon: <BiVideo />,
+      icon: <VideoConference />,
       shortcut: "⌘G",
     },
   ];
@@ -73,7 +75,7 @@ export default function QuickCreate({ className }: Props) {
             isIconOnly
             className={cn("rounded-full size-2", className)}
           >
-            <FiPlus className="text-2xl" />
+            <Plus size={18} />
           </Button>
         </DropdownTrigger>
         <DropdownMenu

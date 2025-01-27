@@ -1,9 +1,11 @@
-import { FaCalendar } from "@react-icons/all-files/fa/FaCalendar";
-import { FaVideo } from "@react-icons/all-files/fa/FaVideo";
-import { HiViewGrid } from "@react-icons/all-files/hi/HiViewGrid";
-import { IoDocumentText } from "@react-icons/all-files/io5/IoDocumentText";
-import { MdContacts } from "@react-icons/all-files/md/MdContacts";
-import { RiMessage3Fill } from "@react-icons/all-files/ri/RiMessage3Fill";
+import {
+  AddressBookTabs,
+  CalendarDots,
+  ChatCenteredDots,
+  FileText,
+  SquaresFour,
+  VideoConference,
+} from "@phosphor-icons/react";
 import React from "react";
 
 import SectionSideBar from "./SectionSideBar";
@@ -13,55 +15,55 @@ export const listSidebarItems = [
     id: "1",
     title: "Messages",
     href: "/workplace/messenger",
-    icon: <RiMessage3Fill size={18} />,
+    icon: <ChatCenteredDots size={20} weight="fill" />,
     children: [],
   },
   {
     id: "2",
     title: "Meetings",
     href: "/workplace/meetings",
-    icon: <FaVideo size={18} />,
+    icon: <VideoConference size={20} weight="fill" />,
     children: [],
   },
   {
     id: "3",
     title: "Calendar",
     href: "/workplace/groups",
-    icon: <FaCalendar size={15} />,
+    icon: <CalendarDots size={20} weight="fill" />,
     children: [],
   },
   {
     id: "4",
     title: "Docs",
     href: "/workplace/contacts",
-    icon: <IoDocumentText size={18} />,
+    icon: <FileText size={20} weight="fill" />,
     children: [],
   },
   {
     id: "6",
     title: "Contact",
     href: "/workplace/settings",
-    icon: <MdContacts size={18} />,
+    icon: <AddressBookTabs size={20} weight="fill" />,
     children: [],
   },
   {
     id: "8",
     title: "Workplace",
     href: "/workplace/settings",
-    icon: <HiViewGrid size={23} />,
+    icon: <SquaresFour size={22} weight="fill" />,
     children: [
       {
         id: "5",
         title: "Contacts",
         href: "workplace/settings",
-        icon: <RiMessage3Fill />,
+        icon: <SquaresFour size={20} weight="fill" />,
         children: [],
       },
       {
         id: "6",
         title: "Favor",
         href: "/workplace/settings",
-        icon: <RiMessage3Fill />,
+        icon: <SquaresFour size={20} weight="fill" />,
         children: [],
       },
     ],
