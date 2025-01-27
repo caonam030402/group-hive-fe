@@ -39,15 +39,15 @@ const authHandler = auth((req) => {
 
   if (isRejected) {
     const newUrl = new URL(PATH.HOME, req.nextUrl.origin);
-    return Response.redirect(newUrl);
-  }
 
-  if (
-    !isVerified &&
-    req.nextUrl.pathname !== PATH.VERIFY &&
-    req.nextUrl.pathname !== PATH.LOGIN
-  ) {
-    const newUrl = new URL(PATH.VERIFY, req.nextUrl.origin);
+    if (
+      !isVerified &&
+      req.nextUrl.pathname !== PATH.VERIFY &&
+      req.nextUrl.pathname !== PATH.LOGIN
+    ) {
+      return Response.redirect(new URL(PATH.VERIFY, req.nextUrl.origin));
+    }
+
     return Response.redirect(newUrl);
   }
 

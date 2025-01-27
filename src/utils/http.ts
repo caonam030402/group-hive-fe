@@ -7,7 +7,7 @@ import { HttpStatusCode } from "@/constants/httpStatusCode";
 import { Env } from "@/libs/env";
 import type { IErrorResponse, IRequestInit } from "@/types";
 
-const isClient = typeof window !== "undefined";
+import { isClient } from "./common";
 
 export class HttpError extends Error {
   data: IErrorResponse;

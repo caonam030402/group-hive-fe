@@ -1,3 +1,5 @@
+import { isClient } from "./common";
+
 export const setLocalStorage = ({
   key,
   value,
@@ -5,13 +7,13 @@ export const setLocalStorage = ({
   key: string;
   value: unknown;
 }) => {
-  return value && localStorage.setItem(key, JSON.stringify(value));
+  return value && isClient && localStorage.setItem(key, JSON.stringify(value));
 };
 export const getLocalStorage = ({ key }: { key: string }) => {
-  const value = localStorage.getItem(key);
+  const value = isClient && localStorage.getItem(key);
   return value && JSON.parse(value);
 };
 
 export const clearLocalStorage = ({ key }: { key: string }) => {
-  localStorage.removeItem(key);
+  isClient && localStorage.removeItem(key);
 };
