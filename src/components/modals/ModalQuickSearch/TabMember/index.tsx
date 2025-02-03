@@ -4,7 +4,7 @@ import React from "react";
 import ArrayRepeater from "@/components/common/ArrayRepeater";
 import RenderCondition from "@/components/common/RenderCondition";
 import User from "@/components/common/User";
-import SkeletonUser from "@/components/skeleton/SkeletonUser";
+import SkeletonUser from "@/components/skeletons/SkeletonUser";
 import useWorkspace from "@/hooks/useWorkspace";
 import { workspaceService } from "@/services";
 import { renderFullName } from "@/utils/helpers";
