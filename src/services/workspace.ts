@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { workSpaceKeyRQ } from "@/constants/keyRQ";
-import useQueryInfiniteCommon, { useQueryCommon } from "@/hooks/useQuery";
+import { useQueryCommon, useQueryInfiniteCommon } from "@/hooks/useQuery";
 import type { IOptionRQ, IPaginationResponse } from "@/types";
 import http from "@/utils/http";
 
@@ -9,12 +9,7 @@ export const workspaceService = {
   useGetInviteById: (id: IWorkspace["id"] | null, option?: IOptionRQ) => {
     const query = useQueryCommon<IInviteWorkspace>({
       queryKey: [workSpaceKeyRQ.invite, ...(option?.expendQueryKey ?? [])],
-      queryFn: async () => {
-        const response = await http.get<IInviteWorkspace>(
-          `workspaces/invite/${id}`,
-        );
-        return response.payload;
-      },
+      url: `workspaces/invite/${id}`,
       ...option,
     });
     return {
