@@ -1,6 +1,6 @@
 "use client";
 
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
@@ -21,7 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={storeRef.current}>
-        <NextUIProvider>
+        <HeroUIProvider>
           <NextThemesProvider attribute="class" defaultTheme="light">
             <ProgressBar
               height="4px"
@@ -33,7 +33,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <Toaster />
           </NextThemesProvider>
           <ReactQueryDevtools initialIsOpen={false} />
-        </NextUIProvider>
+        </HeroUIProvider>
       </Provider>
     </QueryClientProvider>
   );

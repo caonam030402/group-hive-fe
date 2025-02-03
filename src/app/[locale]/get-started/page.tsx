@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
-import { useDisclosure } from "@nextui-org/react";
+import { Button } from "@heroui/button";
+import { useDisclosure } from "@heroui/react";
 import React from "react";
 
 import RenderCondition from "@/components/common/RenderCondition";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Image, Link } from "@nextui-org/react";
+import { Button, Image, Link } from "@heroui/react";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";

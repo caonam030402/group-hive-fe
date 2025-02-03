@@ -1,8 +1,8 @@
 "use client";
 
-import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
-import { Input } from "@nextui-org/input";
-import { Checkbox } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import { Input } from "@heroui/input";
+import { Checkbox } from "@heroui/react";
 import React from "react";
 import { Controller, type UseFormReturn } from "react-hook-form";
 

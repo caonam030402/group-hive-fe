@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@nextui-org/input";
+import { Input } from "@heroui/input";
 import React, { useRef, useState } from "react";
 
 interface IProps {

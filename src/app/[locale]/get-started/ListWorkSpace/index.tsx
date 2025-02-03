@@ -1,6 +1,6 @@
-import { Avatar } from "@nextui-org/avatar";
-import { Button } from "@nextui-org/button";
-import { Divider } from "@nextui-org/divider";
+import { Avatar } from "@heroui/avatar";
+import { Button } from "@heroui/button";
+import { Divider } from "@heroui/divider";
 import React from "react";
 
 import Card from "@/components/common/Card";

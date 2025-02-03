@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 import React from "react";
 
 import FormAuth from "@/components/business/FormAuth";

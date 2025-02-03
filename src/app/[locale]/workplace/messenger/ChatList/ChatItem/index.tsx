@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar } from "@nextui-org/avatar";
+import { Avatar } from "@heroui/avatar";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 

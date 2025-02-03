@@ -1,7 +1,7 @@
 "use client";
 
-import { Avatar } from "@nextui-org/avatar";
-import { Input } from "@nextui-org/input";
+import { Avatar } from "@heroui/avatar";
+import { Input } from "@heroui/input";
 import React from "react";
 
 import type { IProps } from ".";

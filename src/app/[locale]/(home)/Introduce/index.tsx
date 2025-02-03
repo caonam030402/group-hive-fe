@@ -1,5 +1,5 @@
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
 import { IoCloudDownloadOutline } from "@react-icons/all-files/io5/IoCloudDownloadOutline";
 import Image from "next/image";
 import React from "react";

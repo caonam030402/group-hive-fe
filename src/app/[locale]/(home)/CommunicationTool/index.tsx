@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem, Button } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button } from "@heroui/react";
 import { BiAnchor } from "@react-icons/all-files/bi/BiAnchor";
 import { BiBraille } from "@react-icons/all-files/bi/BiBraille";
 import { BiFile } from "@react-icons/all-files/bi/BiFile";

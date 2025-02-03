@@ -1,5 +1,5 @@
-import { Button } from "@nextui-org/button";
-import { useDisclosure } from "@nextui-org/modal";
+import { Button } from "@heroui/button";
+import { useDisclosure } from "@heroui/modal";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import React from "react";

@@ -4,7 +4,7 @@ import {
   CardFooter,
   CardHeader,
   type CardProps,
-} from "@nextui-org/card";
+} from "@heroui/card";
 import React from "react";
 
 import { cn } from "@/libs/utils";

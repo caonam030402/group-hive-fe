@@ -1,12 +1,16 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
+import { useDisclosure } from "@heroui/modal";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import React from "react";
+
+import ModalQuickSearch from "@/components/modals/ModalQuickSearch";
 
 interface Props {
   isExpanded?: boolean;
 }
 
 export default function QuickSearch({ isExpanded }: Props) {
+  const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   if (isExpanded) {
     return (
       <Button
@@ -18,8 +22,20 @@ export default function QuickSearch({ isExpanded }: Props) {
     );
   }
   return (
-    <Button size="sm" isIconOnly className="size-4 rounded-full">
-      <MagnifyingGlass size={18} />
-    </Button>
+    <>
+      <ModalQuickSearch
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        onClose={onClose}
+      />
+      <Button
+        onPress={onOpen}
+        size="sm"
+        isIconOnly
+        className="size-4 rounded-full"
+      >
+        <MagnifyingGlass size={18} />
+      </Button>
+    </>
   );
 }

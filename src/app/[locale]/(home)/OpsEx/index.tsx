@@ -1,4 +1,4 @@
-import { Tab, Tabs } from "@nextui-org/react";
+import { Tab, Tabs } from "@heroui/react";
 import { BiAnalyse } from "@react-icons/all-files/bi/BiAnalyse";
 import { BiBorderOuter } from "@react-icons/all-files/bi/BiBorderOuter";
 import { BiChat } from "@react-icons/all-files/bi/BiChat";

@@ -1,11 +1,11 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@nextui-org/modal";
+} from "@heroui/modal";
 import { toPng } from "html-to-image";
 import React, { useCallback, useRef } from "react";
 import toast from "react-hot-toast";

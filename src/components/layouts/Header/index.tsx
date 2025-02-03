@@ -5,7 +5,7 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 import UserSetting from "@/components/business/UserSetting";
 import Logo from "@/components/common/Logo";

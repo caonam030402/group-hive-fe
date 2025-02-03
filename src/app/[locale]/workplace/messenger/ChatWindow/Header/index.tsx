@@ -1,4 +1,4 @@
-import { Avatar } from "@nextui-org/avatar";
+import { Avatar } from "@heroui/avatar";
 import React from "react";
 
 import Divider from "@/components/common/Divider";

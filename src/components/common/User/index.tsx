@@ -1,4 +1,4 @@
-import { Avatar } from "@nextui-org/avatar";
+import { Avatar } from "@heroui/avatar";
 import React from "react";
 
 import { cn } from "@/libs/utils";
@@ -7,7 +7,7 @@ interface Props {
   info: {
     name?: string | null | undefined;
     email?: string | null | undefined;
-    avatar: string;
+    avatar?: string;
   };
   onlyAvatar?: boolean;
   shape?: "circle" | "square";
@@ -28,7 +28,7 @@ export default function User({ info, onlyAvatar, shape = "circle" }: Props) {
           <div className="overflow-hidden text-ellipsis text-base font-bold">
             {info.name}
           </div>
-          <div className="overflow-hidden text-ellipsis text-tiny">
+          <div className="color-contract-light overflow-hidden text-ellipsis text-tiny">
             {info.email}
           </div>
         </div>

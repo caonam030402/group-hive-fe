@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/dropdown";
-import { useDisclosure } from "@nextui-org/modal";
+} from "@heroui/dropdown";
+import { useDisclosure } from "@heroui/modal";
 import {
   Plus,
   Presentation,

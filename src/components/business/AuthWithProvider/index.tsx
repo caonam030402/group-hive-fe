@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { FacebookLogo, GoogleLogo } from "@phosphor-icons/react";
 import React from "react";
 

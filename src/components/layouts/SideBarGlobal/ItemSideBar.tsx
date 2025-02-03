@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
 import { useRouter } from "next-nprogress-bar";
 import React from "react";

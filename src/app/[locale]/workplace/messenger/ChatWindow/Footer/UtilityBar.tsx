@@ -1,4 +1,4 @@
-import { Button, Tooltip } from "@nextui-org/react";
+import { Button, Tooltip } from "@heroui/react";
 import { GrExpand } from "@react-icons/all-files/gr/GrExpand";
 import { HiOutlineEmojiHappy } from "@react-icons/all-files/hi/HiOutlineEmojiHappy";
 import { MdTextFormat } from "@react-icons/all-files/md/MdTextFormat";

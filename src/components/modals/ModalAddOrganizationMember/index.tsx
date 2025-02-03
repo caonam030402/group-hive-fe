@@ -1,12 +1,12 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@nextui-org/modal";
-import { Tab, Tabs } from "@nextui-org/react";
+} from "@heroui/modal";
+import { Tab, Tabs } from "@heroui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";

@@ -1,32 +1,37 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { workSpaceKeyRQ } from "@/constants/keyRQ";
-import useQueryCommon from "@/hooks/useQuery";
+import useQueryInfiniteCommon, { useQueryCommon } from "@/hooks/useQuery";
 import type { IOptionRQ, IPaginationResponse } from "@/types";
 import http from "@/utils/http";
 
 export const workspaceService = {
   useGetInviteById: (id: IWorkspace["id"] | null, option?: IOptionRQ) => {
-    const query = useQueryCommon({
+    const query = useQueryCommon<IInviteWorkspace>({
       queryKey: [workSpaceKeyRQ.invite, ...(option?.expendQueryKey ?? [])],
-      queryFn: () => http.get<IInviteWorkspace>(`workspaces/invite/${id}`),
+      queryFn: async () => {
+        const response = await http.get<IInviteWorkspace>(
+          `workspaces/invite/${id}`,
+        );
+        return response.payload;
+      },
       ...option,
     });
     return {
       ...query,
-      data: query.data?.payload,
+      data: query.data,
     };
   },
   useGet: (option?: IOptionRQ) => {
-    const query = useQueryCommon({
+    const query = useQueryInfiniteCommon<IPaginationResponse<IWorkspace>>({
       queryKey: [workSpaceKeyRQ.workspace],
-      queryFn: () => http.get<IPaginationResponse<IWorkspace>>("workspaces"),
+      url: "workspaces",
       ...option,
     });
 
     return {
       ...query,
-      data: query.data?.payload?.data,
+      data: query.data?.data,
     };
   },
   useUpdateInvite: () => {
@@ -71,5 +76,18 @@ export const workspaceService = {
         });
       },
     });
+  },
+  useGetMembers: (workspaceId: IWorkspace["id"], option?: IOptionRQ) => {
+    type Response = IPaginationResponse<IUser>;
+    const query = useQueryInfiniteCommon<Response>({
+      queryKey: [workSpaceKeyRQ.member],
+      url: `workspaces/members?workspaceId=${workspaceId}`,
+      ...option,
+    });
+
+    return {
+      ...query,
+      data: query.data?.data,
+    };
   },
 };

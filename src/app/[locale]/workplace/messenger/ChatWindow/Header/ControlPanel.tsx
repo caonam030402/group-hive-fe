@@ -1,6 +1,6 @@
 "use client";
 
-import { Tab, Tabs } from "@nextui-org/react";
+import { Tab, Tabs } from "@heroui/react";
 import { Chat, FileText, Folder, PushPin } from "@phosphor-icons/react";
 import React from "react";
 

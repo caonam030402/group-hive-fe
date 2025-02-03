@@ -79,10 +79,11 @@ const request = async <Response>(
       throw payloadErr;
     }
 
+    const responsePayload = payload as Response;
     const data = {
       ok: response.ok,
       status: response.status,
-      payload,
+      payload: responsePayload,
     };
 
     return data;

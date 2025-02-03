@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
-import { InputOtp } from "@nextui-org/input-otp";
+import { Button } from "@heroui/button";
+import { InputOtp } from "@heroui/input-otp";
 import { IoChevronBackOutline } from "@react-icons/all-files/io5/IoChevronBackOutline";
 import React, { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
