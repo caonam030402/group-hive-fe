@@ -69,7 +69,7 @@ export default function ModalQuickSearch({ isOpen, onOpenChange }: IPropModal) {
                 ))}
               </Tabs>
               <div className="min-h-80">
-                <TabMember />
+                <TabMember onClose={onClose} />
               </div>
             </ModalBody>
             <ModalFooter />

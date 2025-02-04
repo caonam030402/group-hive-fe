@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 import Divider from "@/components/common/Divider";
 import { PATH } from "@/constants";
-import { workSpaceKeyRQ } from "@/constants/keyRQ";
+import { keyRQ } from "@/constants/keyRQ";
 import useWorkspace from "@/hooks/useWorkspace";
 import { hostUrl } from "@/libs/i18nNavigation";
 import { workspaceService } from "@/services";
@@ -80,7 +80,7 @@ export default function QuickInvitation() {
   const handleResetInvite = () => {
     mutate(workspaceId, {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [workSpaceKeyRQ.invite] });
+        queryClient.invalidateQueries({ queryKey: [keyRQ.invite] });
       },
     });
   };

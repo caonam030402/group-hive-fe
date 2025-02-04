@@ -14,7 +14,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { workSpaceKeyRQ } from "@/constants/keyRQ";
+import { keyRQ } from "@/constants/keyRQ";
 import { workspaceService } from "@/services";
 import { userService } from "@/services/user";
 import type { WorkSpaceValidation } from "@/validations/workSpaceValidation";
@@ -65,7 +65,7 @@ export default function ModalAddWorkSpace({
       onSuccess: () => {
         toast.success("Workspace created successfully");
         onCloseAdd();
-        queryClient.invalidateQueries({ queryKey: [workSpaceKeyRQ.workspace] });
+        queryClient.invalidateQueries({ queryKey: [keyRQ.workspace] });
       },
     });
   };

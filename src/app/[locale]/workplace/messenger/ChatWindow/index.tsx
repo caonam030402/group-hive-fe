@@ -1,38 +1,32 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import Card from "@/components/common/Card";
-import useApi from "@/hooks/useApi";
-import { chatGetDetail, messageGet } from "@/services";
-import type { IChat, IMessage } from "@/types/chat";
+import { MessageInit } from "@/enums/chat";
 
+import { chatService } from "../../../../../services/chat";
 import Body from "./Body";
 import Footer from "./Footer";
 import Header from "./Header";
 
 export default function ChatWindow({ params }: { params: { id: string } }) {
-  const [chatDetail, setChatDetail] = React.useState<IChat | null>();
-  const [listMessage, setListMessage] = React.useState<IMessage[] | null>();
-  const { fetch } = useApi();
+  const enabled =
+    !!params.id && params.id[0] !== String(MessageInit.MESSAGE_ID_DEFAULT);
+  const { data: chatDetail } = chatService.useGetDetailMessage(params.id, {
+    enabled,
+  });
 
-  useEffect(() => {
-    fetch({
-      fn: chatGetDetail(params.id),
-      onSuccess: (data) => {
-        setChatDetail(data.payload);
+  const { data: listMessage } = chatService.useGetAllMessage(
+    {
+      filterRelational: {
+        field: "chat",
+        value: params.id,
       },
-    });
-    fetch({
-      fn: messageGet({
-        filterRelational: {
-          field: "chat",
-          value: params.id,
-        },
-      }),
-      onSuccess: (data) => {
-        setListMessage(data.payload?.data);
-      },
-    });
-  }, [params.id]);
+    },
+    {
+      enabled,
+    },
+  );
+
   return (
     <Card
       footer={<Footer />}

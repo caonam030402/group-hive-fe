@@ -14,3 +14,7 @@ export enum EMessageType {
   IMAGE = 2,
   FILE = 3,
 }
+
+export enum MessageInit {
+  MESSAGE_ID_DEFAULT = 0,
+}

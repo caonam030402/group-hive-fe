@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { workSpaceKeyRQ } from "@/constants/keyRQ";
+import { keyRQ } from "@/constants/keyRQ";
 import { useQueryCommon, useQueryInfiniteCommon } from "@/hooks/useQuery";
 import type { IOptionRQ, IPaginationResponse } from "@/types";
 import http from "@/utils/http";
@@ -8,7 +8,7 @@ import http from "@/utils/http";
 export const workspaceService = {
   useGetInviteById: (id: IWorkspace["id"] | null, option?: IOptionRQ) => {
     const query = useQueryCommon<IInviteWorkspace>({
-      queryKey: [workSpaceKeyRQ.invite, ...(option?.expendQueryKey ?? [])],
+      queryKey: [keyRQ.invite, ...(option?.expendQueryKey ?? [])],
       url: `workspaces/invite/${id}`,
       ...option,
     });
@@ -19,7 +19,7 @@ export const workspaceService = {
   },
   useGet: (option?: IOptionRQ) => {
     const query = useQueryInfiniteCommon<IPaginationResponse<IWorkspace>>({
-      queryKey: [workSpaceKeyRQ.workspace],
+      queryKey: [keyRQ.workspace],
       url: "workspaces",
       ...option,
     });
@@ -75,7 +75,7 @@ export const workspaceService = {
   useGetMembers: (workspaceId: IWorkspace["id"], option?: IOptionRQ) => {
     type Response = IPaginationResponse<IUser>;
     const query = useQueryInfiniteCommon<Response>({
-      queryKey: [workSpaceKeyRQ.member],
+      queryKey: [keyRQ.member],
       url: `workspaces/members?workspaceId=${workspaceId}`,
       ...option,
     });
