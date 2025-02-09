@@ -40,7 +40,7 @@ export const chatService = {
   useGetDetailMessage: (id: IMessage["id"], option?: IOptionRQ) => {
     const query = useQueryCommon<IChat>({
       queryKey: [keyRQ.messageDetail, id],
-      url: `message/${id}`,
+      url: `chat/${id}`,
       ...option,
     });
 

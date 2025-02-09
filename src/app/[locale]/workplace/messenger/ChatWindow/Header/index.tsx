@@ -1,6 +1,5 @@
 import { Avatar } from "@heroui/avatar";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 
 import Divider from "@/components/common/Divider";
 import { useChatStore } from "@/providers/chatStoreProvider";
@@ -18,7 +17,7 @@ interface IProps {
 export default function Header({ chatDetail }: IProps) {
   const { user: data } = userService.useProfile();
   const { userSelected } = useChatStore((state) => state);
-  const router = useRouter();
+  // const router = useRouter();
 
   const userFriend = getUserFriend({
     userChats: chatDetail?.userChats,
@@ -29,11 +28,11 @@ export default function Header({ chatDetail }: IProps) {
   const renderAvatar = user?.avatar;
   const renderName = renderFullName(user?.firstName, user?.lastName);
 
-  useEffect(() => {
-    if (!userSelected) {
-      router.push(`/workplace/messenger`);
-    }
-  }, [userSelected, router]);
+  // useEffect(() => {
+  //   if (!userSelected) {
+  //     router.push(`/workplace/messenger`);
+  //   }
+  // }, [userSelected, router]);
 
   return (
     <>

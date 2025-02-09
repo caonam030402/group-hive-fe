@@ -30,3 +30,16 @@ export const formatDateText = (date: string | dayjs.Dayjs) => {
   }
   return inputDate.tz(timezoneStr).format("MM/DD/YYYY");
 };
+
+export const formatTimeDisplay = (time: string): string => {
+  const now = dayjs();
+  const messageTime = dayjs(time);
+
+  if (messageTime.isSame(now, "day")) {
+    return messageTime.format("hh:mm A");
+  }
+  if (messageTime.year() === now.year()) {
+    return messageTime.format("DD/MM");
+  }
+  return messageTime.format("DD/MM/YYYY");
+};

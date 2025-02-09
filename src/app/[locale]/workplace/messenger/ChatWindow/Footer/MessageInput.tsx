@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
+import HardBreak from "@tiptap/extension-hard-break";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -9,7 +10,11 @@ import { cn } from "@/libs/utils";
 
 import UtilityBar from "./UtilityBar";
 
-export default function MessageInput() {
+interface IProps {
+  handleSendMessage: ({ content }: { content: string }) => void;
+}
+
+export default function MessageInput({ handleSendMessage }: IProps) {
   const [openEmojis, setOpenEmojis] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
@@ -20,27 +25,26 @@ export default function MessageInput() {
       Placeholder.configure({
         placeholder: "Send a message…",
       }),
+      HardBreak.extend({
+        addKeyboardShortcuts() {
+          return {
+            Enter: () => {
+              const content = this.editor.getHTML();
+              handleSendMessage({ content });
+              this.editor.commands.clearContent();
+              return true;
+            },
+          };
+        },
+      }),
     ],
-    // content: "<p>Hello World! 🌎️</p>",
     editorProps: {
       attributes: {
         class: "outline-none focus:ring-0",
         style: "word-break: break-word; overflow-wrap: break-word;",
       },
-      handleKeyPress(_view, event) {
-        if (event.key === "Enter") {
-          handleGetContent();
-        }
-      },
     },
   });
-
-  const handleGetContent = () => {
-    // if (editor) {
-    //   const htmlContent = editor.getHTML();
-    //   console.log(htmlContent);
-    // }
-  };
 
   const isOneLine = ref.current?.offsetHeight;
 

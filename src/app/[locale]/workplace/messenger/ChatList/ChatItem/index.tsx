@@ -8,7 +8,7 @@ import { PATH } from "@/constants";
 import { cn } from "@/libs/utils";
 import { userService } from "@/services/user";
 import type { IChat } from "@/types/chat";
-import { formatDateText } from "@/utils/formatDate";
+import { formatTimeDisplay } from "@/utils/formatDate";
 import { getUserFriend, renderFullName } from "@/utils/helpers";
 
 interface Props {
@@ -56,7 +56,9 @@ export default function ChatItem({ item }: Props) {
       <div className="w-full space-y-1 text-xs">
         <div className="flex justify-between">
           <p className="text-[14px] font-medium">{nameRender}</p>
-          <p className="text-zinc-500">{formatDateText(lastMessage.sentAt)}</p>
+          <p className="text-zinc-500">
+            {formatTimeDisplay(lastMessage.sentAt)}
+          </p>
         </div>
         <p className="line-clamp-1 text-start text-[11px] text-zinc-500">
           {authorSend}: {lastMessage?.content}
