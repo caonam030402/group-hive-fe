@@ -10,9 +10,10 @@ const TIME_THRESHOLD = 5 * 60 * 1000;
 
 interface IProps {
   listMessage: IMessage[] | null | undefined;
+  isChatPrivate?: boolean;
 }
 
-export default function Body({ listMessage }: IProps) {
+export default function Body({ listMessage, isChatPrivate }: IProps) {
   return (
     <div className="flex flex-col gap-3">
       {listMessage?.map((message, index) => {
@@ -32,12 +33,13 @@ export default function Body({ listMessage }: IProps) {
         return (
           <React.Fragment key={message.id}>
             {shouldShowTime && (
-              <p className="text-center text-xs text-gray-500">
+              <p className="color-contract-light text-center text-[11px]">
                 {formatTimeDisplay(message.sentAt)}
               </p>
             )}
             <MessageItem
               message={message}
+              isChatPrivate={isChatPrivate}
               showAvatarAndName={shouldShowAvatar}
             />
           </React.Fragment>

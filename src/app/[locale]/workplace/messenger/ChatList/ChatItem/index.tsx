@@ -41,6 +41,7 @@ export default function ChatItem({ item }: Props) {
   const nameRender =
     renderFullName(userFriend?.user.firstName, userFriend?.user.lastName) ||
     name;
+
   return (
     <button
       type="button"
@@ -56,10 +57,11 @@ export default function ChatItem({ item }: Props) {
       <div className="w-full space-y-1 text-xs">
         <div className="flex justify-between">
           <p className="text-[14px] font-medium">{nameRender}</p>
-          <p className="text-zinc-500">
+          <p className="color-contract-light text-[11px]">
             {formatTimeDisplay(lastMessage.sentAt)}
           </p>
         </div>
+
         <p className="line-clamp-1 text-start text-[11px] text-zinc-500">
           {authorSend}: {lastMessage?.content}
         </p>

@@ -1,7 +1,7 @@
 import React from "react";
 
 import Card from "@/components/common/Card";
-import { MessageInit } from "@/enums/chat";
+import { EChatType, MessageInit } from "@/enums/chat";
 import useWorkspace from "@/hooks/useWorkspace";
 import { socket } from "@/libs/socket";
 import { userService } from "@/services/user";
@@ -56,6 +56,8 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
     });
   };
 
+  const isChatPrivate = chatDetail?.chatType === EChatType.PRIVATE;
+
   return (
     <Card
       footer={
@@ -68,7 +70,7 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       }}
       header={<Header chatDetail={chatDetail} />}
     >
-      <Body listMessage={listMessage} />
+      <Body isChatPrivate={isChatPrivate} listMessage={listMessage} />
     </Card>
   );
 }
