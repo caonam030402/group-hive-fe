@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useState } from "react";
 
 import Card from "@/components/common/Card";
 import { keyRQ } from "@/constants/keyRQ";
@@ -26,6 +26,7 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
   const { workspaceId } = useWorkspace();
   const { user } = userService.useProfile();
   const queryClient = useQueryClient();
+  const [idSend, setIdSend] = useState("");
 
   const enabled =
     !!params.id && params.id[0] !== String(MessageInit.MESSAGE_ID_DEFAULT);
@@ -66,6 +67,8 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       user,
     };
 
+    setIdSend(`id-${dayjs().format()}`);
+
     queryClient.setQueryData<IPaginationResponse<IMessage>>(
       [keyRQ.message, params.id],
       (oldData) => {
@@ -99,6 +102,10 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       classNames={{
         header: "p-0",
         footer: "overflow-visible",
+      }}
+      autoScroll={{
+        position: "bottom",
+        valueChange: idSend,
       }}
       header={<Header chatDetail={chatDetail} />}
     >

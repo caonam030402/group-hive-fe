@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card as CardUI,
   CardBody,
@@ -5,7 +7,7 @@ import {
   CardHeader,
   type CardProps,
 } from "@heroui/card";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { cn } from "@/libs/utils";
 
@@ -20,6 +22,10 @@ interface IProps extends CardProps {
     base?: string;
   };
   isDecorative?: boolean;
+  autoScroll?: {
+    position: "top" | "bottom";
+    valueChange: string;
+  };
 }
 export default function Card({
   children,
@@ -27,8 +33,18 @@ export default function Card({
   classNames,
   footer,
   isDecorative = true,
+  autoScroll,
   ...props
 }: IProps) {
+  const refBody = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (refBody.current) {
+      refBody.current.scrollTop =
+        autoScroll?.position === "bottom" ? refBody.current.scrollHeight : 0;
+    }
+  }, [autoScroll]);
+
   return (
     <CardUI
       classNames={{
@@ -48,14 +64,16 @@ export default function Card({
           {header}
         </CardHeader>
       )}
-      <CardBody
-        className={cn(
-          "size-full flex-1 scroll py-3 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100    dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-1",
-          classNames?.body,
-        )}
-      >
-        {children}
-      </CardBody>
+      <div className="scroll" ref={refBody}>
+        <CardBody
+          className={cn(
+            "size-full flex-1 py-3 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100    dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-1",
+            classNames?.body,
+          )}
+        >
+          {children}
+        </CardBody>
+      </div>
       {footer && (
         <CardFooter className={classNames?.footer}>{footer}</CardFooter>
       )}
