@@ -27,7 +27,8 @@ interface IPagination {
 
 interface IPaginationResponse<T> {
   data: T[];
-  pagination: IPagination;
+  hasNextPage: boolean;
+  pagination?: IPagination;
 }
 
 type IOptionRQCustom = { expendQueryKey?: string[]; url?: string };

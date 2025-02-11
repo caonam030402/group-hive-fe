@@ -2,6 +2,8 @@ import { Tooltip } from "@heroui/react";
 import React from "react";
 
 import User from "@/components/common/User";
+import { cn } from "@/libs/utils";
+import { userService } from "@/services/user";
 import type { IMessage } from "@/types/chat";
 import { formatTimeDisplay } from "@/utils/formatDate";
 import { renderFullName } from "@/utils/helpers";
@@ -19,6 +21,9 @@ export default function MessageItem({
 }: IProps) {
   const { content, user } = message;
   const fullName = renderFullName(user.firstName, user.lastName);
+  const { user: me } = userService.useProfile();
+
+  const itsMe = me.id === user.id;
 
   return (
     <div className="flex items-start gap-2">
@@ -40,7 +45,9 @@ export default function MessageItem({
           }
         >
           <p
-            className="rounded-md bg-zinc-200/70 p-2 text-sm"
+            className={cn("rounded-md bg-zinc-200/70 p-2 text-sm", {
+              "bg-primary-50": itsMe,
+            })}
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </Tooltip>

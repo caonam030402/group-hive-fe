@@ -7,6 +7,7 @@ export enum EMessageStatus {
   SENT = 1,
   DELIVERED = 2,
   READ = 3,
+  PENDING = 4,
 }
 
 export enum EMessageType {

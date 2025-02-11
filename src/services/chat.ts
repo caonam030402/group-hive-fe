@@ -28,7 +28,7 @@ export const chatService = {
   useGetAllMessage: (queryS: IQueryGetApi, option?: IOptionRQ) => {
     const queryString = buildQueryParamsGet(queryS);
     const query = useQueryInfiniteCommon<IPaginationResponse<IMessage>>({
-      queryKey: [keyRQ.message],
+      queryKey: [keyRQ.message, ...(option?.expendQueryKey || [])],
       url: `message?${queryString}`,
       ...option,
     });

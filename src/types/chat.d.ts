@@ -1,8 +1,9 @@
-import type { EChatType, EMessageType } from "@/enums/chat";
+import type { EChatType, EMessageStatus, EMessageType } from "@/enums/chat";
 
 interface IMessage {
-  id: string;
+  id?: string;
   type: EMessageType;
+  status: EMessageStatus;
   content: string;
   user: IUser;
   sentAt: string;
