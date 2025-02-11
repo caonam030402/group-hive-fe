@@ -7,6 +7,7 @@ import EmojiPicker from "emoji-picker-react";
 import React, { useRef, useState } from "react";
 
 import { cn } from "@/libs/utils";
+import { isEmpty } from "@/utils/common";
 
 import UtilityBar from "./UtilityBar";
 
@@ -30,7 +31,8 @@ export default function MessageInput({ handleSendMessage }: IProps) {
           return {
             Enter: () => {
               const content = this.editor.getHTML();
-              handleSendMessage({ content });
+
+              !isEmpty(content) && handleSendMessage({ content });
               this.editor.commands.clearContent();
               return true;
             },
