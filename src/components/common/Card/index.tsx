@@ -64,7 +64,7 @@ export default function Card({
           {header}
         </CardHeader>
       )}
-      <div className="scroll" ref={refBody}>
+      <div className="scroll h-full" ref={refBody}>
         <CardBody
           className={cn(
             "size-full flex-1 py-3 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100    dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-1",

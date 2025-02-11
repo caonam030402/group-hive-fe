@@ -13,7 +13,9 @@ type Props = {
 
 export default function LayoutMessenger({ children }: Props) {
   useEffect(() => {
-    socket.connect();
+    if (!socket.connected) {
+      socket.connect();
+    }
 
     return () => {
       socket.disconnect();
