@@ -58,6 +58,9 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
   );
 
   const handleSendMessage = ({ content }: { content: string }) => {
+    const isDefault = params.id[0] === String(MessageInit.MESSAGE_ID_DEFAULT);
+    idSendRef.current = `id-${dayjs().format("[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]")}`;
+
     const newMessage = {
       id: `id-${dayjs().format()}`,
       content,
@@ -66,8 +69,6 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       status: EMessageStatus.PENDING,
       user,
     };
-
-    idSendRef.current = `id-${dayjs().format("[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]")}`;
 
     queryClient.setQueryData<IPaginationResponse<IMessage>>(
       [keyRQ.message, params.id],
@@ -78,8 +79,6 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
         return { data: [newMessage], hasNextPage: false };
       },
     );
-
-    const isDefault = params.id[0] === String(MessageInit.MESSAGE_ID_DEFAULT);
 
     socket.emit("send-message-private", {
       recipientId: recipientUser?.id,

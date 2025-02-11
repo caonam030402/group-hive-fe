@@ -30,7 +30,7 @@ export default function ChatItem({ item }: Props) {
     router.push(`${PATH.MESSENGER}/${id}?recipientId=${idFriend}`);
   };
 
-  const userMessage = lastMessage.user;
+  const userMessage = lastMessage?.user;
 
   const authorSend = renderFullName(
     userMessage.firstName,

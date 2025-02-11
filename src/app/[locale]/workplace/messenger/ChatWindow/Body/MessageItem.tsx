@@ -26,7 +26,9 @@ export default function MessageItem({
   const itsMe = me.id === user.id;
 
   return (
-    <div className="flex items-start gap-2">
+    <div
+      className={cn("flex items-start gap-2", { "mt-4": showAvatarAndName })}
+    >
       <div className="w-[40px]">
         {showAvatarAndName && (
           <User onlyAvatar info={{ avatar: user.avatar ?? "" }} />
