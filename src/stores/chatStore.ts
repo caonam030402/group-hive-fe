@@ -1,7 +1,7 @@
 import { createStore } from "zustand/vanilla";
 
 export type ChatState = {
-  userSelected: IUser | null;
+  userSelected: IUser | undefined;
 };
 
 export type ChatActions = {
@@ -11,7 +11,7 @@ export type ChatActions = {
 export type ChatStore = ChatState & ChatActions;
 
 export const defaultInitState: ChatState = {
-  userSelected: null,
+  userSelected: undefined,
 };
 
 export const createChatStore = (initState: ChatState = defaultInitState) => {

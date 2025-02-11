@@ -26,7 +26,9 @@ export default function TabMember({ onClose }: IProps) {
   const handleNavigate = (user: IUser) => {
     setUserSelected(user);
     onClose();
-    router.push(`/workplace/messenger/${MessageInit.MESSAGE_ID_DEFAULT}`);
+    router.push(
+      `/workplace/messenger/${MessageInit.MESSAGE_ID_DEFAULT}?recipientId=${user.id}`,
+    );
   };
 
   return (

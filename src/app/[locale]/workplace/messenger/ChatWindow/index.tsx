@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useRef } from "react";
 
 import Card from "@/components/common/Card";
 import { keyRQ } from "@/constants/keyRQ";
@@ -15,7 +16,6 @@ import { socket } from "@/libs/socket";
 import { userService } from "@/services/user";
 import type { IPaginationResponse } from "@/types";
 import type { IMessage } from "@/types/chat";
-import { getUserFriend } from "@/utils/helpers";
 
 import { chatService } from "../../../../../services/chat";
 import Body from "./Body";
@@ -25,15 +25,22 @@ import Header from "./Header";
 export default function ChatWindow({ params }: { params: { id: string } }) {
   const { workspaceId } = useWorkspace();
   const { user } = userService.useProfile();
+  const searchParams = useSearchParams();
+  const recipientId = searchParams.get("recipientId");
   const queryClient = useQueryClient();
-  const [idSend, setIdSend] = useState("");
+  const idSendRef = useRef<string | null>(null);
 
   const enabled =
     !!params.id && params.id[0] !== String(MessageInit.MESSAGE_ID_DEFAULT);
-  const { data: chatDetail, isLoading } = chatService.useGetDetailMessage(
-    params.id,
+
+  const { data: chatDetail } = chatService.useGetDetailMessage(params.id, {
+    enabled,
+  });
+
+  const { data: recipientUser, isLoading } = userService.useGetOneUser(
+    Number(recipientId),
     {
-      enabled,
+      enabled: !!recipientId,
     },
   );
 
@@ -50,13 +57,6 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
     },
   );
 
-  const userFriend = getUserFriend({
-    userChats: chatDetail?.userChats,
-    currentUser: Number(user?.id),
-  });
-
-  const idUserFriend = userFriend?.user.id;
-
   const handleSendMessage = ({ content }: { content: string }) => {
     const newMessage = {
       id: `id-${dayjs().format()}`,
@@ -67,7 +67,7 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       user,
     };
 
-    setIdSend(`id-${dayjs().format()}`);
+    idSendRef.current = `id-${dayjs().format("[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]")}`;
 
     queryClient.setQueryData<IPaginationResponse<IMessage>>(
       [keyRQ.message, params.id],
@@ -79,20 +79,38 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       },
     );
 
+    const isDefault = params.id[0] === String(MessageInit.MESSAGE_ID_DEFAULT);
+
     socket.emit("send-message-private", {
-      recipientId: Number(idUserFriend),
-      chatId:
-        params?.id === String(MessageInit.MESSAGE_ID_DEFAULT)
-          ? undefined
-          : params.id[0],
+      recipientId: recipientUser?.id,
+      chatId: isDefault ? undefined : params.id[0],
       content,
       type: 1,
       workspaceId,
     });
   };
 
-  const isChatPrivate = chatDetail?.chatType === EChatType.PRIVATE;
+  useEffect(() => {
+    const handleReceiveMessage = (newMessage: IMessage) => {
+      queryClient.setQueryData<IPaginationResponse<IMessage>>(
+        [keyRQ.message, params.id],
+        (oldData) => {
+          if (oldData) {
+            return { ...oldData, data: [...oldData.data, newMessage] };
+          }
+          return { data: [newMessage], hasNextPage: false };
+        },
+      );
+    };
 
+    socket.on("receive-message", handleReceiveMessage);
+
+    return () => {
+      socket.off("receive-message", handleReceiveMessage);
+    };
+  }, [params.id, queryClient]);
+
+  const isChatPrivate = chatDetail?.chatType === EChatType.PRIVATE;
   return (
     <Card
       footer={
@@ -105,9 +123,9 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       }}
       autoScroll={{
         position: "bottom",
-        valueChange: idSend,
+        valueChange: idSendRef.current ?? "",
       }}
-      header={<Header chatDetail={chatDetail} />}
+      header={<Header recipientUser={recipientUser} />}
     >
       <Body isChatPrivate={isChatPrivate} listMessage={listMessage} />
     </Card>

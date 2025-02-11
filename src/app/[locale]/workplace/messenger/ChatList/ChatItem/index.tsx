@@ -21,9 +21,13 @@ export default function ChatItem({ item }: Props) {
   const isActive = item.id.toString() === params.id?.[0];
   const { lastMessage, id, name, avatar, userChats } = item;
   const { user } = userService.useProfile();
+  const idFriend = getUserFriend({
+    userChats: item.userChats,
+    currentUser: user.id,
+  })?.user.id;
 
   const handleClick = () => {
-    router.push(`${PATH.MESSENGER}/${id}`);
+    router.push(`${PATH.MESSENGER}/${id}?recipientId=${idFriend}`);
   };
 
   const userMessage = lastMessage.user;

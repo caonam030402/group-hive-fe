@@ -2,37 +2,21 @@ import { Avatar } from "@heroui/avatar";
 import React from "react";
 
 import Divider from "@/components/common/Divider";
-import { useChatStore } from "@/providers/chatStoreProvider";
-import { userService } from "@/services/user";
-import type { IChat } from "@/types/chat";
-import { getUserFriend, renderFullName } from "@/utils/helpers";
+import { renderFullName } from "@/utils/helpers";
 
 import ControlPanel from "./ControlPanel";
 import ListAction from "./ListAction";
 
 interface IProps {
-  chatDetail: IChat | null | undefined;
+  recipientUser: IUser | undefined;
 }
 
-export default function Header({ chatDetail }: IProps) {
-  const { user: data } = userService.useProfile();
-  const { userSelected } = useChatStore((state) => state);
-  // const router = useRouter();
-
-  const userFriend = getUserFriend({
-    userChats: chatDetail?.userChats,
-    currentUser: Number(data?.id),
-  });
-
-  const user = userSelected || userFriend?.user;
-  const renderAvatar = user?.avatar;
-  const renderName = renderFullName(user?.firstName, user?.lastName);
-
-  // useEffect(() => {
-  //   if (!userSelected) {
-  //     router.push(`/workplace/messenger`);
-  //   }
-  // }, [userSelected, router]);
+export default function Header({ recipientUser }: IProps) {
+  const renderAvatar = recipientUser?.avatar;
+  const renderName = renderFullName(
+    recipientUser?.firstName,
+    recipientUser?.lastName,
+  );
 
   return (
     <>
