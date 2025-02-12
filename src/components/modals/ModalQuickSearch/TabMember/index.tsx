@@ -1,4 +1,5 @@
 import { ArrowSquareOut } from "@phosphor-icons/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next-nprogress-bar";
 import React from "react";
 
@@ -6,10 +7,11 @@ import ArrayRepeater from "@/components/common/ArrayRepeater";
 import RenderCondition from "@/components/common/RenderCondition";
 import User from "@/components/common/User";
 import SkeletonUser from "@/components/skeletons/SkeletonUser";
-import { MessageInit } from "@/enums/chat";
+import { keyRQ } from "@/constants/keyRQ";
+import { EChatType } from "@/enums/chat";
 import useWorkspace from "@/hooks/useWorkspace";
-import { useChatStore } from "@/providers/chatStoreProvider";
-import { workspaceService } from "@/services";
+import { chatService, workspaceService } from "@/services";
+import { userService } from "@/services/user";
 import { renderFullName } from "@/utils/helpers";
 
 interface IProps {
@@ -19,15 +21,40 @@ interface IProps {
 export default function TabMember({ onClose }: IProps) {
   const { workspaceId } = useWorkspace();
   const router = useRouter();
+  const { user } = userService.useProfile();
 
-  const { setUserSelected } = useChatStore((state) => state);
+  const { mutate } = chatService.useCreateChat();
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = workspaceService.useGetMembers(workspaceId);
-  const handleNavigate = (user: IUser) => {
-    setUserSelected(user);
-    onClose();
-    router.push(
-      `/workplace/messenger/${MessageInit.MESSAGE_ID_DEFAULT}?recipientId=${user.id}`,
+
+  const handleNavigate = (userRecipient: IUser) => {
+    mutate(
+      {
+        hasCheck: true,
+        chatType: EChatType.PRIVATE,
+        userChats: [
+          {
+            user: { id: userRecipient.id },
+          },
+          {
+            user: { id: user.id },
+          },
+        ],
+        workspace: {
+          id: workspaceId,
+        } as IWorkspace,
+      },
+      {
+        onSuccess: (res) => {
+          const chatId = res.payload.id;
+          onClose();
+          router.replace(
+            `/workplace/messenger/${chatId}?recipientId=${userRecipient.id}`,
+          );
+          queryClient.invalidateQueries({ queryKey: [keyRQ.chat] });
+        },
+      },
     );
   };
 

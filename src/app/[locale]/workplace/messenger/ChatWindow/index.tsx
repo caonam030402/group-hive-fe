@@ -79,7 +79,6 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
         return { data: [newMessage], hasNextPage: false };
       },
     );
-
     socket.emit("send-message-private", {
       recipientId: recipientUser?.id,
       chatId: isDefault ? undefined : params.id[0],
@@ -87,6 +86,8 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       type: 1,
       workspaceId,
     });
+
+    queryClient.invalidateQueries({ queryKey: [keyRQ.chat] });
   };
 
   useEffect(() => {
@@ -100,6 +101,7 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
           return { data: [newMessage], hasNextPage: false };
         },
       );
+      queryClient.refetchQueries({ queryKey: [keyRQ.chat] });
     };
 
     socket.on("receive-message", handleReceiveMessage);

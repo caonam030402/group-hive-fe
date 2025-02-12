@@ -1,39 +1,23 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 
 import Card from "@/components/common/Card";
 import { ENameLocalS } from "@/constants";
-import useApi from "@/hooks/useApi";
-import { chatGet } from "@/services";
-import type { IChat } from "@/types/chat";
+import { chatService } from "@/services";
 import { getLocalStorage } from "@/utils/clientStorage";
 
 import ChatItem from "./ChatItem";
 import SearchChat from "./SearchChat";
 
 export default function ChatList() {
-  const [listChat, setListChat] = React.useState<IChat[]>();
-  const { fetch } = useApi();
   const chatId = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
-
-  const handleFetch = () => {
-    fetch({
-      fn: chatGet({
-        filterRelational: {
-          field: "workspace",
-          value: chatId,
-        },
-      }),
-      onSuccess: (data) => {
-        setListChat(data.payload?.data);
-      },
-    });
-  };
-
-  useEffect(() => {
-    handleFetch();
-  }, []);
+  const { data: listChat } = chatService.useGetAllChat({
+    filterRelational: {
+      field: "workspace",
+      value: chatId,
+    },
+  });
 
   return (
     <Card

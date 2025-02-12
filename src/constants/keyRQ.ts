@@ -4,4 +4,5 @@ export const keyRQ = {
   member: "member",
   messageDetail: "messageDetail",
   message: "messageAll",
+  chat: "chatAll",
 };

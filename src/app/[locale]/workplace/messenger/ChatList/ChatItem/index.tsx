@@ -33,8 +33,8 @@ export default function ChatItem({ item }: Props) {
   const userMessage = lastMessage?.user;
 
   const authorSend = renderFullName(
-    userMessage.firstName,
-    userMessage.lastName,
+    userMessage?.firstName,
+    userMessage?.lastName,
   );
 
   const currentUser = Number(user?.id);
@@ -62,13 +62,16 @@ export default function ChatItem({ item }: Props) {
         <div className="flex justify-between">
           <p className="text-[14px] font-medium">{nameRender}</p>
           <p className="color-contract-light text-[11px]">
-            {formatTimeDisplay(lastMessage.sentAt)}
+            {formatTimeDisplay(lastMessage?.sentAt)}
           </p>
         </div>
-
-        <div className="flex w-full items-center text-start text-[11px] text-zinc-500">
-          {authorSend}:
-          <p className="line-clamp-1 flex-1">{lastMessage?.content}</p>
+        <div className="flex h-4 w-full items-center text-start text-[11px] text-zinc-500">
+          {lastMessage && (
+            <>
+              {authorSend}:
+              <p className="line-clamp-1 flex-1">{lastMessage?.content}</p>
+            </>
+          )}
         </div>
       </div>
     </button>

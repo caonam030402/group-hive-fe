@@ -1,7 +1,10 @@
+import { useMutation } from "@tanstack/react-query";
+
 import { keyRQ } from "@/constants/keyRQ";
+import type { EChatType } from "@/enums/chat";
 import { useQueryCommon, useQueryInfiniteCommon } from "@/hooks/useQuery";
 import type { IOptionRQ, IPaginationResponse, IQueryGetApi } from "@/types";
-import type { IChat, IMessage } from "@/types/chat";
+import type { IChat, IMessage, IUserChat } from "@/types/chat";
 import { buildQueryParamsGet } from "@/utils/buildQueryParams";
 import http from "@/utils/http";
 
@@ -25,6 +28,33 @@ export const messageGet = (query: IQueryGetApi) => {
 };
 
 export const chatService = {
+  useCreateChat: () => {
+    return useMutation({
+      mutationFn: async (body: {
+        userChats: IUserChat[];
+        chatType: EChatType;
+        workspace: IWorkspace;
+        hasCheck: boolean;
+      }) => {
+        return http.post<IChat>("chat", {
+          body,
+        });
+      },
+    });
+  },
+
+  useGetAllChat: (queryS: IQueryGetApi, option?: IOptionRQ) => {
+    const queryString = buildQueryParamsGet(queryS);
+    const query = useQueryInfiniteCommon<IPaginationResponse<IChat>>({
+      queryKey: [keyRQ.chat],
+      url: `chat?${queryString}`,
+      ...option,
+    });
+    return {
+      ...query,
+      data: query.data?.data,
+    };
+  },
   useGetAllMessage: (queryS: IQueryGetApi, option?: IOptionRQ) => {
     const queryString = buildQueryParamsGet(queryS);
     const query = useQueryInfiniteCommon<IPaginationResponse<IMessage>>({
