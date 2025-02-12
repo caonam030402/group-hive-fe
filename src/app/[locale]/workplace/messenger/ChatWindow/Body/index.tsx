@@ -15,7 +15,7 @@ interface IProps {
 
 export default function Body({ listMessage, isChatPrivate }: IProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       {listMessage?.map((message, index) => {
         const prevMessage = listMessage[index - 1];
 

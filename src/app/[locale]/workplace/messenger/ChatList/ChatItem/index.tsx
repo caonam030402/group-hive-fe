@@ -58,7 +58,7 @@ export default function ChatItem({ item }: Props) {
         <Avatar className="shrink-0" src={avatarRender} />
         <div className="absolute bottom-[6%] right-0 size-[9px] rounded-full border border-white bg-green-500" />
       </div>
-      <div className="w-full space-y-1 text-xs">
+      <div className="w-1 flex-1 space-y-1 text-xs">
         <div className="flex justify-between">
           <p className="text-[14px] font-medium">{nameRender}</p>
           <p className="color-contract-light text-[11px]">
@@ -66,9 +66,10 @@ export default function ChatItem({ item }: Props) {
           </p>
         </div>
 
-        <p className="line-clamp-1 text-start text-[11px] text-zinc-500">
-          {authorSend}: {lastMessage?.content}
-        </p>
+        <div className="flex w-full items-center text-start text-[11px] text-zinc-500">
+          {authorSend}:
+          <p className="line-clamp-1 flex-1">{lastMessage?.content}</p>
+        </div>
       </div>
     </button>
   );

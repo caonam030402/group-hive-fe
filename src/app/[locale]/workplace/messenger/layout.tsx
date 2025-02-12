@@ -24,7 +24,7 @@ export default function LayoutMessenger({ children }: Props) {
   return (
     <Card classNames={{ body: "h-full flex-1, p-0" }}>
       <div className="flex h-full overflow-hidden">
-        <div className="h-full w-[18%] border-r">
+        <div className="h-full w-[23%] border-r">
           <ChatList />
         </div>
         <div className="h-full flex-1">{children}</div>

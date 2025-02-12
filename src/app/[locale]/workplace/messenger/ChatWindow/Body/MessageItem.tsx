@@ -27,14 +27,17 @@ export default function MessageItem({
 
   return (
     <div
-      className={cn("flex items-start gap-2", { "mt-4": showAvatarAndName })}
+      className={cn("flex items-start gap-2 w-full", {
+        "mt-4": showAvatarAndName,
+        "justify-end": itsMe,
+      })}
     >
       <div className="w-[40px]">
-        {showAvatarAndName && (
+        {showAvatarAndName && !itsMe && (
           <User onlyAvatar info={{ avatar: user.avatar ?? "" }} />
         )}
       </div>
-      <div>
+      <div className="max-w-[calc(100vw-700px)]">
         {showAvatarAndName && (
           <p className="text-[13px]">{!isChatPrivate && fullName}</p>
         )}
