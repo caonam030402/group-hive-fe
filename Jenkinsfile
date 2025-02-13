@@ -1,8 +1,8 @@
 pipeline {
 	agent any
-	tools {
-		nodejs 'NodeJS'
-	}
+	// tools {
+	// 	nodejs 'NodeJS'
+	// }
 	environment {
 		DOCKER_HUB_CREDENTIALS_ID = 'dockerhub-credentials'
 		DOCKER_HUB_REPO = 'caonam81/grouphive'
