@@ -5,8 +5,8 @@ import React from "react";
 
 import ArrayRepeater from "@/components/common/ArrayRepeater";
 import RenderCondition from "@/components/common/RenderCondition";
+import SkeletonUser from "@/components/common/Skeletons/SkeletonUser";
 import User from "@/components/common/User";
-import SkeletonUser from "@/components/skeletons/SkeletonUser";
 import { keyRQ } from "@/constants/keyRQ";
 import { EChatType } from "@/enums/chat";
 import useWorkspace from "@/hooks/useWorkspace";
