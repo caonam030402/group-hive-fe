@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar } from "@heroui/avatar";
+import DOMPurify from "dompurify";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
@@ -46,6 +47,8 @@ export default function ChatItem({ item }: Props) {
     renderFullName(userFriend?.user.firstName, userFriend?.user.lastName) ||
     name;
 
+  const sanitizedHtmlContent = DOMPurify.sanitize(lastMessage.content);
+
   return (
     <button
       type="button"
@@ -69,7 +72,10 @@ export default function ChatItem({ item }: Props) {
           {lastMessage && (
             <>
               {authorSend}:
-              <p className="line-clamp-1 flex-1">{lastMessage?.content}</p>
+              <p
+                dangerouslySetInnerHTML={{ __html: sanitizedHtmlContent }}
+                className="line-clamp-1 flex-1"
+              />
             </>
           )}
         </div>

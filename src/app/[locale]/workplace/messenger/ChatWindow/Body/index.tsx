@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import React from "react";
 
+import Divider from "@/components/common/Divider";
 import type { IMessage } from "@/types/chat";
 import { formatTimeDisplay } from "@/utils/formatDate";
 
@@ -33,9 +34,13 @@ export default function Body({ listMessage, isChatPrivate }: IProps) {
         return (
           <React.Fragment key={message.id}>
             {shouldShowTime && (
-              <p className="color-contract-light text-center text-[11px]">
-                {formatTimeDisplay(message.sentAt)}
-              </p>
+              <div className="flex items-center">
+                <Divider />
+                <p className="color-contract-light my-5 min-w-[100px] text-center text-[11px]">
+                  {formatTimeDisplay(message.sentAt)}
+                </p>
+                <Divider />
+              </div>
             )}
             <MessageItem
               message={message}
