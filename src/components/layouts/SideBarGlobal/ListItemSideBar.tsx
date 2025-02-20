@@ -35,7 +35,7 @@ export const listSidebarItems = [
   {
     id: "4",
     title: "Docs",
-    href: "/workplace/contacts",
+    href: "/workplace/docs",
     icon: <FileText size={20} weight="fill" />,
     children: [],
   },

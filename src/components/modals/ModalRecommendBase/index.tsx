@@ -1,0 +1,85 @@
+import {
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Select,
+  SelectItem,
+} from "@heroui/react";
+import { Funnel, MagnifyingGlass } from "@phosphor-icons/react";
+import React from "react";
+
+import Divider from "@/components/common/Divider";
+import { EListBase } from "@/enums/docs";
+
+import SideContent from "./SideContent";
+import SideNav from "./SideNav";
+
+interface IProps {
+  isOpen: boolean;
+  onOpenChange: () => void;
+  activeKey: EListBase | undefined;
+  setActiveKey: React.Dispatch<React.SetStateAction<EListBase | undefined>>;
+}
+
+export const listBase = [
+  { key: "", label: "All Type" },
+  { key: EListBase.DOC, label: "Docs" },
+  { key: EListBase.FORM, label: "Form" },
+  { key: EListBase.SHEET, label: "Sheet" },
+  { key: EListBase.SLIDE, label: "Slide" },
+];
+
+export default function ModalRecommendBase({
+  isOpen,
+  onOpenChange,
+  activeKey,
+  setActiveKey,
+}: IProps) {
+  return (
+    <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <ModalContent>
+        {() => (
+          <>
+            <ModalHeader className="mt-4 flex justify-between gap-1">
+              <div>Templates</div>
+              <div className="flex gap-3">
+                <Input
+                  className="w-[300px]"
+                  size="sm"
+                  startContent={<MagnifyingGlass />}
+                  placeholder="Search template"
+                />
+                <Select
+                  onSelectionChange={(key) =>
+                    setActiveKey(key as unknown as EListBase)
+                  }
+                  color="primary"
+                  defaultSelectedKeys={activeKey?.toString()}
+                  disableSelectorIconRotation
+                  size="sm"
+                  selectorIcon={<Funnel />}
+                  className="w-[100px]"
+                >
+                  {listBase.map((item) => (
+                    <SelectItem key={item.key}>{item.label}</SelectItem>
+                  ))}
+                </Select>
+              </div>
+            </ModalHeader>
+            <ModalBody>
+              <div className="flex gap-5">
+                <SideNav />
+                <Divider vertical />
+                <SideContent />
+              </div>
+            </ModalBody>
+            <ModalFooter />
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  );
+}
