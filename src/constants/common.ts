@@ -7,6 +7,8 @@ export const PATH = {
   GET_STARTED: "/get-started",
   INVITE_WORKSPACE: "/get-started/invite-workspace",
   VERIFY: "/verify",
+  FORGOT_PASSWORD: "/forgot-password",
+  BASE_DOC: "/workplace/base/doc",
 };
 
 export const PUBLIC_PAGES = [
