@@ -60,7 +60,7 @@ const rows = [
   },
 ];
 
-export default function Bases() {
+export default function ListBase() {
   const [tabActive, setTabActive] = React.useState(ETabKey.RECENT);
   console.log(tabActive);
   const tab = () => {

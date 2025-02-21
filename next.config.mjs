@@ -26,7 +26,7 @@ export default withSentryConfig(
       poweredByHeader: false,
       reactStrictMode: true,
       images: {
-        domains: ['framerusercontent.com'],
+        domains: ['framerusercontent.com', 'media.gcflearnfree.org'],
       },
     }),
   ),

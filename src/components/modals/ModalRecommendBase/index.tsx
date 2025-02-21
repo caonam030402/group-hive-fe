@@ -11,7 +11,6 @@ import {
 import { Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import React from "react";
 
-import Divider from "@/components/common/Divider";
 import { EListBase } from "@/enums/docs";
 
 import SideContent from "./SideContent";
@@ -39,7 +38,11 @@ export default function ModalRecommendBase({
   setActiveKey,
 }: IProps) {
   return (
-    <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal
+      classNames={{ base: "max-w-[60vw]" }}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+    >
       <ModalContent>
         {() => (
           <>
@@ -69,10 +72,9 @@ export default function ModalRecommendBase({
                 </Select>
               </div>
             </ModalHeader>
-            <ModalBody>
-              <div className="flex gap-5">
+            <ModalBody className="border-t p-0">
+              <div className="flex">
                 <SideNav />
-                <Divider vertical />
                 <SideContent />
               </div>
             </ModalBody>
