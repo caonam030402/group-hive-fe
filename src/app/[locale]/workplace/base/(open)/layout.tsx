@@ -11,10 +11,10 @@ export default function BaseMainLayout({
   return (
     <Card classNames={{ body: "w-full h-full px-0" }}>
       <div className="flex h-full">
-        <div className="w-[18%] border-r">
+        <div className="flex-1  border-r">
           <Folder />
         </div>
-        <div className="flex-1">{children}</div>
+        <div className="w-[82%]">{children}</div>
       </div>
     </Card>
   );
