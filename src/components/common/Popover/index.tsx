@@ -11,9 +11,9 @@ import type React from "react";
 interface IProps {
   trigger: React.ReactNode;
   children: React.ReactNode;
-  props: PopoverProps;
-  propsContent: PopoverContentProps;
-  propsTrigger: PopoverTriggerProps;
+  props?: PopoverProps;
+  propsContent?: PopoverContentProps;
+  propsTrigger?: PopoverTriggerProps;
 }
 
 export default function Popover({
