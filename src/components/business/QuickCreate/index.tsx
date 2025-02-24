@@ -1,7 +1,9 @@
 "use client";
 
+import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/modal";
 import {
+  Plus,
   Presentation,
   User,
   Users,
@@ -11,6 +13,7 @@ import React from "react";
 
 import Dropdown from "@/components/common/Dropdown";
 import ModalAddOrganizationMember from "@/components/modals/ModalAddOrganizationMember";
+import { cn } from "@/libs/utils";
 
 export default function QuickCreate() {
   const {
@@ -54,7 +57,14 @@ export default function QuickCreate() {
   ];
   return (
     <>
-      <Dropdown listItem={listQuickCreate} />
+      <Dropdown
+        trigger={
+          <Button size="sm" isIconOnly className={cn("rounded-full size-2")}>
+            <Plus size={18} />
+          </Button>
+        }
+        listItem={listQuickCreate}
+      />
       <ModalAddOrganizationMember
         isOpen={isOpenModalAddExternal}
         onOpenChange={onOpenChangeModalAddExternal}

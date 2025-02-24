@@ -1,4 +1,3 @@
-import { Button } from "@heroui/button";
 import {
   Dropdown as DropdownComponent,
   DropdownItem,
@@ -8,21 +7,16 @@ import {
   DropdownTrigger,
   type DropdownTriggerProps,
 } from "@heroui/dropdown";
-import { cn } from "@heroui/theme";
-import { Plus } from "@phosphor-icons/react";
 import React from "react";
 
+import type { IItemDropDown } from "@/types/common";
+
 interface IProps {
-  listItem: {
-    id: string;
-    name: string;
-    icon: React.JSX.Element;
-    shortcut?: string;
-    action: () => void;
-  }[];
-  props?: DropdownProps;
+  listItem: IItemDropDown[];
+  props?: Omit<DropdownProps, "children">;
   propsMenu?: DropdownMenuProps;
   propsTrigger?: DropdownTriggerProps;
+  trigger: React.ReactNode;
 }
 
 export default function Dropdown({
@@ -30,14 +24,11 @@ export default function Dropdown({
   props,
   propsMenu,
   propsTrigger,
+  trigger,
 }: IProps) {
   return (
     <DropdownComponent placement="left-start" {...props}>
-      <DropdownTrigger {...propsTrigger}>
-        <Button size="sm" isIconOnly className={cn("rounded-full size-2")}>
-          <Plus size={18} />
-        </Button>
-      </DropdownTrigger>
+      <DropdownTrigger {...propsTrigger}>{trigger}</DropdownTrigger>
       <DropdownMenu
         variant="faded"
         aria-label="Dropdown menu with description"

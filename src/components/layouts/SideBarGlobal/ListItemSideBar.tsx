@@ -8,6 +8,8 @@ import {
 } from "@phosphor-icons/react";
 import React from "react";
 
+import { PATH } from "@/constants";
+
 import SectionSideBar from "./SectionSideBar";
 
 export const listSidebarItems = [
@@ -35,7 +37,7 @@ export const listSidebarItems = [
   {
     id: "4",
     title: "Docs",
-    href: "/workplace/base",
+    href: PATH.BASE_HOME,
     icon: <FileText size={20} weight="fill" />,
     children: [],
   },
