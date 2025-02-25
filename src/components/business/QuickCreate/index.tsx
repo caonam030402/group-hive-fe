@@ -1,12 +1,6 @@
 "use client";
 
 import { Button } from "@heroui/button";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@heroui/dropdown";
 import { useDisclosure } from "@heroui/modal";
 import {
   Plus,
@@ -15,17 +9,13 @@ import {
   Users,
   VideoConference,
 } from "@phosphor-icons/react";
-import { FiUser } from "@react-icons/all-files/fi/FiUser";
 import React from "react";
 
+import Dropdown from "@/components/common/Dropdown";
 import ModalAddOrganizationMember from "@/components/modals/ModalAddOrganizationMember";
 import { cn } from "@/libs/utils";
 
-interface Props {
-  className?: string;
-}
-
-export default function QuickCreate({ className }: Props) {
+export default function QuickCreate() {
   const {
     isOpen: isOpenModalAddExternal,
     onOpen: onOpenModalAddExternal,
@@ -38,62 +28,43 @@ export default function QuickCreate({ className }: Props) {
       id: "1",
       name: "New Group",
       icon: <Users />,
-      shortcut: "⌘C",
+      action: () => null,
     },
     {
       id: "2",
       name: "Add External Contact",
-      icon: <FiUser />,
-      shortcut: "⌘D",
+      icon: <Users />,
       action: () => onOpenModalAddExternal(),
     },
     {
       id: "3",
       name: "New Docs",
       icon: <User />,
-      shortcut: "⌘E",
+      action: () => null,
     },
     {
       id: "4",
       name: "New Video Meeting",
       icon: <Presentation />,
-      shortcut: "⌘F",
+      action: () => null,
     },
     {
       id: "5",
       name: "Join Video Meeting",
       icon: <VideoConference />,
-      shortcut: "⌘G",
+      action: () => null,
     },
   ];
   return (
     <>
-      <Dropdown placement="left-start">
-        <DropdownTrigger>
-          <Button
-            size="sm"
-            isIconOnly
-            className={cn("rounded-full size-2", className)}
-          >
+      <Dropdown
+        trigger={
+          <Button size="sm" isIconOnly className={cn("rounded-full size-2")}>
             <Plus size={18} />
           </Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          variant="faded"
-          aria-label="Dropdown menu with description"
-        >
-          {listQuickCreate.map((item) => (
-            <DropdownItem
-              onPress={() => item.action && item.action()}
-              key={item.id}
-              // shortcut={item.shortcut}
-              startContent={<span>{item.icon}</span>}
-            >
-              {item.name}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
+        }
+        listItem={listQuickCreate}
+      />
       <ModalAddOrganizationMember
         isOpen={isOpenModalAddExternal}
         onOpenChange={onOpenChangeModalAddExternal}
