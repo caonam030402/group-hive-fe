@@ -1,4 +1,8 @@
-import type { MutationOptions, UseQueryOptions } from "@tanstack/react-query";
+import type {
+  MutationOptions,
+  UseInfiniteQueryOptions,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 
 export interface IErrorResponse {
   statusCode: number;
@@ -35,6 +39,9 @@ type IOptionRQCustom = { expendQueryKey?: string[]; url?: string };
 
 type IOptionRQ = IOptionRQCustom &
   Omit<UseQueryOptions<any>, "queryKey" | "queryFn">;
+
+type IOptionRQI = IOptionRQCustom &
+  Omit<UseInfiniteQueryOptions<any>, "queryKey" | "queryFn">;
 
 type IOptionRQMutation = MutationOptions;
 

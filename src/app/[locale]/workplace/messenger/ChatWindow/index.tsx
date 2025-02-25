@@ -66,7 +66,7 @@ export default function ChatWindow({ params }: { params: { id: string } }) {
       content,
       sentAt: dayjs().format(),
       type: EMessageType.TEXT,
-      status: EMessageStatus.PENDING,
+      status: EMessageStatus.READ,
       user,
     };
 

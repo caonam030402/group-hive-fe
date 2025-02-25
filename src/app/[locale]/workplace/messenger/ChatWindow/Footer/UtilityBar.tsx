@@ -1,8 +1,8 @@
 import { Button, Tooltip } from "@heroui/react";
-import { GrExpand } from "@react-icons/all-files/gr/GrExpand";
-import { HiOutlineEmojiHappy } from "@react-icons/all-files/hi/HiOutlineEmojiHappy";
-import { MdTextFormat } from "@react-icons/all-files/md/MdTextFormat";
+import { ArrowsOutSimple, Smiley, TextAa } from "@phosphor-icons/react";
 import React from "react";
+
+import ListBoxMore from "./ListBoxMore";
 
 interface IProps {
   setOpenEmojis: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,23 +13,23 @@ export default function UtilityBar({ setOpenEmojis }: IProps) {
     {
       id: "1",
       name: "Formatting",
-      icon: <MdTextFormat size={23} />,
+      icon: <TextAa size={18} />,
     },
     {
       id: "2",
       name: "Emoji",
-      icon: <HiOutlineEmojiHappy size={18} />,
+      icon: <Smiley size={18} />,
       action: () => setOpenEmojis(true),
     },
-    // {
-    //   id: "3",
-    //   name: "Mention",
-    //   icon: "@",
-    // },
+    {
+      id: "1",
+      name: "More",
+      icon: <ListBoxMore />,
+    },
     {
       id: "4",
       name: "Expend",
-      icon: <GrExpand size={13} />,
+      icon: <ArrowsOutSimple size={18} />,
     },
   ];
 
