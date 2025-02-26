@@ -77,7 +77,7 @@ export default function Doc() {
       )}
 
       <div className="mt-14 max-w-[55vw]">
-        <div className="px-14">
+        <div className="mb-3 px-14">
           <Tooltip
             placement="top-start"
             classNames={{

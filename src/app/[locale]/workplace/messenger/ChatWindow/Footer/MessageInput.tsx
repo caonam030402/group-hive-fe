@@ -3,9 +3,9 @@ import HardBreak from "@tiptap/extension-hard-break";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import EmojiPicker from "emoji-picker-react";
 import React, { useRef, useState } from "react";
 
+import EmojisPicker from "@/components/common/EmojisPicker";
 import { cn } from "@/libs/utils";
 import { isEmpty } from "@/utils/common";
 
@@ -18,7 +18,6 @@ interface IProps {
 export default function MessageInput({ handleSendMessage }: IProps) {
   const [openEmojis, setOpenEmojis] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const emojiPickerRef = useRef<HTMLDivElement>(null);
 
   const editor = useEditor({
     extensions: [
@@ -50,12 +49,6 @@ export default function MessageInput({ handleSendMessage }: IProps) {
 
   const isOneLine = ref.current?.offsetHeight;
 
-  const handleBlurEmojisPicker = (event: React.FocusEvent<HTMLDivElement>) => {
-    if (!emojiPickerRef.current?.contains(event.relatedTarget)) {
-      setOpenEmojis(false);
-    }
-  };
-
   return (
     <div
       className={cn(
@@ -74,19 +67,12 @@ export default function MessageInput({ handleSendMessage }: IProps) {
 
       <div className="mt-2 self-end ">
         <UtilityBar setOpenEmojis={setOpenEmojis} />
-      </div>
-
-      <div
-        ref={emojiPickerRef}
-        onBlur={handleBlurEmojisPicker}
-        className="absolute bottom-[115%] right-0 z-10"
-      >
-        <EmojiPicker
-          onEmojiClick={(icon) => {
+        <EmojisPicker
+          isOpen={openEmojis}
+          setIsOpen={setOpenEmojis}
+          onEmojiSelected={(icon) => {
             editor!.commands.insertContent(icon.emoji);
           }}
-          searchDisabled
-          open={openEmojis}
         />
       </div>
     </div>
