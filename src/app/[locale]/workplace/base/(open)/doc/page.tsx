@@ -17,6 +17,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 import Dropdown from "@/components/common/Dropdown";
+import EmojisPicker from "@/components/common/EmojisPicker";
 
 export default function Doc() {
   const editor = useCreateBlockNote();
@@ -87,14 +88,19 @@ export default function Doc() {
             color="secondary"
             content={
               <div className="color-contract-light flex gap-2">
-                <Button
-                  className="px-1"
-                  variant="light"
-                  startContent={<SmileySticker size={18} />}
-                  size="sm"
-                >
-                  Add Icon
-                </Button>
+                <EmojisPicker
+                  buttonTrigger={{
+                    content: "Add Icon",
+                    props: {
+                      className: "px-1",
+                      variant: "light",
+                      startContent: <SmileySticker size={18} />,
+                      size: "sm",
+                    },
+                  }}
+                  onEmojiSelected={(icon) => console.log(icon)}
+                />
+
                 {!cover && (
                   <Button
                     onPress={() => setCover(defaultImage)}
