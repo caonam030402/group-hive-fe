@@ -115,7 +115,7 @@ export default function Doc() {
             />
           </Tooltip>
         </div>
-        <BlockNoteView className="h-full" editor={editor} />
+        <BlockNoteView theme="light" className="h-full" editor={editor} />
       </div>
     </div>
   );
