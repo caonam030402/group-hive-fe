@@ -10,9 +10,7 @@ export interface ICreateDocsHub {
 export interface IDocsHub {
   id: string;
   name: string;
-  author: {
-    id: IUser["id"];
-  };
+  author: IUser;
   lastOpenedAt: string;
   docsType: EListBase;
 }

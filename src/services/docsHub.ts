@@ -3,7 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 import { keyRQ } from "@/constants/keyRQ";
 import { useQueryInfiniteCommon } from "@/hooks/useQuery";
 import type { IOptionRQ, IPaginationResponse, IQueryGetApi } from "@/types";
-import type { IMessage } from "@/types/chat";
 import type { ICreateDocsHub, IDocsHub } from "@/types/docsHub";
 import { buildQueryParamsGet } from "@/utils/buildQueryParams";
 import http from "@/utils/http";
@@ -18,11 +17,11 @@ export const docsHubService = {
       },
     });
   },
-  useGetAllDocsHub: (queryS: IQueryGetApi, option?: IOptionRQ) => {
+  useGetAllDocs: (queryS: IQueryGetApi, option?: IOptionRQ) => {
     const queryString = buildQueryParamsGet(queryS);
-    const query = useQueryInfiniteCommon<IPaginationResponse<IMessage>>({
-      queryKey: [keyRQ.message, ...(option?.expendQueryKey || [])],
-      url: `message?${queryString}`,
+    const query = useQueryInfiniteCommon<IPaginationResponse<IDocsHub>>({
+      queryKey: [keyRQ.docsHub, ...(option?.expendQueryKey || [])],
+      url: `docs-hubs?${queryString}`,
       ...option,
     });
     return {

@@ -43,3 +43,27 @@ export const formatTimeDisplay = (time: string): string => {
   }
   return messageTime.format("DD/MM/YYYY");
 };
+
+export const formatTimeDisplayNormal = (
+  time: string,
+  format?: "DD/MM/YYYY" | "DD/MM" | "hh:mm A" | "DD/MM/YYYY hh:mm A",
+): string => {
+  return dayjs(time).format(format || "DD/MM/YYYY");
+};
+
+export const formatCustomTime = (date: string | dayjs.Dayjs) => {
+  const timezoneStr = dayjs.tz.guess();
+  const now = dayjs().tz(timezoneStr);
+  const inputDate = dayjs(date).tz(timezoneStr);
+
+  if (inputDate.isSame(now, "day")) {
+    return inputDate.format("hh:mm A [Today]");
+  }
+  if (inputDate.isAfter(now.subtract(7, "days"))) {
+    return inputDate.format("h:mm A MMM DD");
+  }
+  if (inputDate.year() === now.year()) {
+    return inputDate.format("h:mm A MMM DD");
+  }
+  return inputDate.format("MMM DD, YYYY");
+};

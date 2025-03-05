@@ -13,6 +13,7 @@ interface IProps extends TableProps {
   columns: {
     key: string;
     label: string;
+    render?: (data: any) => JSX.Element;
   }[];
   data: Iterable<unknown> | undefined;
 }
@@ -25,10 +26,17 @@ export default function TableList({ data, columns, ...props }: IProps) {
       </TableHeader>
       <TableBody items={data}>
         {(item: any) => (
-          <TableRow key={item.key}>
-            {(columnKey) => (
-              <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-            )}
+          <TableRow className="border-b" key={item.key}>
+            {(columnKey) => {
+              const col = columns.find((column) => column.key === columnKey);
+              return (
+                <TableCell>
+                  {col?.render
+                    ? col?.render(item)
+                    : getKeyValue(item, columnKey)}
+                </TableCell>
+              );
+            }}
           </TableRow>
         )}
       </TableBody>
