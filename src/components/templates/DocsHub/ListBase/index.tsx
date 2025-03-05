@@ -1,12 +1,17 @@
 "use client";
 
+import { Spinner } from "@heroui/react";
+import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
 import { DotsThree } from "@phosphor-icons/react";
+import { useAsyncList } from "@react-stately/data";
+import Image from "next/image";
 import React from "react";
 
 import Button from "@/components/common/Button";
 import Tab from "@/components/common/Tab";
 import TableList from "@/components/common/Table";
 import User from "@/components/common/User";
+import { listDocsHub } from "@/constants/dric";
 import { docsHubService } from "@/services/docsHub";
 import type { IDocsHub } from "@/types/docsHub";
 import { formatCustomTime } from "@/utils/formatDate";
@@ -28,6 +33,21 @@ const columns = [
   {
     key: "name",
     label: "NAME",
+    render: (data: IDocsHub) => {
+      return (
+        <span className="flex gap-2">
+          <Image
+            alt=""
+            src={
+              listDocsHub.find((item) => item.key === data.docsType)?.icon || ""
+            }
+            width={20}
+            height={20}
+          />
+          {data.name}
+        </span>
+      );
+    },
   },
   {
     key: "OWNER",
@@ -73,8 +93,36 @@ const columns = [
 
 export default function ListBase() {
   const [tabActive, setTabActive] = React.useState(ETabKey.RECENT);
-  console.log(tabActive);
+  const [isLoadingTable, setIsLoadingTable] = React.useState(true);
+  const [hasMore, setHasMore] = React.useState(false);
   const { data, isLoading } = docsHubService.useGetAllDocs({});
+
+  const list = useAsyncList({
+    async load({ signal, cursor }) {
+      if (cursor) {
+        setIsLoadingTable(false);
+      }
+      console.log(cursor);
+      const res = await fetch(
+        cursor || "https://swapi.py4e.com/api/people/?search=",
+        { signal },
+      );
+      const json = await res.json();
+
+      setHasMore(json.next !== null);
+
+      return {
+        items: json.results,
+        cursor: json.next,
+      };
+    },
+  });
+  console.log(tabActive);
+  const [loaderRef, scrollerRef] = useInfiniteScroll({
+    hasMore,
+    onLoadMore: list.loadMore,
+  });
+
   const tab = () => {
     return (
       <Tab
@@ -86,7 +134,22 @@ export default function ListBase() {
   return (
     <div className="flex flex-col gap-4">
       {tab()}
-      {!isLoading && <TableList data={data} columns={columns} removeWrapper />}
+      {!isLoading && (
+        <TableList
+          isLoading={isLoadingTable}
+          baseRef={scrollerRef}
+          bottomContent={
+            hasMore ? (
+              <div className="flex w-full justify-center">
+                <Spinner ref={loaderRef} color="white" />
+              </div>
+            ) : null
+          }
+          data={data}
+          columns={columns}
+          removeWrapper
+        />
+      )}
     </div>
   );
 }

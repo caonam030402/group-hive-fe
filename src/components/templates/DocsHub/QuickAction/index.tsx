@@ -6,37 +6,15 @@ import React, { useState } from "react";
 
 import Card from "@/components/common/Card";
 import ModalRecommendBase from "@/components/modals/ModalRecommendBase";
-import { iconPath } from "@/constants/icons";
-import { EListBase } from "@/enums/docs";
+import { listDocsHub } from "@/constants/dric";
+import type { EListBase } from "@/enums/docs";
 import useNavigate from "@/utils/navigate";
-
-const listQuickAction = [
-  {
-    key: EListBase.DOC,
-    title: "New Docs",
-    icon: iconPath.doc,
-  },
-  {
-    key: EListBase.SHEET,
-    title: "New Sheet",
-    icon: iconPath.sheet,
-  },
-  {
-    key: EListBase.SLIDE,
-    title: "New Slide",
-    icon: iconPath.slide,
-  },
-  {
-    key: EListBase.FORM,
-    title: "New Form",
-    icon: iconPath.form,
-  },
-];
 
 export default function QuickAction() {
   const [activeKey, setActiveKey] = useState<EListBase>();
   const { navigate } = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const handleOpenModal = (key: EListBase) => {
     navigate({ paramsList: [{ name: "docsType", value: key.toString() }] });
     onOpen();
@@ -45,7 +23,7 @@ export default function QuickAction() {
 
   return (
     <div className="flex gap-3 ">
-      {listQuickAction.map((item) => (
+      {listDocsHub.map((item) => (
         <button
           type="button"
           key={item.key}
