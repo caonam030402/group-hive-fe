@@ -8,6 +8,7 @@ import Card from "@/components/common/Card";
 import ModalRecommendBase from "@/components/modals/ModalRecommendBase";
 import { iconPath } from "@/constants/icons";
 import { EListBase } from "@/enums/docs";
+import useNavigate from "@/utils/navigate";
 
 const listQuickAction = [
   {
@@ -34,9 +35,10 @@ const listQuickAction = [
 
 export default function QuickAction() {
   const [activeKey, setActiveKey] = useState<EListBase>();
-  console.log(activeKey);
+  const { navigate } = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const handleOpenModal = (key: EListBase) => {
+    navigate({ paramsList: [{ name: "docsType", value: key.toString() }] });
     onOpen();
     setActiveKey(key);
   };

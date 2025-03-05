@@ -1,14 +1,33 @@
 import { Plus } from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 import Card from "@/components/common/Card";
 import { PATH } from "@/constants";
+import { docsHubService } from "@/services/docsHub";
+import { userService } from "@/services/user";
+import useNavigate from "@/utils/navigate";
 
 export default function CreateItem() {
-  const router = useRouter();
+  const { navigate, searchParams } = useNavigate();
+  const { mutate } = docsHubService.useCreateDocs();
+  const { user } = userService.useProfile();
+
   const handleCreate = () => {
-    router.push(PATH.BASE_DOC);
+    const body = {
+      author: {
+        id: user.id,
+      },
+      docsType: Number(searchParams.get("docsType") || 0),
+      lastOpenedAt: new Date().toISOString(),
+      name: "Untitled document",
+    };
+    mutate(body, {
+      onSuccess: () => {
+        toast.success("Create docs successfully");
+        navigate({ customUrl: PATH.BASE_DOC });
+      },
+    });
   };
   return (
     <button type="button" onClick={handleCreate}>
