@@ -46,7 +46,9 @@ export default function TableList({
         {(item: any) => (
           <TableRow
             onClick={() => rowAction && rowAction(item)}
-            className={cn("border-b", { "cursor-pointer": !!rowAction })}
+            className={cn("border-b hover:bg-primary-50/50", {
+              "cursor-pointer": !!rowAction,
+            })}
             key={item.key}
           >
             {(columnKey) => {

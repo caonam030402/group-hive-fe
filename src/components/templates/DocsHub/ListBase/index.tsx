@@ -184,7 +184,7 @@ export default function ListBase() {
         <TableList
           isLoading={isLoadingTable}
           baseRef={scrollerRef}
-          rowAction={(item: IDocsHub) =>
+          rowAction={(item) =>
             handleOpenPage({ id: item.id, type: item.docsType })
           }
           bottomContent={
