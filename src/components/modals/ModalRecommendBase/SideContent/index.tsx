@@ -1,14 +1,20 @@
 import React from "react";
 
+import type { EListBase } from "@/enums/docs";
+
 import CreateItem from "./CreateItem";
 import TemplateItem from "./TemplateItem";
 
-export default function SideContent() {
+interface IProps {
+  activeKey: EListBase | undefined;
+}
+
+export default function SideContent({ activeKey }: IProps) {
   return (
     <div className="w-full bg-background px-5 py-3">
       <h1 className="my-3">Recommended</h1>
       <div className="scroll mt-3 grid h-[60vh] grid-cols-4 gap-4">
-        <CreateItem />
+        <CreateItem activeKey={activeKey} />
         {Array.from({ length: 20 })
           .fill(0)
           .map((_item, index) => (

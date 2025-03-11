@@ -75,7 +75,7 @@ export default function ModalRecommendBase({
             <ModalBody className="border-t p-0">
               <div className="flex">
                 <SideNav />
-                <SideContent />
+                <SideContent activeKey={activeKey} />
               </div>
             </ModalBody>
             <ModalFooter />

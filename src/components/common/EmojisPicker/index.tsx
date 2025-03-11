@@ -1,10 +1,9 @@
-import type { ButtonProps } from "@heroui/button";
+/* eslint-disable unused-imports/no-unused-vars */
+import { Button, type ButtonProps } from "@heroui/button";
 import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
 import React, { useRef } from "react";
 
 import { cn } from "@/libs/utils";
-
-import Button from "../Button";
 
 interface IProps {
   onEmojiSelected: (emoji: EmojiClickData) => void;

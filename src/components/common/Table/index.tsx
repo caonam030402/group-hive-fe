@@ -40,7 +40,11 @@ export default function TableList({
       </TableHeader>
       <TableBody isLoading={isLoading} className="border" items={data}>
         {(item: any) => (
-          <TableRow className="border-b" key={item.key}>
+          <TableRow
+            onClick={() => console.log(12312)}
+            className="border-b "
+            key={item.key}
+          >
             {(columnKey) => {
               const col = columns.find((column) => column.key === columnKey);
               return (

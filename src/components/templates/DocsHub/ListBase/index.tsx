@@ -2,12 +2,21 @@
 
 import { Spinner } from "@heroui/react";
 import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
-import { DotsThree } from "@phosphor-icons/react";
+import {
+  Copy,
+  DotsThree,
+  Heart,
+  Link as LinkIcon,
+  PushPin,
+  Share,
+  Trash,
+} from "@phosphor-icons/react";
 import { useAsyncList } from "@react-stately/data";
 import Image from "next/image";
 import React from "react";
 
 import Button from "@/components/common/Button";
+import Dropdown from "@/components/common/Dropdown";
 import Tab from "@/components/common/Tab";
 import TableList from "@/components/common/Table";
 import User from "@/components/common/User";
@@ -27,6 +36,35 @@ const listTab = [
   { title: "Recent", key: ETabKey.RECENT },
   { title: "Pins", key: ETabKey.PINS },
   { title: "Favorites", key: ETabKey.FAVORITES },
+];
+
+const listItemAction = [
+  { id: "1", name: "Share", icon: <Share size={17} />, action: () => null },
+  {
+    id: "2",
+    name: "Copy Link",
+    icon: <LinkIcon size={17} />,
+    action: () => null,
+  },
+  {
+    id: "2",
+    name: "Make a Copy",
+    icon: <Copy size={17} />,
+    action: () => null,
+  },
+  {
+    id: "2",
+    name: "Add to Pins",
+    icon: <PushPin size={17} />,
+    action: () => null,
+  },
+  {
+    id: "2",
+    name: "Add to Favorites",
+    icon: <Heart size={17} />,
+    action: () => null,
+  },
+  { id: "2", name: "Delete", icon: <Trash size={17} />, action: () => null },
 ];
 
 const columns = [
@@ -83,9 +121,15 @@ const columns = [
     label: "ACTION",
     render: () => {
       return (
-        <Button size="sm" variant="light" isIconOnly>
-          <DotsThree size={20} />
-        </Button>
+        <Dropdown
+          props={{ placement: "bottom-end" }}
+          listItem={listItemAction}
+          trigger={
+            <Button size="sm" variant="light" isIconOnly>
+              <DotsThree size={20} />
+            </Button>
+          }
+        />
       );
     },
   },
