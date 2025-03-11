@@ -7,15 +7,15 @@ import React, { useState } from "react";
 import Card from "@/components/common/Card";
 import ModalRecommendBase from "@/components/modals/ModalRecommendBase";
 import { listDocsHub } from "@/constants/dric";
-import type { EListBase } from "@/enums/docs";
-import useNavigate from "@/utils/navigate";
+import type { EListDocsHub } from "@/enums/docsHub";
+import useNavigate from "@/hooks/navigate";
 
 export default function QuickAction() {
-  const [activeKey, setActiveKey] = useState<EListBase>();
+  const [activeKey, setActiveKey] = useState<EListDocsHub>();
   const { navigate } = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const handleOpenModal = (key: EListBase) => {
+  const handleOpenModal = (key: EListDocsHub) => {
     navigate({ paramsList: [{ name: "docsType", value: key.toString() }] });
     onOpen();
     setActiveKey(key);

@@ -9,6 +9,8 @@ import {
   TableRow,
 } from "@heroui/react";
 
+import { cn } from "@/libs/utils";
+
 interface IProps extends TableProps {
   columns: {
     key: string;
@@ -17,12 +19,14 @@ interface IProps extends TableProps {
   }[];
   data: Iterable<unknown> | undefined;
   isLoading?: boolean;
+  rowAction?: (row: any) => void;
 }
 
 export default function TableList({
   data,
   columns,
   isLoading,
+  rowAction,
   ...props
 }: IProps) {
   return (
@@ -41,8 +45,8 @@ export default function TableList({
       <TableBody isLoading={isLoading} className="border" items={data}>
         {(item: any) => (
           <TableRow
-            onClick={() => console.log(12312)}
-            className="border-b "
+            onClick={() => rowAction && rowAction(item)}
+            className={cn("border-b", { "cursor-pointer": !!rowAction })}
             key={item.key}
           >
             {(columnKey) => {

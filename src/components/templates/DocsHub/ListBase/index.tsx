@@ -21,6 +21,7 @@ import Tab from "@/components/common/Tab";
 import TableList from "@/components/common/Table";
 import User from "@/components/common/User";
 import { listDocsHub } from "@/constants/dric";
+import useDocsHub from "@/hooks/features/useDocsHub";
 import { docsHubService } from "@/services/docsHub";
 import type { IDocsHub } from "@/types/docsHub";
 import { formatCustomTime } from "@/utils/formatDate";
@@ -140,6 +141,7 @@ export default function ListBase() {
   const [isLoadingTable, setIsLoadingTable] = React.useState(true);
   const [hasMore, setHasMore] = React.useState(false);
   const { data, isLoading } = docsHubService.useGetAllDocs({});
+  const { handleOpenPage } = useDocsHub();
 
   const list = useAsyncList({
     async load({ signal, cursor }) {
@@ -182,6 +184,9 @@ export default function ListBase() {
         <TableList
           isLoading={isLoadingTable}
           baseRef={scrollerRef}
+          rowAction={(item: IDocsHub) =>
+            handleOpenPage({ id: item.id, type: item.docsType })
+          }
           bottomContent={
             hasMore ? (
               <div className="flex w-full justify-center">

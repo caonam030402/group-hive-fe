@@ -4,7 +4,7 @@ export interface ICreateDocsHub {
     id: IUser["id"];
   };
   lastOpenedAt: string;
-  docsType: EListBase;
+  docsType: EListDocsHub;
 }
 
 export interface IDocsHub {
@@ -12,5 +12,5 @@ export interface IDocsHub {
   name: string;
   author: IUser;
   lastOpenedAt: string;
-  docsType: EListBase;
+  docsType: EListDocsHub;
 }

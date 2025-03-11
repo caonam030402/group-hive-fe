@@ -1,12 +1,12 @@
 import React from "react";
 
-import type { EListBase } from "@/enums/docs";
+import type { EListDocsHub } from "@/enums/docsHub";
 
 import CreateItem from "./CreateItem";
 import TemplateItem from "./TemplateItem";
 
 interface IProps {
-  activeKey: EListBase | undefined;
+  activeKey: EListDocsHub | undefined;
 }
 
 export default function SideContent({ activeKey }: IProps) {

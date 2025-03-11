@@ -11,7 +11,7 @@ import {
 import { Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import React from "react";
 
-import { EListBase } from "@/enums/docs";
+import { EListDocsHub } from "@/enums/docsHub";
 
 import SideContent from "./SideContent";
 import SideNav from "./SideNav";
@@ -19,16 +19,16 @@ import SideNav from "./SideNav";
 interface IProps {
   isOpen: boolean;
   onOpenChange: () => void;
-  activeKey: EListBase | undefined;
-  setActiveKey: React.Dispatch<React.SetStateAction<EListBase | undefined>>;
+  activeKey: EListDocsHub | undefined;
+  setActiveKey: React.Dispatch<React.SetStateAction<EListDocsHub | undefined>>;
 }
 
 export const listBase = [
   { key: "", label: "All Type" },
-  { key: EListBase.DOC, label: "Docs" },
-  { key: EListBase.FORM, label: "Form" },
-  { key: EListBase.SHEET, label: "Sheet" },
-  { key: EListBase.SLIDE, label: "Slide" },
+  { key: EListDocsHub.DOC, label: "Docs" },
+  { key: EListDocsHub.FORM, label: "Form" },
+  { key: EListDocsHub.SHEET, label: "Sheet" },
+  { key: EListDocsHub.SLIDE, label: "Slide" },
 ];
 
 export default function ModalRecommendBase({
@@ -57,7 +57,7 @@ export default function ModalRecommendBase({
                 />
                 <Select
                   onSelectionChange={(key) =>
-                    setActiveKey(key as unknown as EListBase)
+                    setActiveKey(key as unknown as EListDocsHub)
                   }
                   color="primary"
                   defaultSelectedKeys={activeKey?.toString()}

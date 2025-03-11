@@ -1,25 +1,25 @@
-import { EListBase } from "@/enums/docs";
+import { EListDocsHub } from "@/enums/docsHub";
 
 import { iconPath } from "./icons";
 
 export const listDocsHub = [
   {
-    key: EListBase.DOC,
+    key: EListDocsHub.DOC,
     title: "New Docs",
     icon: iconPath.doc,
   },
   {
-    key: EListBase.SHEET,
+    key: EListDocsHub.SHEET,
     title: "New Sheet",
     icon: iconPath.sheet,
   },
   {
-    key: EListBase.SLIDE,
+    key: EListDocsHub.SLIDE,
     title: "New Slide",
     icon: iconPath.slide,
   },
   {
-    key: EListBase.FORM,
+    key: EListDocsHub.FORM,
     title: "New Form",
     icon: iconPath.form,
   },

@@ -1,4 +1,4 @@
-export enum EListBase {
+export enum EListDocsHub {
   DOC,
   SHEET,
   FORM,

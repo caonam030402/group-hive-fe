@@ -4,20 +4,19 @@ import React from "react";
 import toast from "react-hot-toast";
 
 import Card from "@/components/common/Card";
-import { PATH } from "@/constants";
 import { keyRQ } from "@/constants/keyRQ";
-import type { EListBase } from "@/enums/docs";
+import type { EListDocsHub } from "@/enums/docsHub";
+import useDocsHub from "@/hooks/features/useDocsHub";
 import { docsHubService } from "@/services/docsHub";
 import { userService } from "@/services/user";
-import useNavigate from "@/utils/navigate";
 
 interface IProps {
-  activeKey: EListBase | undefined;
+  activeKey: EListDocsHub | undefined;
 }
 
 export default function CreateItem({ activeKey }: IProps) {
-  const { navigate } = useNavigate();
   const { mutate } = docsHubService.useCreateDocs();
+  const { handleOpenPage } = useDocsHub();
   const { user } = userService.useProfile();
   const queryClient = useQueryClient();
 
@@ -34,14 +33,9 @@ export default function CreateItem({ activeKey }: IProps) {
       onSuccess: (data) => {
         toast.success("Create docs successfully");
         queryClient.invalidateQueries({ queryKey: [keyRQ.docsHub] });
-        navigate({
-          customUrl: PATH.BASE_DOC,
-          paramsList: [
-            {
-              name: "id",
-              value: data.payload.id,
-            },
-          ],
+        handleOpenPage({
+          id: data.payload.id,
+          type: data.payload.docsType,
         });
       },
     });
