@@ -17,8 +17,10 @@ export default function BaseMainLayout({
           <Folder />
         </div>
         <div className="w-[82%]">
-          <HeaderDocsHub />
-          <Room>{children}</Room>
+          <Room>
+            <HeaderDocsHub />
+            {children}
+          </Room>
         </div>
       </div>
     </Card>
