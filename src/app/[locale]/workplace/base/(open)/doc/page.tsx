@@ -1,11 +1,8 @@
 "use client";
 
-import "@blocknote/core/fonts/inter.css";
-import "@blocknote/mantine/style.css";
-
-import { BlockNoteView } from "@blocknote/mantine";
-import { useCreateBlockNote } from "@blocknote/react";
 import { Button, Tooltip } from "@heroui/react";
+import { useRoom } from "@liveblocks/react/suspense";
+import { getYjsProviderForRoom } from "@liveblocks/yjs";
 import {
   ArrowsOutCardinal,
   Image as ImageIcon,
@@ -14,14 +11,51 @@ import {
   Trash,
 } from "@phosphor-icons/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+import BlockNote from "@/components/business/BlockNote";
 import Dropdown from "@/components/common/Dropdown";
 import EmojisPicker from "@/components/common/EmojisPicker";
+import { userService } from "@/services/user";
 
 export default function Doc() {
-  const editor = useCreateBlockNote();
-  const [cover, setCover] = useState<undefined | string>(undefined);
+  const room = useRoom();
+  const yProvider = getYjsProviderForRoom(room);
+  const yDoc = yProvider.getYDoc();
+  const { user } = userService.useProfile();
+
+  const [metadata] = useState(() => yDoc.getMap("metadata"));
+  const [title, setTitle] = useState(metadata.get("title") || "");
+  const [cover, setCover] = useState<string | undefined>(
+    metadata.get("cover") as string | undefined,
+  );
+
+  useEffect(() => {
+    const handleChange = () => {
+      setTitle(metadata.get("title") || "");
+      setCover(metadata.get("cover") as string | undefined);
+    };
+
+    metadata.observe(handleChange);
+    return () => metadata.unobserve(handleChange);
+  }, [metadata]);
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value;
+    setTitle(newTitle);
+    metadata.set("title", newTitle);
+  };
+
+  const handleCoverChange = (newCover: string) => {
+    setCover(newCover);
+    metadata.set("cover", newCover);
+  };
+
+  const handleDeleteCover = () => {
+    setCover(undefined);
+    metadata.delete("cover");
+  };
+
   const defaultImage =
     "https://cdn.pixabay.com/photo/2015/06/24/16/36/home-820389_1280.jpg";
 
@@ -30,7 +64,7 @@ export default function Doc() {
       id: "1",
       name: "Select image",
       icon: <ImageIcon />,
-      action: () => null,
+      action: () => handleCoverChange(defaultImage),
     },
     {
       id: "2",
@@ -42,12 +76,12 @@ export default function Doc() {
       id: "3",
       name: "Delete cover",
       icon: <Trash />,
-      action: () => null,
+      action: handleDeleteCover,
     },
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <div className="flex flex-col items-center justify-center">
       {cover && (
         <div className="group/cover relative">
           <Image
@@ -103,7 +137,7 @@ export default function Doc() {
 
                 {!cover && (
                   <Button
-                    onPress={() => setCover(defaultImage)}
+                    onPress={() => handleCoverChange(defaultImage)}
                     className="px-1"
                     startContent={<ImageIcon size={18} />}
                     variant="light"
@@ -118,10 +152,12 @@ export default function Doc() {
             <input
               className="bg-white text-4xl font-bold focus:outline-none"
               placeholder="Enter title here"
+              value={title as string}
+              onChange={handleTitleChange}
             />
           </Tooltip>
         </div>
-        <BlockNoteView theme="light" className="h-full" editor={editor} />
+        <BlockNote user={user} doc={yDoc} provider={yProvider} />
       </div>
     </div>
   );

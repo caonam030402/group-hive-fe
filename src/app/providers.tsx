@@ -1,6 +1,7 @@
 "use client";
 
 import { HeroUIProvider } from "@heroui/react";
+import { LiveblocksProvider } from "@liveblocks/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
@@ -17,7 +18,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
     storeRef.current = store;
   }
   const queryClient = new QueryClient();
-
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={storeRef.current}>
@@ -29,7 +29,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
               options={{ showSpinner: false }}
               shallowRouting
             />
-            {children}
+            <LiveblocksProvider
+              publicApiKey={process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY ?? ""}
+            >
+              {children}
+            </LiveblocksProvider>
             <Toaster />
           </NextThemesProvider>
           <ReactQueryDevtools initialIsOpen={false} />

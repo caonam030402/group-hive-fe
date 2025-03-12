@@ -14,6 +14,7 @@ export const Env = createEnv({
     NEXT_PUBLIC_CLOUDINARY_API_KEY: z.string().optional(),
     NEXT_PUBLIC_CLOUDINARY_API_SECRET: z.string().optional(),
     NEXT_PUBLIC_API_URL: z.string().optional(),
+    NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY: z.string().optional(),
   },
   runtimeEnv: {
     LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
@@ -26,5 +27,6 @@ export const Env = createEnv({
     NEXT_PUBLIC_CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     NEXT_PUBLIC_CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY: process.env.LIVEBLOCKS_PUBLIC_KEY,
   },
 });

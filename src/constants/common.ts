@@ -332,3 +332,6 @@ export const industriesList = [
     ],
   },
 ];
+
+export const defaultImageCoverDocs =
+  "https://cdn.pixabay.com/photo/2015/06/24/16/36/home-820389_1280.jpg";

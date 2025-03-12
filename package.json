@@ -52,6 +52,8 @@
     "@heroui/use-infinite-scroll": "^2.2.7",
     "@hookform/resolvers": "^3.9.0",
     "@libsql/client": "^0.6.1",
+    "@liveblocks/react": "^2.20.0",
+    "@liveblocks/yjs": "^2.20.0",
     "@logtail/pino": "^0.4.21",
     "@phosphor-icons/react": "^2.1.7",
     "@react-icons/all-files": "^4.1.0",
@@ -98,7 +100,6 @@
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "y-websocket": "^2.1.0",
     "yjs": "^13.6.24",
     "zod": "^3.23.8",
     "zustand": "^5.0.3"

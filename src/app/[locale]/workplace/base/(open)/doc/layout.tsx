@@ -3,6 +3,7 @@ import React from "react";
 import Card from "@/components/common/Card";
 import Folder from "@/components/layouts/Folder";
 import HeaderDocsHub from "@/components/layouts/HeaderDocsHub";
+import { Room } from "@/providers/roomProvider";
 
 export default function BaseMainLayout({
   children,
@@ -17,7 +18,7 @@ export default function BaseMainLayout({
         </div>
         <div className="w-[82%]">
           <HeaderDocsHub />
-          {children}
+          <Room>{children}</Room>
         </div>
       </div>
     </Card>
