@@ -1,5 +1,6 @@
 "use client";
 
+import { Spinner } from "@heroui/react";
 import { ClientSideSuspense } from "@liveblocks/react";
 import { RoomProvider } from "@liveblocks/react/suspense";
 import { useSearchParams } from "next/navigation";
@@ -16,7 +17,13 @@ export function Room({ children }: { children: ReactNode }) {
         cursor: null,
       }}
     >
-      <ClientSideSuspense fallback={<div>Loading...</div>}>
+      <ClientSideSuspense
+        fallback={
+          <div className="flex size-full items-center justify-center">
+            <Spinner />
+          </div>
+        }
+      >
         {children}
       </ClientSideSuspense>
     </RoomProvider>
