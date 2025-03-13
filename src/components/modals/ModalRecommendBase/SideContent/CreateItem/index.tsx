@@ -7,6 +7,7 @@ import Card from "@/components/common/Card";
 import { keyRQ } from "@/constants/keyRQ";
 import type { EListDocsHub } from "@/enums/docsHub";
 import useDocsHub from "@/hooks/features/useDocsHub";
+import useWorkspace from "@/hooks/useWorkspace";
 import { docsHubService } from "@/services/docsHub";
 import { userService } from "@/services/user";
 
@@ -18,12 +19,16 @@ export default function CreateItem({ activeKey }: IProps) {
   const { mutate } = docsHubService.useCreateDocs();
   const { handleOpenPage } = useDocsHub();
   const { user } = userService.useProfile();
+  const { workspaceId } = useWorkspace();
   const queryClient = useQueryClient();
 
   const handleCreate = () => {
     const body = {
       author: {
         id: user.id,
+      },
+      workspace: {
+        id: workspaceId,
       },
       docsType: activeKey,
       lastOpenedAt: new Date().toISOString(),

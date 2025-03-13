@@ -17,8 +17,18 @@ export const docsHubService = {
       },
     });
   },
-  useGetAllDocs: (queryS: IQueryGetApi, option?: IOptionRQ) => {
-    const queryString = buildQueryParamsGet(queryS);
+  useGetAllDocs: (
+    queryS: IQueryGetApi & {
+      userId: number;
+      workspaceId: string;
+    },
+    option?: IOptionRQ,
+  ) => {
+    const queryString = buildQueryParamsGet(queryS, {
+      userId: queryS.userId,
+      workspaceId: queryS.workspaceId,
+    });
+
     const query = useQueryInfiniteCommon<IPaginationResponse<IDocsHub>>({
       queryKey: [keyRQ.docsHub, ...(option?.expendQueryKey || [])],
       url: `docs-hubs?${queryString}`,

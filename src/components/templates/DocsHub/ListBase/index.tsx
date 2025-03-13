@@ -22,7 +22,9 @@ import TableList from "@/components/common/Table";
 import User from "@/components/common/User";
 import { listDocsHub } from "@/constants/dric";
 import useDocsHub from "@/hooks/features/useDocsHub";
+import useWorkspace from "@/hooks/useWorkspace";
 import { docsHubService } from "@/services/docsHub";
+import { userService } from "@/services/user";
 import type { IDocsHub } from "@/types/docsHub";
 import { formatCustomTime } from "@/utils/formatDate";
 import { renderFullName } from "@/utils/helpers";
@@ -140,7 +142,16 @@ export default function ListBase() {
   const [tabActive, setTabActive] = React.useState(ETabKey.RECENT);
   const [isLoadingTable, setIsLoadingTable] = React.useState(true);
   const [hasMore, setHasMore] = React.useState(false);
-  const { data, isLoading } = docsHubService.useGetAllDocs({});
+  const { workspaceId } = useWorkspace();
+  const { user } = userService.useProfile();
+  const { data, isLoading } = docsHubService.useGetAllDocs({
+    userId: user.id || 0,
+    workspaceId,
+    filterBy: {
+      field: "docsType",
+      value: tabActive.toString(),
+    },
+  });
   const { handleOpenPage } = useDocsHub();
 
   const list = useAsyncList({

@@ -4,7 +4,9 @@ import { ENameLocalS, PATH } from "@/constants";
 import { getLocalStorage, setLocalStorage } from "@/utils/clientStorage";
 
 export default function useWorkspace() {
-  const workspaceId = getLocalStorage({ key: ENameLocalS.WORKSPACE_ID });
+  const workspaceId: string = getLocalStorage({
+    key: ENameLocalS.WORKSPACE_ID,
+  });
   const router = useRouter();
   const handleSaveWorkspaceId = (id: string) => {
     setLocalStorage({ key: ENameLocalS.WORKSPACE_ID, value: id });

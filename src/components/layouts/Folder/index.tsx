@@ -3,7 +3,12 @@
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Accordion, AccordionItem } from "@heroui/react";
-import { GoogleDriveLogo, House, MagnifyingGlass } from "@phosphor-icons/react";
+import {
+  FolderOpen,
+  FolderSimpleUser,
+  House,
+  MagnifyingGlass,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import React from "react";
 
@@ -13,15 +18,25 @@ import { cn } from "@/libs/utils";
 
 const listDrives = [
   {
-    title: "Home",
+    title: "Workspace",
     icon: <House size={20} />,
     link: "/workplace/base/home",
   },
   {
-    title: "Drive",
-    icon: <GoogleDriveLogo size={20} />,
-    link: "/workplace/base/drive",
+    title: "My Drive",
+    icon: <FolderSimpleUser size={20} />,
+    link: "/workplace/base/my-drive",
   },
+  {
+    title: "Shared With Me",
+    icon: <FolderOpen size={20} />,
+    link: "/workplace/base/shared-with-me",
+  },
+  // {
+  //   title: "Drive",
+  //   icon: <GoogleDriveLogo size={20} />,
+  //   link: "/workplace/base/drive",
+  // },
 ];
 
 const listPin = [

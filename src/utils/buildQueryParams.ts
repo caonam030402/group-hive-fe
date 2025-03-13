@@ -1,6 +1,6 @@
 import type { IQueryGetApi } from "@/types";
 
-export const buildQueryParamsGet = (query: IQueryGetApi) => {
+export const buildQueryParamsGet = (query: IQueryGetApi, addObject?: {}) => {
   const params = new URLSearchParams();
 
   const fields = {
@@ -14,6 +14,7 @@ export const buildQueryParamsGet = (query: IQueryGetApi) => {
     searchValue: query.search?.value,
     orderField: query.order?.field,
     orderValue: query.order?.value,
+    ...addObject,
   };
 
   Object.entries(fields).forEach(([key, value]) => {
