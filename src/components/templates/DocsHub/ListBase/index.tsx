@@ -37,12 +37,12 @@ export default function ListBase() {
       isShared: menuFolderActive?.scope === EScopeDocsHub.SHARED,
       scope: menuFolderActive?.scope || EScopeDocsHub.PERSONAL,
       filterBy: {
-        field: "docsType",
-        value: tabActive.toString(),
+        field: "pinned",
+        value: tabActive,
       },
     },
     {
-      expendQueryKey: [keyMenuFolder],
+      expendQueryKey: [keyMenuFolder, `tabActive-${tabActive}`],
     },
   );
 
@@ -50,7 +50,9 @@ export default function ListBase() {
     return (
       <Tab
         listTab={listTab}
-        onSelectionChange={(key) => setTabActive(key as ETabKey)}
+        onSelectionChange={(key) => {
+          setTabActive(key as ETabKey);
+        }}
       />
     );
   };
