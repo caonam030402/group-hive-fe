@@ -146,34 +146,12 @@ export default function ListBase() {
   const [hasMore, setHasMore] = React.useState(false);
   console.log(setIsLoadingTable, setHasMore);
   const { workspaceId } = useWorkspace();
-  const { user, isLoading: isLoadingUser } = userService.useProfile();
-  const { getDynamicRoute } = useNavigate();
-  const keyMenu = getDynamicRoute() || "";
-
-  // Add early return if data is not ready
-  if (isLoadingUser || !user?.id || !workspaceId) {
-    return <div className="flex justify-center"><Spinner /></div>;
-  }
-
-  const [menuDataActive] = useStateRef(() =>
-    docsHubSidebarMenu.find((item) => item.link.includes(keyMenu)),
-  );
-
-  const { data, isLoading } = docsHubService.useGetAllDocs({
-    userId: user.id,  // Now we're sure user.id exists
-    workspaceId,      // Now we're sure workspaceId exists
-    isShared: menuDataActive()?.scope === EScopeDocsHub.SHARED,
-    scope: menuDataActive()?.scope || EScopeDocsHub.PERSONAL,
-    filterBy: {
-      field: "docsType",
-      value: tabActive.toString(),
-    },
-  });
+  const { user } = userService.useProfile();
   const { menuFolderActive, keyMenuFolder } = useDocsHub();
 
   const { data, isLoading } = docsHubService.useGetAllDocs(
     {
-      userId: user.id || 0,
+      userId: user?.id || 0,
       workspaceId,
       isShared: menuFolderActive?.scope === EScopeDocsHub.SHARED,
       scope: menuFolderActive?.scope || EScopeDocsHub.PERSONAL,
