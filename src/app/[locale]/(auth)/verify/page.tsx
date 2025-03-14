@@ -3,13 +3,13 @@
 import React, { useEffect } from "react";
 
 import VerifyCodeMail from "@/components/business/VerifyCodeMail";
-import useAuth from "@/hooks/useAuth";
+import useVerifyOTP from "@/hooks/features/auth/useVerifyOTP";
 import { userService } from "@/services/user";
 
 import IntroSection from "../login/IntroSection";
 
 export default function Verify() {
-  const { handleConfirmOtp, handleResendOtp, isLoadingAuth } = useAuth();
+  const { handleConfirmOtp, handleResendOtp, isLoadingAuth } = useVerifyOTP();
   const { user } = userService.useProfile();
 
   useEffect(() => {

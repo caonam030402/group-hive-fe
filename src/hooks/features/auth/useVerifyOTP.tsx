@@ -9,7 +9,7 @@ import { authService } from "@/services/auth";
 import type { IRequestConfirmOtp } from "@/types/auth";
 import { getLocalStorage } from "@/utils/clientStorage";
 
-export default function useAuth() {
+export default function useVerifyOTP() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { mutate, isPending } = authService.useGenerateOtp();

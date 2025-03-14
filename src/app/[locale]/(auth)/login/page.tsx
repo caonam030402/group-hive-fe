@@ -5,9 +5,9 @@ import React from "react";
 
 import FormAuth from "@/components/business/FormAuth";
 import { PATH } from "@/constants/common";
+import useLogin from "@/hooks/features/auth/useLogin";
 
 import IntroSection from "./IntroSection";
-import useLogin from "./logic";
 
 export default function Login() {
   const { form, isLoading, handleLogin } = useLogin();

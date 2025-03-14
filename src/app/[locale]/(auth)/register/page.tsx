@@ -5,11 +5,11 @@ import React from "react";
 
 import VerifyCodeMail from "@/components/business/VerifyCodeMail";
 import { PATH } from "@/constants/common";
+import useRegister from "@/hooks/features/auth/useRegister";
 
 import FormAuth from "../../../../components/business/FormAuth";
 import { STEP_FORM_AUTH } from "./constant";
 import IntroSection from "./IntroSection";
-import useSignIn from "./logic";
 
 export default function SignIn() {
   const {
@@ -23,7 +23,7 @@ export default function SignIn() {
     handleConfirmOtp,
     setStep,
     emailRef,
-  } = useSignIn();
+  } = useRegister();
   const renderStep = () => {
     switch (step) {
       case STEP_FORM_AUTH.FORM_AUTH:
