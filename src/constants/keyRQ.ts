@@ -6,4 +6,5 @@ export const keyRQ = {
   message: "messageAll",
   chat: "chatAll",
   docsHub: "docsHub",
+  docsHubPinned: "docsHubPinned",
 };

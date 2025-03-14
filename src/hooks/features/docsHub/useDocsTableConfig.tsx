@@ -1,27 +1,77 @@
-import { Button } from "@heroui/button";
 import {
   Copy,
   DotsThree,
   Heart,
   Link as LinkIcon,
   PushPin,
+  PushPinSimple,
+  PushPinSlash,
   Share,
   Trash,
 } from "@phosphor-icons/react";
+import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
+import Button from "@/components/common/Button";
 import Dropdown from "@/components/common/Dropdown";
 import User from "@/components/common/User";
 import { listDocsHub } from "@/constants/dric";
+import { keyRQ } from "@/constants/keyRQ";
 import { docsHubService } from "@/services/docsHub";
 import type { IDocsHub } from "@/types/docsHub";
 import { formatCustomTime } from "@/utils/formatDate";
 import { renderFullName } from "@/utils/helpers";
 
 export function useDocsTableConfig() {
-  const { mutate } = docsHubService.usePinnedDocs();
+  const { mutate: mutateAdd } = docsHubService.usePinnedDocs();
+  const { mutate: mutateDelete } = docsHubService.useRemovePinnedDocs();
+  const queryClient = useQueryClient();
 
-  const getActionItems = (itemId: string) => [
+  const handleActionPins = (data: IDocsHub) => {
+    const mutation = data.pinned ? mutateDelete : mutateAdd;
+    mutation(
+      {
+        docsHub: {
+          id: data.id,
+        },
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [keyRQ.docsHubPinned],
+          });
+          queryClient.invalidateQueries({ queryKey: [keyRQ.docsHub] });
+        },
+      },
+    );
+  };
+
+  const PinButton = ({ data }: { data: IDocsHub }) =>
+    data.pinned ? (
+      <Button
+        onPress={() => handleActionPins(data)}
+        variant="light"
+        isIconOnly
+        size="xxs"
+      >
+        <PushPinSimple className="text-teal-700" size={13} weight="fill" />
+      </Button>
+    ) : (
+      <Button
+        variant="light"
+        onPress={() => handleActionPins(data)}
+        isIconOnly
+        size="xxs"
+      >
+        <PushPinSimple
+          className="hidden group-hover/row-table:block"
+          size={13}
+          weight="regular"
+        />
+      </Button>
+    );
+
+  const getActionItems = (data: IDocsHub) => [
     { id: "1", name: "Share", icon: <Share size={17} />, action: () => null },
     {
       id: "2",
@@ -37,14 +87,10 @@ export function useDocsTableConfig() {
     },
     {
       id: "2",
-      name: "Add to Pins",
-      icon: <PushPin size={17} />,
+      name: data.pinned ? "Remove From Pins" : "Add to Pins",
+      icon: data.pinned ? <PushPinSlash size={17} /> : <PushPin size={17} />,
       action: () => {
-        mutate({
-          docsHub: {
-            id: itemId,
-          },
-        });
+        handleActionPins(data);
       },
     },
     {
@@ -61,7 +107,7 @@ export function useDocsTableConfig() {
       label: "NAME",
       render: (data: IDocsHub) => {
         return (
-          <span className="flex gap-2">
+          <span className="flex items-center gap-2">
             <Image
               alt=""
               src={
@@ -72,6 +118,7 @@ export function useDocsTableConfig() {
               height={20}
             />
             {data.name}
+            <PinButton data={data} />
           </span>
         );
       },
@@ -114,7 +161,7 @@ export function useDocsTableConfig() {
             props={{
               placement: "bottom-end",
             }}
-            listItem={getActionItems(item.id)}
+            listItem={getActionItems(item)}
             trigger={
               <Button size="sm" variant="light" isIconOnly>
                 <DotsThree size={20} />

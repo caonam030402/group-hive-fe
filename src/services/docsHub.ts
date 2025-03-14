@@ -57,11 +57,25 @@ export const docsHubService = {
       },
     });
   },
+  useRemovePinnedDocs: () => {
+    return useMutation({
+      mutationFn: async (body: {
+        docsHub: {
+          id: string;
+        };
+      }) => {
+        return http.delete<IDocsHub>(
+          `docs-hubs-pinned/byDocs/${body.docsHub.id}`,
+          {},
+        );
+      },
+    });
+  },
   useGetAllPinnedDocs: (queryS: IQueryGetApi, option?: IOptionRQ) => {
     const queryString = buildQueryParamsGet(queryS);
 
     const query = useQueryInfiniteCommon<IPaginationResponse<IDocsHubPinned>>({
-      queryKey: [keyRQ.docsHub, ...(option?.expendQueryKey || [])],
+      queryKey: [keyRQ.docsHubPinned, ...(option?.expendQueryKey || [])],
       url: `docs-hubs-pinned?${queryString}`,
       ...option,
     });

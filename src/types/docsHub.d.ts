@@ -16,6 +16,7 @@ export interface IDocsHub {
   author: IUser;
   lastOpenedAt: string;
   docsType: EListDocsHub;
+  pinned: boolean;
 }
 
 export interface IDocsHubPinned {
