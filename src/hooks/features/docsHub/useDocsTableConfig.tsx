@@ -4,76 +4,24 @@ import {
   Heart,
   Link as LinkIcon,
   PushPin,
-  PushPinSimple,
   PushPinSlash,
   Share,
   Trash,
 } from "@phosphor-icons/react";
-import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
 import Button from "@/components/common/Button";
 import Dropdown from "@/components/common/Dropdown";
 import User from "@/components/common/User";
 import { listDocsHub } from "@/constants/dric";
-import { keyRQ } from "@/constants/keyRQ";
-import { docsHubService } from "@/services/docsHub";
 import type { IDocsHub } from "@/types/docsHub";
 import { formatCustomTime } from "@/utils/formatDate";
 import { renderFullName } from "@/utils/helpers";
 
+import usePinsDocs from "./usePinsDocs";
+
 export function useDocsTableConfig() {
-  const { mutate: mutateAdd, isPending: isPendingAdd } =
-    docsHubService.usePinnedDocs();
-  const { mutate: mutateDelete, isPending: isPendingDelete } =
-    docsHubService.useRemovePinnedDocs();
-  const queryClient = useQueryClient();
-
-  const handleActionPins = (data: IDocsHub) => {
-    const mutation = data.pinned ? mutateDelete : mutateAdd;
-    mutation(
-      {
-        docsHub: {
-          id: data.id,
-        },
-      },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: [keyRQ.docsHubPinned],
-          });
-          queryClient.invalidateQueries({ queryKey: [keyRQ.docsHub] });
-        },
-      },
-    );
-  };
-
-  const PinButton = ({ data }: { data: IDocsHub }) =>
-    data.pinned ? (
-      <Button
-        isDisabled={isPendingDelete || isPendingAdd}
-        onPress={() => handleActionPins(data)}
-        variant="light"
-        isIconOnly
-        size="xxs"
-      >
-        <PushPinSimple className="text-teal-700" size={13} weight="fill" />
-      </Button>
-    ) : (
-      <Button
-        isDisabled={isPendingDelete || isPendingAdd}
-        variant="light"
-        onPress={() => handleActionPins(data)}
-        isIconOnly
-        size="xxs"
-      >
-        <PushPinSimple
-          className="hidden group-hover/row-table:block"
-          size={13}
-          weight="regular"
-        />
-      </Button>
-    );
+  const { PinButton, handleActionPins } = usePinsDocs();
 
   const getActionItems = (data: IDocsHub) => [
     { id: "1", name: "Share", icon: <Share size={17} />, action: () => null },
