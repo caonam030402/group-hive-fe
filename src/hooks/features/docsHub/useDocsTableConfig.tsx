@@ -23,8 +23,10 @@ import { formatCustomTime } from "@/utils/formatDate";
 import { renderFullName } from "@/utils/helpers";
 
 export function useDocsTableConfig() {
-  const { mutate: mutateAdd } = docsHubService.usePinnedDocs();
-  const { mutate: mutateDelete } = docsHubService.useRemovePinnedDocs();
+  const { mutate: mutateAdd, isPending: isPendingAdd } =
+    docsHubService.usePinnedDocs();
+  const { mutate: mutateDelete, isPending: isPendingDelete } =
+    docsHubService.useRemovePinnedDocs();
   const queryClient = useQueryClient();
 
   const handleActionPins = (data: IDocsHub) => {
@@ -49,6 +51,7 @@ export function useDocsTableConfig() {
   const PinButton = ({ data }: { data: IDocsHub }) =>
     data.pinned ? (
       <Button
+        isDisabled={isPendingDelete || isPendingAdd}
         onPress={() => handleActionPins(data)}
         variant="light"
         isIconOnly
@@ -58,6 +61,7 @@ export function useDocsTableConfig() {
       </Button>
     ) : (
       <Button
+        isDisabled={isPendingDelete || isPendingAdd}
         variant="light"
         onPress={() => handleActionPins(data)}
         isIconOnly
