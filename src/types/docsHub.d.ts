@@ -1,3 +1,5 @@
+import type { EScopeDocsHub } from "@/enums/docsHub";
+
 export interface ICreateDocsHub {
   name: string;
   author: {
@@ -5,6 +7,7 @@ export interface ICreateDocsHub {
   };
   lastOpenedAt: string;
   docsType: EListDocsHub;
+  scope: EScopeDocsHub;
 }
 
 export interface IDocsHub {

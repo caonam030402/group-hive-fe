@@ -1,9 +1,10 @@
+import { docsHubSidebarMenu } from "@/constants/docsHub";
 import { EListDocsHub } from "@/enums/docsHub";
 
 import useNavigate from "../navigate";
 
 export default function useDocsHub() {
-  const { navigate } = useNavigate();
+  const { navigate, getDynamicRoute } = useNavigate();
   const listUrl = {
     [EListDocsHub.DOC]: "doc",
     [EListDocsHub.SHEET]: "sheet",
@@ -16,7 +17,16 @@ export default function useDocsHub() {
       paramsList: [{ name: "id", value: id }],
     });
   };
+
+  const keyMenuFolder = getDynamicRoute() || "";
+
+  const menuFolderActive = docsHubSidebarMenu.find((item) =>
+    item.link.includes(keyMenuFolder),
+  );
+
   return {
     handleOpenPage,
+    menuFolderActive,
+    keyMenuFolder,
   };
 }

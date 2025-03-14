@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 import Card from "@/components/common/Card";
 import { keyRQ } from "@/constants/keyRQ";
-import type { EListDocsHub } from "@/enums/docsHub";
+import { type EListDocsHub, EScopeDocsHub } from "@/enums/docsHub";
 import useDocsHub from "@/hooks/features/useDocsHub";
 import useWorkspace from "@/hooks/useWorkspace";
 import { docsHubService } from "@/services/docsHub";
@@ -21,6 +21,7 @@ export default function CreateItem({ activeKey }: IProps) {
   const { user } = userService.useProfile();
   const { workspaceId } = useWorkspace();
   const queryClient = useQueryClient();
+  const { menuFolderActive } = useDocsHub();
 
   const handleCreate = () => {
     const body = {
@@ -32,6 +33,7 @@ export default function CreateItem({ activeKey }: IProps) {
       },
       docsType: activeKey,
       lastOpenedAt: new Date().toISOString(),
+      scope: menuFolderActive?.scope || EScopeDocsHub.PERSONAL,
       name: "Untitled document",
     };
     mutate(body, {

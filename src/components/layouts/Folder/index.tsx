@@ -4,13 +4,11 @@ import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Accordion, AccordionItem } from "@heroui/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
 
 import { docsHubSidebarMenu } from "@/constants/docsHub";
 import { iconPath } from "@/constants/icons";
-import { keyRQ } from "@/constants/keyRQ";
 import useJump from "@/hooks/useJump";
 import { cn } from "@/libs/utils";
 
@@ -29,7 +27,6 @@ const listPin = [
 ];
 export default function Folder() {
   const { handleJump, isActive } = useJump();
-  const queryClient = useQueryClient();
 
   return (
     <div className="px-3">
@@ -46,7 +43,7 @@ export default function Folder() {
             <Button
               onPress={() => {
                 handleJump({ url: item.link });
-                queryClient.invalidateQueries({ queryKey: [keyRQ.docsHub] });
+                // queryClient.invalidateQueries({ queryKey: [keyRQ.docsHub] });
               }}
               size="sm"
               variant="light"

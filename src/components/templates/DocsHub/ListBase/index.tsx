@@ -21,12 +21,9 @@ import Dropdown from "@/components/common/Dropdown";
 import Tab from "@/components/common/Tab";
 import TableList from "@/components/common/Table";
 import User from "@/components/common/User";
-import { docsHubSidebarMenu } from "@/constants/docsHub";
 import { listDocsHub } from "@/constants/dric";
 import { EScopeDocsHub } from "@/enums/docsHub";
 import useDocsHub from "@/hooks/features/useDocsHub";
-import useNavigate from "@/hooks/navigate";
-import { useStateRef } from "@/hooks/useStateRef";
 import useWorkspace from "@/hooks/useWorkspace";
 import { docsHubService } from "@/services/docsHub";
 import { userService } from "@/services/user";
@@ -149,17 +146,22 @@ export default function ListBase() {
   const [hasMore, setHasMore] = React.useState(false);
   console.log(setIsLoadingTable, setHasMore);
   const { workspaceId } = useWorkspace();
-  const { user } = userService.useProfile();
+  const { user, isLoading: isLoadingUser } = userService.useProfile();
   const { getDynamicRoute } = useNavigate();
   const keyMenu = getDynamicRoute() || "";
+
+  // Add early return if data is not ready
+  if (isLoadingUser || !user?.id || !workspaceId) {
+    return <div className="flex justify-center"><Spinner /></div>;
+  }
 
   const [menuDataActive] = useStateRef(() =>
     docsHubSidebarMenu.find((item) => item.link.includes(keyMenu)),
   );
 
   const { data, isLoading } = docsHubService.useGetAllDocs({
-    userId: user.id || 0,
-    workspaceId,
+    userId: user.id,  // Now we're sure user.id exists
+    workspaceId,      // Now we're sure workspaceId exists
     isShared: menuDataActive()?.scope === EScopeDocsHub.SHARED,
     scope: menuDataActive()?.scope || EScopeDocsHub.PERSONAL,
     filterBy: {
@@ -167,6 +169,23 @@ export default function ListBase() {
       value: tabActive.toString(),
     },
   });
+  const { menuFolderActive, keyMenuFolder } = useDocsHub();
+
+  const { data, isLoading } = docsHubService.useGetAllDocs(
+    {
+      userId: user.id || 0,
+      workspaceId,
+      isShared: menuFolderActive?.scope === EScopeDocsHub.SHARED,
+      scope: menuFolderActive?.scope || EScopeDocsHub.PERSONAL,
+      filterBy: {
+        field: "docsType",
+        value: tabActive.toString(),
+      },
+    },
+    {
+      expendQueryKey: [keyMenuFolder],
+    },
+  );
 
   const { handleOpenPage } = useDocsHub();
 
