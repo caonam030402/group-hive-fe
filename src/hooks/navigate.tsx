@@ -1,4 +1,4 @@
-import { usePathname, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
 import { useRouter } from "@/libs/i18nNavigation";
@@ -11,19 +11,24 @@ export default function useNavigate() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const params = useParams();
 
   const createQueryString = useCallback(
     (paramsList?: IParamsList[]) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const paramsNew = new URLSearchParams(searchParams.toString());
 
       paramsList?.forEach(({ name, value }) => {
-        params.set(name, value);
+        paramsNew.set(name, value);
       });
 
-      return params.toString();
+      return paramsNew.toString();
     },
     [searchParams],
   );
+
+  const getDynamicRoute = useCallback(() => {
+    return params.menu?.at(-1);
+  }, [params]);
 
   const navigate = useCallback(
     ({
@@ -38,5 +43,12 @@ export default function useNavigate() {
     },
     [createQueryString, pathname, router],
   );
-  return { navigate, pathname, searchParams, createQueryString, router };
+  return {
+    navigate,
+    pathname,
+    searchParams,
+    createQueryString,
+    router,
+    getDynamicRoute,
+  };
 }

@@ -1,3 +1,5 @@
+/* eslint-disable unused-imports/no-unused-vars */
+
 "use client";
 
 import { Spinner } from "@heroui/react";
@@ -11,7 +13,6 @@ import {
   Share,
   Trash,
 } from "@phosphor-icons/react";
-import { useAsyncList } from "@react-stately/data";
 import Image from "next/image";
 import React from "react";
 
@@ -20,8 +21,12 @@ import Dropdown from "@/components/common/Dropdown";
 import Tab from "@/components/common/Tab";
 import TableList from "@/components/common/Table";
 import User from "@/components/common/User";
+import { docsHubSidebarMenu } from "@/constants/docsHub";
 import { listDocsHub } from "@/constants/dric";
+import { EScopeDocsHub } from "@/enums/docsHub";
 import useDocsHub from "@/hooks/features/useDocsHub";
+import useNavigate from "@/hooks/navigate";
+import { useStateRef } from "@/hooks/useStateRef";
 import useWorkspace from "@/hooks/useWorkspace";
 import { docsHubService } from "@/services/docsHub";
 import { userService } from "@/services/user";
@@ -142,42 +147,32 @@ export default function ListBase() {
   const [tabActive, setTabActive] = React.useState(ETabKey.RECENT);
   const [isLoadingTable, setIsLoadingTable] = React.useState(true);
   const [hasMore, setHasMore] = React.useState(false);
+  console.log(setIsLoadingTable, setHasMore);
   const { workspaceId } = useWorkspace();
   const { user } = userService.useProfile();
+  const { getDynamicRoute } = useNavigate();
+  const keyMenu = getDynamicRoute() || "";
+
+  const [menuDataActive] = useStateRef(() =>
+    docsHubSidebarMenu.find((item) => item.link.includes(keyMenu)),
+  );
+
   const { data, isLoading } = docsHubService.useGetAllDocs({
     userId: user.id || 0,
     workspaceId,
+    isShared: menuDataActive()?.scope === EScopeDocsHub.SHARED,
+    scope: menuDataActive()?.scope || EScopeDocsHub.PERSONAL,
     filterBy: {
       field: "docsType",
       value: tabActive.toString(),
     },
   });
+
   const { handleOpenPage } = useDocsHub();
 
-  const list = useAsyncList({
-    async load({ signal, cursor }) {
-      if (cursor) {
-        setIsLoadingTable(false);
-      }
-      console.log(cursor);
-      const res = await fetch(
-        cursor || "https://swapi.py4e.com/api/people/?search=",
-        { signal },
-      );
-      const json = await res.json();
-
-      setHasMore(json.next !== null);
-
-      return {
-        items: json.results,
-        cursor: json.next,
-      };
-    },
-  });
-  console.log(tabActive);
   const [loaderRef, scrollerRef] = useInfiniteScroll({
     hasMore,
-    onLoadMore: list.loadMore,
+    // onLoadMore: list.loadMore,
   });
 
   const tab = () => {

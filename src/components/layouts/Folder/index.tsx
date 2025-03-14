@@ -3,41 +3,16 @@
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Accordion, AccordionItem } from "@heroui/react";
-import {
-  FolderOpen,
-  FolderSimpleUser,
-  House,
-  MagnifyingGlass,
-} from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react";
+import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
 
+import { docsHubSidebarMenu } from "@/constants/docsHub";
 import { iconPath } from "@/constants/icons";
+import { keyRQ } from "@/constants/keyRQ";
 import useJump from "@/hooks/useJump";
 import { cn } from "@/libs/utils";
-
-const listDrives = [
-  {
-    title: "Workspace",
-    icon: <House size={20} />,
-    link: "/workplace/base/home",
-  },
-  {
-    title: "My Drive",
-    icon: <FolderSimpleUser size={20} />,
-    link: "/workplace/base/my-drive",
-  },
-  {
-    title: "Shared With Me",
-    icon: <FolderOpen size={20} />,
-    link: "/workplace/base/shared-with-me",
-  },
-  // {
-  //   title: "Drive",
-  //   icon: <GoogleDriveLogo size={20} />,
-  //   link: "/workplace/base/drive",
-  // },
-];
 
 const listPin = [
   {
@@ -54,6 +29,7 @@ const listPin = [
 ];
 export default function Folder() {
   const { handleJump, isActive } = useJump();
+  const queryClient = useQueryClient();
 
   return (
     <div className="px-3">
@@ -64,10 +40,14 @@ export default function Folder() {
         placeholder="Search"
       />
       <div className="mt-3 flex flex-col gap-2">
-        {listDrives.map((item) => {
+        {docsHubSidebarMenu.map((item) => {
+          const IconComponent = item.iconComponent;
           return (
             <Button
-              onPress={() => handleJump({ url: item.link })}
+              onPress={() => {
+                handleJump({ url: item.link });
+                queryClient.invalidateQueries({ queryKey: [keyRQ.docsHub] });
+              }}
               size="sm"
               variant="light"
               className={cn(
@@ -78,7 +58,7 @@ export default function Folder() {
               )}
               key={item.title}
             >
-              {item.icon} {item.title}
+              <IconComponent size={20} /> {item.title}
             </Button>
           );
         })}

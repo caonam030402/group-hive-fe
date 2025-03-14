@@ -4,3 +4,9 @@ export enum EListDocsHub {
   FORM,
   SLIDE,
 }
+
+export enum EScopeDocsHub {
+  PERSONAL,
+  WORKSPACE,
+  SHARED,
+}
