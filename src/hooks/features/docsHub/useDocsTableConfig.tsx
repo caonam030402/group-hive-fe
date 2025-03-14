@@ -13,12 +13,15 @@ import Image from "next/image";
 import Dropdown from "@/components/common/Dropdown";
 import User from "@/components/common/User";
 import { listDocsHub } from "@/constants/dric";
+import { docsHubService } from "@/services/docsHub";
 import type { IDocsHub } from "@/types/docsHub";
 import { formatCustomTime } from "@/utils/formatDate";
 import { renderFullName } from "@/utils/helpers";
 
 export function useDocsTableConfig() {
-  const listItemActionTable = [
+  const { mutate } = docsHubService.usePinnedDocs();
+
+  const getActionItems = (itemId: string) => [
     { id: "1", name: "Share", icon: <Share size={17} />, action: () => null },
     {
       id: "2",
@@ -36,7 +39,13 @@ export function useDocsTableConfig() {
       id: "2",
       name: "Add to Pins",
       icon: <PushPin size={17} />,
-      action: () => null,
+      action: () => {
+        mutate({
+          docsHub: {
+            id: itemId,
+          },
+        });
+      },
     },
     {
       id: "2",
@@ -46,7 +55,6 @@ export function useDocsTableConfig() {
     },
     { id: "2", name: "Delete", icon: <Trash size={17} />, action: () => null },
   ];
-
   const listColumnsTable = [
     {
       key: "name",
@@ -100,11 +108,13 @@ export function useDocsTableConfig() {
     {
       key: "action",
       label: "ACTION",
-      render: () => {
+      render: (item: IDocsHub) => {
         return (
           <Dropdown
-            props={{ placement: "bottom-end" }}
-            listItem={listItemActionTable}
+            props={{
+              placement: "bottom-end",
+            }}
+            listItem={getActionItems(item.id)}
             trigger={
               <Button size="sm" variant="light" isIconOnly>
                 <DotsThree size={20} />
@@ -118,6 +128,5 @@ export function useDocsTableConfig() {
 
   return {
     listColumnsTable,
-    listItemActionTable,
   };
 }

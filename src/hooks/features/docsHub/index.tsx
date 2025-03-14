@@ -4,13 +4,12 @@ import { useDocsTableConfig } from "./useDocsTableConfig";
 export default function useDocsHub() {
   const { handleOpenPage, keyMenuFolder, menuFolderActive } =
     useDocsNavigation();
-  const { listColumnsTable, listItemActionTable } = useDocsTableConfig();
+  const { listColumnsTable } = useDocsTableConfig();
 
   return {
     handleOpenPage,
     menuFolderActive,
     keyMenuFolder,
     listColumnsTable,
-    listItemActionTable,
   };
 }

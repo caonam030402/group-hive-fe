@@ -3,5 +3,5 @@ export interface IItemDropDown {
   name: string;
   icon?: React.JSX.Element;
   shortcut?: string;
-  action: () => void;
+  action: (item?: any) => void;
 }

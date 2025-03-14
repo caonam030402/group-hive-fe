@@ -17,3 +17,8 @@ export interface IDocsHub {
   lastOpenedAt: string;
   docsType: EListDocsHub;
 }
+
+export interface IDocsHubPinned {
+  id: string;
+  docsHub: IDocsHub;
+}

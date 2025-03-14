@@ -8,25 +8,15 @@ import Image from "next/image";
 import React from "react";
 
 import { docsHubSidebarMenu } from "@/constants/docsHub";
-import { iconPath } from "@/constants/icons";
+import { listDocsHub } from "@/constants/dric";
 import useJump from "@/hooks/useJump";
 import { cn } from "@/libs/utils";
+import { docsHubService } from "@/services/docsHub";
 
-const listPin = [
-  {
-    id: 1,
-    title: "Getting Started with Lark Docs",
-    icon: iconPath.doc_regular,
-  },
-  { id: 2, title: "Lark Docs Tutorial", icon: iconPath.slide_regular },
-  {
-    id: 3,
-    title: "Lark Docs API Reference",
-    icon: iconPath.form_regular,
-  },
-];
 export default function Folder() {
   const { handleJump, isActive } = useJump();
+
+  const { data } = docsHubService.useGetAllPinnedDocs({});
 
   return (
     <div className="px-3">
@@ -73,7 +63,7 @@ export default function Folder() {
             title="Pinned"
           >
             <div className="flex flex-col gap-4 ">
-              {listPin.map((item) => {
+              {data?.map((item) => {
                 return (
                   <div
                     key={item.id}
@@ -83,10 +73,16 @@ export default function Folder() {
                       className="color-contract-light"
                       width={18}
                       height={18}
-                      src={item.icon}
+                      src={
+                        listDocsHub.find(
+                          (itemDoc) => itemDoc.key === item.docsHub.docsType,
+                        )?.icon || ""
+                      }
                       alt="icon"
                     />
-                    <div className="text-sm opacity-85">{item.title}</div>
+                    <div className="text-sm opacity-85">
+                      {item.docsHub.name}
+                    </div>
                   </div>
                 );
               })}
