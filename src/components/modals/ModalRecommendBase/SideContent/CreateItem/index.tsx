@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Card from "@/components/common/Card";
 import { keyRQ } from "@/constants/keyRQ";
 import { type EListDocsHub, EScopeDocsHub } from "@/enums/docsHub";
-import useDocsHub from "@/hooks/features/useDocsHub";
+import useDocsHub from "@/hooks/features/docsHub";
 import useWorkspace from "@/hooks/useWorkspace";
 import { docsHubService } from "@/services/docsHub";
 import { userService } from "@/services/user";
@@ -17,11 +17,10 @@ interface IProps {
 
 export default function CreateItem({ activeKey }: IProps) {
   const { mutate } = docsHubService.useCreateDocs();
-  const { handleOpenPage } = useDocsHub();
   const { user } = userService.useProfile();
   const { workspaceId } = useWorkspace();
   const queryClient = useQueryClient();
-  const { menuFolderActive } = useDocsHub();
+  const { menuFolderActive, handleOpenPage } = useDocsHub();
 
   const handleCreate = () => {
     const body = {

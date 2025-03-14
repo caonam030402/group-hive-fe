@@ -44,4 +44,17 @@ export const docsHubService = {
       data: query.data?.data,
     };
   },
+  usePinnedDocs: () => {
+    return useMutation({
+      mutationFn: async (body: {
+        docsHub: {
+          id: number;
+        };
+      }) => {
+        return http.post<IDocsHub>("docs-hubs/pinned", {
+          body,
+        });
+      },
+    });
+  },
 };

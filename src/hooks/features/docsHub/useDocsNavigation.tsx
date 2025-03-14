@@ -1,9 +1,8 @@
 import { docsHubSidebarMenu } from "@/constants/docsHub";
 import { EListDocsHub } from "@/enums/docsHub";
+import useNavigate from "@/hooks/navigate";
 
-import useNavigate from "../navigate";
-
-export default function useDocsHub() {
+export function useDocsNavigation() {
   const { navigate, getDynamicRoute } = useNavigate();
   const listUrl = {
     [EListDocsHub.DOC]: "doc",
@@ -26,7 +25,7 @@ export default function useDocsHub() {
 
   return {
     handleOpenPage,
-    menuFolderActive,
     keyMenuFolder,
+    menuFolderActive,
   };
 }

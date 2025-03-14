@@ -42,7 +42,12 @@ export default function TableList({
       <TableHeader columns={columns}>
         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
-      <TableBody isLoading={isLoading} className="border" items={data}>
+      <TableBody
+        emptyContent={21312312321312}
+        isLoading={isLoading}
+        className="border"
+        items={data || []}
+      >
         {(item: any) => (
           <TableRow
             onClick={() => rowAction && rowAction(item)}
