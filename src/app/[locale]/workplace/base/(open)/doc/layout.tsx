@@ -16,10 +16,10 @@ export default function BaseMainLayout({
         <div className="flex-1  border-r py-5">
           <Folder />
         </div>
-        <div className="w-[82%]">
+        <div className="flex w-[82%] flex-col">
           <Room>
             <HeaderDocsHub />
-            {children}
+            <Card isNoStyle>{children}</Card>
           </Room>
         </div>
       </div>

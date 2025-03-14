@@ -33,5 +33,5 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "testing.automaticallyOpenTestResults": "neverOpen",
-  "cSpell.words": ["heroui", "nextui"]
+  "cSpell.words": ["blocknote", "heroui", "nextui"]
 }

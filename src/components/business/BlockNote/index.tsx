@@ -43,7 +43,6 @@ const insertHelloWorldItem = (editor: BlockNoteEditor) => ({
           return;
         }
         const chunk = decoder.decode(value, { stream: true });
-        console.log(chunk);
         // eslint-disable-next-line no-underscore-dangle
         editor?._tiptapEditor?.commands.insertContent(JSON.parse(chunk).tweet);
         reader?.read().then(processText);
